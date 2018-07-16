@@ -1,3 +1,8 @@
+import Layout from "../components/MyLayout";
+import RegisterForm from "../components/RegisterForm";
+
 export default () => (
-  <div>This will be a register form</div>
-)
+  <Layout>
+    <RegisterForm />
+  </Layout>
+);

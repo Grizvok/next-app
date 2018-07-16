@@ -17,12 +17,12 @@ class Header extends React.Component {
 
   render() {
     return (
-      <nav class="navbar is-fixed-top is-info">
+      <nav class="navbar is-light is-info is-fixed-top">
         <div class="container">
           <div class="navbar-brand">
             <Link prefetch href="/">
             <a class="navbar-item">
-              Sci&nbsp;<i class="fas fa-flask" />&nbsp;Sport
+             Sci&nbsp;<i class="fas fa-flask" />&nbsp;Sport
             </a>
             </Link>
             <span onClick={this.handleClick} class="navbar-burger burger" data-target="navMenu">
