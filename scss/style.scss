@@ -1,8 +1,40 @@
 @import "../node_modules/bulma/sass/utilities/initial-variables";
 @import "../node_modules/bulma/sass/utilities/functions";
 
+$orange: #d17c56;
+
+$danger: $orange;
+
+$info: #417e8d;
+
+$grey-light: #dad3c8;
+
+$body-background-color: $grey-light;
+
+.instruction {
+  padding-top: 5%;
+}
+
+.homehero {
+  padding-top: 5%;
+}
+
+.instruction-section {
+  margin-bottom: 5%;
+}
+
+.register-container {
+  padding-top: 2%;
+}
+
+.sport-select {
+  margin-right: 50%;
+}
 
 
 
 
-@import "../node_modules/bulma/bulma.sass";
+
+
+@import '../node_modules/bulma/bulma.sass';
+
