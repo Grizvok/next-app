@@ -1,4 +1,5 @@
 import axios from "axios";
+import classNames from "classnames";
 
 class RegisterForm extends React.Component {
   constructor(props) {
@@ -49,9 +50,8 @@ class RegisterForm extends React.Component {
   };
 
   handleSubmit(e) {
+    let err = this.validate();
     e.preventDefault();
-    const err = this.validate();
-
     if (!err) {
       this.setState({
         email: "",
@@ -67,8 +67,18 @@ class RegisterForm extends React.Component {
       });
     }
   }
-
   render() {
+    let passwordInputClass = classNames({
+      input: true,
+      "register-input": true,
+      "is-danger": this.state.passwordError && this.state.password
+    });
+    let confirmPasswordClass = classNames({
+      input: true,
+      "register-input": true,
+      "is-danger": this.state.confirmPasswordError
+    });
+
     return (
       <form method="POST" onSubmit={this.handleSubmit}>
         <div align="center" className="column is-half container form-container">
@@ -91,7 +101,7 @@ class RegisterForm extends React.Component {
             <div className="field">
               <p className="control has-icons-left">
                 <input
-                  className="input register-input"
+                  className={passwordInputClass}
                   type="password"
                   name="password"
                   placeholder="Password"
@@ -103,15 +113,15 @@ class RegisterForm extends React.Component {
                 </span>
               </p>
               <div>
-                <p className="help is-danger register-error-text">
+                <article className=" message help is-danger register-error-text">
                   {this.state.passwordError}
-                </p>
+                </article>
               </div>
             </div>
             <div className="field">
               <p className="control has-icons-left">
                 <input
-                  className="input register-input"
+                  className={confirmPasswordClass}
                   name="confirmPassword"
                   type="password"
                   placeholder="Confirm Password"
