@@ -5,15 +5,13 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <div class="container">
+      <div class="column is-half container form-container">
+      <div className="box">
         <div class="field">
           <p class="control has-icons-left has-icons-right">
             <input class="input" type="email" placeholder="Email" />
             <span class="icon is-small is-left">
               <i class="fas fa-envelope" />
-            </span>
-            <span class="icon is-small is-right">
-              <i class="fas fa-check" />
             </span>
           </p>
         </div>
@@ -29,6 +27,7 @@ class LoginForm extends React.Component {
           <p class="control">
             <button class="button is-success">Login</button>
           </p>
+        </div>
         </div>
       </div>
     );
