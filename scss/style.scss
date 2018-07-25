@@ -31,4 +31,7 @@ $body-background-color: $grey-light;
   margin-right: 50%;
 }
 
+.register-error-text {
+  visibility: hidden;
+}
 @import "../node_modules/bulma/bulma.sass";

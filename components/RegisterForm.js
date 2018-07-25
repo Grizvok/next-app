@@ -71,12 +71,36 @@ class RegisterForm extends React.Component {
     let passwordInputClass = classNames({
       input: true,
       "register-input": true,
-      "is-danger": this.state.passwordError && this.state.password
+      "is-danger": this.state.passwordError && this.state.password.length < 6,
+      "is-success": this.state.password.length > 5
     });
     let confirmPasswordClass = classNames({
       input: true,
       "register-input": true,
-      "is-danger": this.state.confirmPasswordError
+      "is-danger":
+        this.state.confirmPasswordError &&
+        !(
+          this.state.password.length > 5 &&
+          this.state.password === this.state.confirmPassword
+        ),
+      "is-success":
+        this.state.confirmPassword.length > 5 &&
+        this.state.password === this.state.confirmPassword
+    });
+    let passwordSpanClass = classNames({
+      help: true,
+      "is-danger": true,
+      "is-invisible": !(
+        this.state.passwordError && this.state.password.length < 6
+      )
+    });
+    let confirmPasswordSpanClass = classNames({
+      help: true,
+      "is-danger": true,
+      "is-invisible":
+        !this.state.confirmPasswordError ||
+        (this.state.password.length > 5 &&
+          this.state.password === this.state.confirmPassword)
     });
 
     return (
@@ -97,6 +121,9 @@ class RegisterForm extends React.Component {
                   <i className="fas fa-envelope" />
                 </span>
               </p>
+              <span className="register-error-text">
+                Please enter an email address
+              </span>
             </div>
             <div className="field">
               <p className="control has-icons-left">
@@ -112,11 +139,9 @@ class RegisterForm extends React.Component {
                   <i className="fas fa-lock" />
                 </span>
               </p>
-              <div>
-                <article className=" message help is-danger register-error-text">
-                  {this.state.passwordError}
-                </article>
-              </div>
+              <span className={passwordSpanClass}>
+                Password needs to be atleast 6 characters long
+              </span>
             </div>
             <div className="field">
               <p className="control has-icons-left">
@@ -132,9 +157,9 @@ class RegisterForm extends React.Component {
                   <i className="fas fa-lock" />
                 </span>
               </p>
-              <p className="help is-danger register-error-text">
-                {this.state.confirmPasswordError}
-              </p>
+              <span className={confirmPasswordSpanClass}>
+                Confirm password does not match your password
+              </span>
             </div>
             <div align="left" className="field">
               <p className="control">
