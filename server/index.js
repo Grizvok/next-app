@@ -15,11 +15,10 @@ app
     const server = express();
 
     server.use(morgan("combined", { stream: winston.stream }));
-    // server.use(morgan('combined', {stream: logger.stream}));
+
     server.use(bodyParser.json());
     server.use(bodyParser.urlencoded({ extended: true }));
     server.use(cookieParser());
-    //server.use("/api", require("./src/routes"));
 
     //setup auth routes
     setupAuthRoutes(server);

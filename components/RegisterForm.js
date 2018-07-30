@@ -60,13 +60,22 @@ class RegisterForm extends React.Component {
         passwordError: "",
         confirmPasswordError: ""
       });
-      axios.post("/api/register", {
-        email: this.state.email,
-        password: this.state.password,
-        confirmPassword: this.state.confirmPassword
-      });
+      axios
+        .post("/api/register", {
+          email: this.state.email,
+          password: this.state.password,
+          confirmPassword: this.state.confirmPassword
+        })
+        .then(function (response) {
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+          return;
+        });
     }
   }
+
   render() {
     let passwordInputClass = classNames({
       input: true,

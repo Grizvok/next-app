@@ -17,39 +17,39 @@ class Header extends React.Component {
 
   render() {
     return (
-      <nav class="navbar is-light is-info is-fixed-top">
-        <div class="container">
-          <div class="navbar-brand">
+      <nav className="navbar is-light is-info is-fixed-top">
+        <div className="container">
+          <div className="navbar-brand">
             <Link prefetch href="/">
-            <a class="navbar-item">
-             Sci&nbsp;<i class="fas fa-flask" />&nbsp;Sport
+            <a className="navbar-item">
+             Sci&nbsp;<i className="fas fa-flask" />&nbsp;Sport
             </a>
             </Link>
-            <span onClick={this.handleClick} class="navbar-burger burger" data-target="navMenu">
+            <span onClick={this.handleClick} className="navbar-burger burger" data-target="navMenu">
               <span />
               <span />
               <span />
             </span>
           </div>
-          <div id="navMenu" class="navbar-menu">
-            <div class="navbar-end">
+          <div id="navMenu" className="navbar-menu">
+            <div className="navbar-end">
               <Link prefetch href="/register">
-              <a class="navbar-item">
+              <a className="navbar-item">
                 Register
               </a>
               </Link>
               <Link prefetch href="/login">
-              <a class="navbar-item">
+              <a className="navbar-item">
                 Login
               </a>
               </Link>
               <Link prefetch href="/shop">
-              <a class="navbar-item">
+              <a className="navbar-item">
                 Shop
               </a>
               </Link>
               <Link prefetch href="/dashboard">
-              <a class="navbar-item">
+              <a className="navbar-item">
                 Dashboard
               </a>
               </Link>
