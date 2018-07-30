@@ -10,8 +10,9 @@ const router = new Router();
 
 router.post("/", async (req, res) => {
   const email = req.body.email;
-  const hash = hasher.hash(req.body.password);
+  const hash = await hasher(req.body.password);
   const joinDate = new Date();
+  console.log(hash);
 
   const rows = await db.query("SELECT * FROM users.client WHERE email = $1", [
     email
