@@ -125,6 +125,7 @@ class RegisterForm extends React.Component {
                   placeholder="Email"
                   value={this.state.email}
                   onChange={this.handleChange}
+                  required
                 />
                 <span className="icon is-small is-left">
                   <i className="fas fa-envelope" />

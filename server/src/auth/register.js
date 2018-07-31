@@ -4,15 +4,14 @@ const Router = require("express-promise-router");
 
 //our packages
 const db = require("../db/index");
-const hasher = require('../util/hash');
+const hasher = require("../util/hash");
 
 const router = new Router();
 
 router.post("/", async (req, res) => {
   const email = req.body.email;
-  const hash = await hasher(req.body.password);
+  const hash = await hasher.createHash(req.body.password);
   const joinDate = new Date();
-  console.log(hash);
 
   const rows = await db.query("SELECT * FROM users.client WHERE email = $1", [
     email

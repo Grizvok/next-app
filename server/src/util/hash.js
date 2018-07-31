@@ -1,8 +1,12 @@
 const bcrypt = require("bcrypt");
-const saltRounds = 12;
 
-const hash = str => {
-   return bcrypt.hash(str, saltRounds);
+const hasher = {
+  saltRounds: 12,
+  createHash: password => {
+    return bcrypt.hash(password, hasher.saltRounds);
+  },
+  compareHash: async (password, userHash) => {
+    return (match = await bcrypt.compare(password, userHash));
+  }
 };
-
-module.exports = hash;
+module.exports = hasher;

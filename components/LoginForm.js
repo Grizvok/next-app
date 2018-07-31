@@ -1,35 +1,104 @@
+import axios from "axios";
+//import classNames from "classnames";
+
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      email: "",
+      password: "",
+      passwordError: ""
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  handleChange(e) {
+    const target = e.target;
+    const value = e.target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  validate = () => {
+    let isError = false;
+
+    if (this.state.password.length < 5) {
+      isError = true;
+      this.setState({
+        passwordError: "Your password must be at least 6 characters"
+      });
+    }
+
+    return isError;
+  };
+
+  handleSubmit(e) {
+    let err = this.validate();
+    e.preventDefault();
+
+    if (!err) {
+      axios
+        .post("/api/login", {
+          email: this.state.email,
+          password: this.state.password
+        })
+        .then(function(response) {
+          console.log(response.data);
+        })
+        .catch(function(error) {
+          console.log(error.response.data);
+          return;
+        });
+    }
+  }
   render() {
     return (
-      <div className="column is-half container form-container">
-      <div className="box">
-        <div className="field">
-          <p className="control has-icons-left has-icons-right">
-            <input className="input" type="email" placeholder="Email" />
-            <span className="icon is-small is-left">
-              <i className="fas fa-envelope" />
-            </span>
-          </p>
+      <form method="POST" onSubmit={this.handleSubmit}>
+        <div className="column is-half container form-container">
+          <div className="box">
+            <div className="field">
+              <p className="control has-icons-left has-icons-right">
+                <input
+                  className="input"
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-envelope" />
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control has-icons-left">
+                <input
+                  className="input"
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock" />
+                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control">
+                <button className="button is-success">Login</button>
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="field">
-          <p className="control has-icons-left">
-            <input className="input" type="password" placeholder="Password" />
-            <span className="icon is-small is-left">
-              <i className="fas fa-lock" />
-            </span>
-          </p>
-        </div>
-        <div className="field">
-          <p className="control">
-            <button className="button is-success">Login</button>
-          </p>
-        </div>
-        </div>
-      </div>
+      </form>
     );
   }
 }
