@@ -14,7 +14,7 @@ class LoginForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
+  handleChange = e => {
     const target = e.target;
     const value = e.target.value;
     const name = target.name;
@@ -22,40 +22,23 @@ class LoginForm extends React.Component {
     this.setState({
       [name]: value
     });
-  }
-
-  validate = () => {
-    let isError = false;
-
-    if (this.state.password.length < 5) {
-      isError = true;
-      this.setState({
-        passwordError: "Your password must be at least 6 characters"
-      });
-    }
-
-    return isError;
   };
 
-  handleSubmit(e) {
-    let err = this.validate();
+  handleSubmit = e => {
     e.preventDefault();
-
-    if (!err) {
-      axios
-        .post("/api/login", {
-          email: this.state.email,
-          password: this.state.password
-        })
-        .then(function(response) {
-          console.log(response.data);
-        })
-        .catch(function(error) {
-          console.log(error.response.data);
-          return;
-        });
-    }
-  }
+    axios
+      .post("/api/login", {
+        email: this.state.email,
+        password: this.state.password
+      })
+      .then(function(response) {
+        console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error.response.data);
+        return;
+      });
+  };
   render() {
     return (
       <form method="POST" onSubmit={this.handleSubmit}>
@@ -70,6 +53,7 @@ class LoginForm extends React.Component {
                   placeholder="Email"
                   value={this.state.email}
                   onChange={this.handleChange}
+                  required
                 />
                 <span className="icon is-small is-left">
                   <i className="fas fa-envelope" />
@@ -85,6 +69,7 @@ class LoginForm extends React.Component {
                   placeholder="Password"
                   value={this.state.password}
                   onChange={this.handleChange}
+                  required
                 />
                 <span className="icon is-small is-left">
                   <i className="fas fa-lock" />

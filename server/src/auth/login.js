@@ -6,9 +6,8 @@ const db = require("../db/index");
 
 const router = new Router();
 
-router.post("/", async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+router.post("/", passport.authenticate('local'), (req, res) => {
+  
 });
 
 module.exports = router;
