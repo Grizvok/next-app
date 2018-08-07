@@ -28,6 +28,7 @@ app
       secret: "asfgaergadfvaerg",
       resave: false,
       saveUninitialized: true,
+      secure: false
     }));
 
     server.use(passport.initialize());
