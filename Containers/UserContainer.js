@@ -12,8 +12,7 @@ class UserContainer extends Container {
 
   removeCurrentUser = async () => {
     await this.setState({ currentUser: "" });
-    console.log(this.state.currentUser);
   };
 }
 
-export default {UserContainer};
+export default UserContainer;

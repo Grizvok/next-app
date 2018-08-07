@@ -1,20 +1,15 @@
 import axios from "axios";
-//import classNames from "classnames";
 import Router from "next/router";
-import {UserContainer} from "../Containers/UserContainer";
+import UserContainer from "../Containers/UserContainer";
+import { Subscribe } from "unstated";
+import { callbackify } from "util";
 
 class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      passwordError: ""
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  state = {
+    email: "",
+    password: "",
+    passwordError: ""
+  };
 
   handleChange = e => {
     const target = e.target;
@@ -34,17 +29,21 @@ class LoginForm extends React.Component {
         password: this.state.password
       })
       .then(function(response) {
+
         console.log(response.data);
+        return response.data;
       })
       .catch(function(error) {
         console.log(error.response.data);
         return;
       });
   };
-  
+
   render() {
     return (
-          <form method="POST" onSubmit={this.handleSubmit}>
+      <Subscribe to={[UserContainer]}>
+        {usercontainer => (
+          <form method="POST" onSubmit={e => usercontainer.setCurrentUser(this.handleSubmit(e))}>
             <div className="column is-half container form-container">
               <div className="box">
                 <div className="field">
@@ -87,8 +86,9 @@ class LoginForm extends React.Component {
               </div>
             </div>
           </form>
+        )}
+      </Subscribe>
     );
   }
 }
-
 export default LoginForm;
