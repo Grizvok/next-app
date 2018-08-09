@@ -1,8 +1,5 @@
-import axios from "axios";
-import Router from "next/router";
 import UserContainer from "../Containers/UserContainer";
 import { Subscribe } from "unstated";
-import { callbackify } from "util";
 
 class LoginForm extends React.Component {
   state = {
@@ -21,29 +18,11 @@ class LoginForm extends React.Component {
     });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    axios
-      .post("/api/login", {
-        email: this.state.email,
-        password: this.state.password
-      })
-      .then(function(response) {
-
-        console.log(response.data);
-        return response.data;
-      })
-      .catch(function(error) {
-        console.log(error.response.data);
-        return;
-      });
-  };
-
   render() {
     return (
       <Subscribe to={[UserContainer]}>
         {usercontainer => (
-          <form method="POST" onSubmit={e => usercontainer.setCurrentUser(this.handleSubmit(e))}>
+          <form method="POST" onSubmit={usercontainer.handleUserUpdate}>
             <div className="column is-half container form-container">
               <div className="box">
                 <div className="field">
