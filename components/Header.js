@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { Subscribe } from "unstated";
+import usercontainer from "../Containers/UserContainer";
+import LoginButtonControl from "./LoginButton";
 
 class Header extends React.Component {
   constructor(props) {
@@ -8,11 +11,11 @@ class Header extends React.Component {
   }
 
   handleClick() {
-    const burger = document.querySelector('.burger');
-    const nav = document.querySelector('#'+burger.dataset.target);
+    const burger = document.querySelector(".burger");
+    const nav = document.querySelector("#" + burger.dataset.target);
 
-    burger.classList.toggle('is-active');
-    nav.classList.toggle('is-active');
+    burger.classList.toggle("is-active");
+    nav.classList.toggle("is-active");
   }
 
   render() {
@@ -21,11 +24,17 @@ class Header extends React.Component {
         <div className="container">
           <div className="navbar-brand">
             <Link prefetch href="/">
-            <a className="navbar-item">
-             Sci&nbsp;<i className="fas fa-flask" />&nbsp;Sport
-            </a>
+              <a className="navbar-item">
+                Sci&nbsp;
+                <i className="fas fa-flask" />
+                &nbsp;Sport
+              </a>
             </Link>
-            <span onClick={this.handleClick} className="navbar-burger burger" data-target="navMenu">
+            <span
+              onClick={this.handleClick}
+              className="navbar-burger burger"
+              data-target="navMenu"
+            >
               <span />
               <span />
               <span />
@@ -33,26 +42,16 @@ class Header extends React.Component {
           </div>
           <div id="navMenu" className="navbar-menu">
             <div className="navbar-end">
-              <Link prefetch href="/register">
-              <a className="navbar-item">
-                Register
-              </a>
-              </Link>
-              <Link prefetch href="/login">
-              <a className="navbar-item">
-                Login
-              </a>
-              </Link>
               <Link prefetch href="/shop">
-              <a className="navbar-item">
-                Shop
-              </a>
+                <a className="navbar-item">Shop</a>
               </Link>
               <Link prefetch href="/dashboard">
-              <a className="navbar-item">
-                Dashboard
-              </a>
+                <a className="navbar-item">Dashboard</a>
               </Link>
+              <Link prefetch href="/register" as="/register">
+                <a className="navbar-item">Register</a>
+              </Link>
+              <LoginButtonControl />
             </div>
           </div>
         </div>

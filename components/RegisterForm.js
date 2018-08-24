@@ -1,11 +1,16 @@
 import axios from "axios";
 import classNames from "classnames";
+import UserContainer from "../Containers/UserContainer";
+import { Subscribe } from "unstated";
+import usercontainer from "../Containers/UserContainer";
+import Router from "next/router";
 
 class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
+      emailError: "",
       password: "",
       confirmPassword: "",
       passwordError: "",
@@ -50,6 +55,9 @@ class RegisterForm extends React.Component {
   };
 
   handleSubmit(e) {
+    const email = this.state.email;
+    const password = this.state.password;
+    const confirmPassword = this.state.confirmPassword;
     let err = this.validate();
     e.preventDefault();
     if (!err) {
@@ -58,25 +66,45 @@ class RegisterForm extends React.Component {
         password: "",
         confirmPassword: "",
         passwordError: "",
-        confirmPasswordError: ""
+        confirmPasswordError: "",
+        emailError: ""
       });
       axios
         .post("/api/register", {
-          email: this.state.email,
-          password: this.state.password,
-          confirmPassword: this.state.confirmPassword
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword
         })
-        .then(function (response) {
-          console.log(response.data);
+        .then(response => {
+          axios
+            .post("/api/login", {
+              email: email,
+              password: password
+            })
+            .then(response => {
+              usercontainer.addCurrentUser(email);
+              Router.push("/dashboard");
+            })
+            .catch(error => {
+              Router.push("/register");
+            })
         })
-        .catch(function (error) {
-          console.log(error.response.data);
-          return;
+        .catch(error => {
+          this.setState({ emailError: error.response.data.error });
+          console.log(error.response.data.error);
         });
     }
   }
 
   render() {
+    if (usercontainer.state.currentUser) {
+      Router.push("/dashboard");
+    }
+    let emailSpanClass = classNames({
+      help: true,
+      "is-danger": true,
+      "is-invisible": !this.state.emailError
+    });
     let passwordInputClass = classNames({
       input: true,
       "register-input": true,
@@ -113,72 +141,79 @@ class RegisterForm extends React.Component {
     });
 
     return (
-      <form method="POST" onSubmit={this.handleSubmit}>
-        <div align="center" className="column is-half container form-container">
-          <div className="box">
-            <div className="field">
-              <p className="control has-icons-left has-icons-right">
-                <input
-                  className="input register-input"
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                  required
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope" />
-                </span>
-              </p>
-              <span className="register-error-text">
-                Please enter an email address
-              </span>
+      <Subscribe to={[UserContainer]}>
+        {usercontainer => (
+          <form method="POST" onSubmit={this.handleSubmit}>
+            <div
+              align="center"
+              className="column is-half container form-container"
+            >
+              <div className="box">
+                <div className="field">
+                  <p className="control has-icons-left has-icons-right">
+                    <input
+                      className="input register-input"
+                      name="email"
+                      type="email"
+                      placeholder="Email"
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                      required
+                    />
+                    <span className="icon is-small is-left">
+                      <i className="fas fa-envelope" />
+                    </span>
+                  </p>
+                  <span className={emailSpanClass}>
+                    That email is already taken
+                  </span>
+                </div>
+                <div className="field">
+                  <p className="control has-icons-left">
+                    <input
+                      className={passwordInputClass}
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      value={this.state.password}
+                      onChange={this.handleChange}
+                    />
+                    <span className="icon is-small is-left">
+                      <i className="fas fa-lock" />
+                    </span>
+                  </p>
+                  <span className={passwordSpanClass}>
+                    Password needs to be atleast 6 characters long
+                  </span>
+                </div>
+                <div className="field">
+                  <p className="control has-icons-left">
+                    <input
+                      className={confirmPasswordClass}
+                      name="confirmPassword"
+                      type="password"
+                      placeholder="Confirm Password"
+                      value={this.state.confirmPassword}
+                      onChange={this.handleChange}
+                    />
+                    <span className="icon is-small is-left">
+                      <i className="fas fa-lock" />
+                    </span>
+                  </p>
+                  <span className={confirmPasswordSpanClass}>
+                    Confirm password does not match your password
+                  </span>
+                </div>
+                <div align="left" className="field">
+                  <p className="control">
+                    <button className="button is-success">Register</button>
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input
-                  className={passwordInputClass}
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={this.state.password}
-                  onChange={this.handleChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock" />
-                </span>
-              </p>
-              <span className={passwordSpanClass}>
-                Password needs to be atleast 6 characters long
-              </span>
-            </div>
-            <div className="field">
-              <p className="control has-icons-left">
-                <input
-                  className={confirmPasswordClass}
-                  name="confirmPassword"
-                  type="password"
-                  placeholder="Confirm Password"
-                  value={this.state.confirmPassword}
-                  onChange={this.handleChange}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock" />
-                </span>
-              </p>
-              <span className={confirmPasswordSpanClass}>
-                Confirm password does not match your password
-              </span>
-            </div>
-            <div align="left" className="field">
-              <p className="control">
-                <button className="button is-success">Register</button>
-              </p>
-            </div>
-          </div>
-        </div>
-      </form>
+          </form>
+        )}
+      </Subscribe>
     );
   }
 }

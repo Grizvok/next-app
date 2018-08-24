@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
     res.status(401).send({ error: "That email is already taken" });
     return;
   } else {
-    const registerPost = await db.query(
+    await db.query(
       "INSERT INTO users.client(email, hash, join_date) VALUES ($1, $2, $3) RETURNING email",
       [email, hash, joinDate]
     );

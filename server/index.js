@@ -13,6 +13,7 @@ const session = require("express-session");
 //our packages
 const winston = require("./src/util/logger");
 const setupAuthRoutes = require("./src/auth/index");
+const setupVideoRoutes = require("./src/video/index");
 
 app
   .prepare()
@@ -26,7 +27,7 @@ app
     server.use(cookieParser());
     server.use(session({
       secret: "asfgaergadfvaerg",
-      resave: false,
+      resave: true,
       saveUninitialized: true,
       secure: false
     }));
@@ -36,7 +37,34 @@ app
 
     //setup auth routes
     setupAuthRoutes(server);
+    //setup video routes
+    setupVideoRoutes(server);
 
+    //setup SSR routes
+    server.get("/", (req, res) => {
+      return app.render(req, res, "/", req.query);
+    });
+
+    server.get("/login", (req, res) => {
+      return app.render(req, res, "/login", req.query);
+    });
+
+    server.get("/register", (req, res) => {
+      if (req.user) {
+        console.log("This function ran");
+        res.redirect('/dashboard');
+      }
+      return app.render(req, res, "/register", req.query);
+    });
+
+    server.get("/dashboard", (req, res) => {
+      if (!req.user) {
+        console.log("Hello!");
+        return res.redirect('/register');
+      }
+      return app.render(req, res, "/dashboard", req.query);
+    })
+    
     server.get("*", (req, res) => {
       return handle(req, res);
     });
