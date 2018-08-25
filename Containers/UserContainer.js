@@ -12,18 +12,21 @@ class UserContainer extends Container {
     };
   }
   handleUserRegister = async (email, password) => {
-    axios
+    const { currentUser, error } = await axios
       .post("/api/login", {
         email: email,
         password: password
       })
-      .then(response => {
-        this.setState({ currentUser });
-        Router.push("/dashboard");
-      })
-      .catch(error => {
-        console.log(error.response.data);
-      });
+      .then(response => ({ currentUser: response.data }))
+      .catch(error => ({ error }));
+    await this.setState({ currentUser, error });
+
+    if (this.state.currentUser) {
+      await console.log(this.state);
+
+      Router.push("/dashboard/");
+    }
+    await console.log(this.state);
   };
 
   handleUserUpdate = async e => {
@@ -32,14 +35,15 @@ class UserContainer extends Container {
     const email = await formData.get("email");
     const password = await formData.get("password");
 
-    const {currentUser, error} = await axios.post("/api/login", {
-      email: email,
-      password: password
-    })
-    .then(response => ({currentUser: response.data}))
-    .catch(error => ({error}));
-    this.setState({currentUser, error});
-  }
+    const { currentUser, error } = await axios
+      .post("/api/login", {
+        email: email,
+        password: password
+      })
+      .then(response => ({ currentUser: response.data }))
+      .catch(error => ({ error }));
+    this.setState({ currentUser, error });
+  };
 
   addCurrentUser = async user => {
     await this.setState({ currentUser: user });
@@ -53,9 +57,6 @@ class UserContainer extends Container {
 let usercontainer = new UserContainer();
 
 export default usercontainer;
-
-
-
 
 // handleUserUpdate = async e => {
 //   e.preventDefault();

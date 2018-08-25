@@ -1,11 +1,12 @@
-import UserContainer from "../Containers/UserContainer";
+import usercontainer from "../Containers/UserContainer";
 import { Subscribe } from "unstated";
+import classNames from "classnames";
 
 class LoginForm extends React.Component {
   state = {
     email: "",
     password: "",
-    passwordError: ""
+    error: usercontainer.state.error
   };
 
   handleChange = e => {
@@ -19,11 +20,16 @@ class LoginForm extends React.Component {
   };
 
   render() {
+    let loginErrorClass = classNames({
+      help: true,
+      "is-danger": true,
+      "is-invisible": !usercontainer.state.error
+    });
     return (
-      <Subscribe to={[UserContainer]}>
+      <Subscribe to={[usercontainer]}>
         {usercontainer => (
           <form method="POST" onSubmit={usercontainer.handleUserUpdate}>
-            <div className="column is-half container form-container">
+            <div align="center" className="column is-half container form-container">
               <div className="box">
                 <div className="field">
                   <p className="control has-icons-left has-icons-right">
@@ -40,6 +46,9 @@ class LoginForm extends React.Component {
                       <i className="fas fa-envelope" />
                     </span>
                   </p>
+                  <span className={loginErrorClass}>
+                    Incorrect username or password.
+                  </span>
                 </div>
                 <div className="field">
                   <p className="control has-icons-left">
