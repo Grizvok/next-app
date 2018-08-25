@@ -7,7 +7,8 @@ class UserContainer extends Container {
     super();
 
     this.state = {
-      currentUser: ""
+      currentUser: "",
+      error: ""
     };
   }
   handleUserRegister = async (email, password) => {
@@ -28,23 +29,19 @@ class UserContainer extends Container {
   handleUserUpdate = async e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const currentUser = await formData.get("email");
+    const email = await formData.get("email");
     const password = await formData.get("password");
-    axios
-      .post("/api/login", {
-        email: currentUser,
-        password: password
-      })
-      .then(response => {
-        this.setState({ currentUser });
-        Router.push("/dashboard");
-      })
-      .catch(error => {
-        console.log(error.response.data);
-      });
-  };
-  
-  addCurrentUser = async (user) => {
+
+    const {currentUser, error} = await axios.post("/api/login", {
+      email: email,
+      password: password
+    })
+    .then(response => ({currentUser: response.data}))
+    .catch(error => ({error}));
+    this.setState({currentUser, error});
+  }
+
+  addCurrentUser = async user => {
     await this.setState({ currentUser: user });
   };
 
@@ -56,3 +53,24 @@ class UserContainer extends Container {
 let usercontainer = new UserContainer();
 
 export default usercontainer;
+
+
+
+
+// handleUserUpdate = async e => {
+//   e.preventDefault();
+//   const formData = new FormData(e.target);
+//   const email = await formData.get("email");
+//   const password = await formData.get("password");
+//   try {
+//     const response = await axios.post("/api/login", {
+//       email: email,
+//       password: password
+//     });
+//     const currentUser = response.data;
+//     this.setState({ currentUser });
+//     Router.push("/dashboard");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
