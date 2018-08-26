@@ -6,7 +6,7 @@ class LoginForm extends React.Component {
   state = {
     email: "",
     password: "",
-    error: usercontainer.state.error
+    error: ""
   };
 
   handleChange = e => {
@@ -19,6 +19,17 @@ class LoginForm extends React.Component {
     });
   };
 
+  handleSubmit = async e => {
+    e.preventDefault();
+    const error = await usercontainer.handleUserUpdate(e);
+    console.log(error);
+    this.setState({
+      email: "",
+      password: "",
+      error: error
+    });
+  };
+
   render() {
     let loginErrorClass = classNames({
       help: true,
@@ -28,8 +39,11 @@ class LoginForm extends React.Component {
     return (
       <Subscribe to={[usercontainer]}>
         {usercontainer => (
-          <form method="POST" onSubmit={usercontainer.handleUserUpdate}>
-            <div align="center" className="column is-half container form-container">
+          <form method="POST" onSubmit={this.handleSubmit}>
+            <div
+              align="center"
+              className="column is-half container form-container"
+            >
               <div className="box">
                 <div className="field">
                   <p className="control has-icons-left has-icons-right">

@@ -87,7 +87,7 @@ class RegisterForm extends React.Component {
             })
             .catch(error => {
               Router.push("/register");
-            })
+            });
         })
         .catch(error => {
           this.setState({ emailError: error.response.data.error });

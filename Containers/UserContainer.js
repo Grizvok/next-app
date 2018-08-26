@@ -22,11 +22,8 @@ class UserContainer extends Container {
     await this.setState({ currentUser, error });
 
     if (this.state.currentUser) {
-      await console.log(this.state);
-
       Router.push("/dashboard/");
     }
-    await console.log(this.state);
   };
 
   handleUserUpdate = async e => {
@@ -42,7 +39,11 @@ class UserContainer extends Container {
       })
       .then(response => ({ currentUser: response.data }))
       .catch(error => ({ error }));
-    this.setState({ currentUser, error });
+    await this.setState({ currentUser, error });
+
+    if (this.state.currentUser) {
+      Router.push(`/dashboard/${this.state.currentUser}`);
+    }
   };
 
   addCurrentUser = async user => {

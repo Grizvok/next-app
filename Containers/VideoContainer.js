@@ -7,9 +7,8 @@ class VideoContainer extends Container {
     super();
 
     this.state = {
-      videoList: "",
-
-    }
+      videoList: ""
+    };
   }
 }
 
