@@ -1,0 +1,16 @@
+{
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parser": "babel-eslint",
+  "globals": {
+    "FormData": true,
+    "document": true,
+    "window": true,
+    "module": true,
+    "process": true,
+    "require": true,
+    "console": true
+  },
+  "rules": {
+    "react/display-name": [0]
+  }
+}

@@ -1,17 +1,16 @@
-import { Container } from "unstated";
-import axios from "axios";
-import Router from "next/router";
+import { Container } from 'unstated';
+
 
 class VideoContainer extends Container {
   constructor() {
     super();
 
     this.state = {
-      videoList: ""
+      videoList: '',
     };
   }
 }
 
-let videocontainer = new VideoContainer();
+const videocontainer = new VideoContainer();
 
 export default videocontainer;

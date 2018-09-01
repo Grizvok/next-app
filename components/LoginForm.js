@@ -1,10 +1,11 @@
+import React from 'react';
 import usercontainer from "../Containers/UserContainer";
 import { Subscribe } from "unstated";
 import classNames from "classnames";
 
 class LoginForm extends React.Component {
   state = {
-    email: "",
+    user: "",
     password: "",
     error: ""
   };
@@ -22,9 +23,8 @@ class LoginForm extends React.Component {
   handleSubmit = async e => {
     e.preventDefault();
     const error = await usercontainer.handleUserUpdate(e);
-    console.log(error);
     this.setState({
-      email: "",
+      user: "",
       password: "",
       error: error
     });
@@ -49,10 +49,10 @@ class LoginForm extends React.Component {
                   <p className="control has-icons-left has-icons-right">
                     <input
                       className="input"
-                      name="email"
-                      type="email"
-                      placeholder="Email"
-                      value={this.state.email}
+                      name="username"
+                      type="text"
+                      placeholder="Username"
+                      value={this.state.user}
                       onChange={this.handleChange}
                       required
                     />

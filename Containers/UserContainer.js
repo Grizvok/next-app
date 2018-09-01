@@ -1,44 +1,45 @@
-import { Container } from "unstated";
-import axios from "axios";
-import Router from "next/router";
+import { Container } from 'unstated';
+import axios from 'axios';
+import Router from 'next/router';
 
 class UserContainer extends Container {
   constructor() {
     super();
 
     this.state = {
-      currentUser: "",
-      error: ""
+      currentUser: '',
+      error: '',
     };
   }
-  handleUserRegister = async (email, password) => {
+
+  handleUserRegister = async (user, password) => {
     const { currentUser, error } = await axios
-      .post("/api/login", {
-        email: email,
-        password: password
+      .post('/api/login', {
+        user,
+        password,
       })
-      .then(response => ({ currentUser: response.data }))
-      .catch(error => ({ error }));
+      .then((response) => ({ currentUser: response.data }))
+      .catch((error) => ({ error }));
     await this.setState({ currentUser, error });
 
     if (this.state.currentUser) {
-      Router.push("/dashboard/");
+      Router.push('/dashboard/');
     }
   };
 
-  handleUserUpdate = async e => {
+  handleUserUpdate = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const email = await formData.get("email");
-    const password = await formData.get("password");
+    const user = await formData.get('username');
+    const password = await formData.get('password');
 
     const { currentUser, error } = await axios
-      .post("/api/login", {
-        email: email,
-        password: password
+      .post('/api/login', {
+        user: user,
+        password: password,
       })
-      .then(response => ({ currentUser: response.data }))
-      .catch(error => ({ error }));
+      .then((response) => ({ currentUser: response.data }))
+      .catch((error) => ({ error }));
     await this.setState({ currentUser, error });
 
     if (this.state.currentUser) {
@@ -46,12 +47,12 @@ class UserContainer extends Container {
     }
   };
 
-  addCurrentUser = async user => {
+  addCurrentUser = async (user) => {
     await this.setState({ currentUser: user });
   };
 
   removeCurrentUser = async () => {
-    await this.setState({ currentUser: "" });
+    await this.setState({ currentUser: '' });
   };
 }
 

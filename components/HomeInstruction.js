@@ -1,3 +1,5 @@
+import React from "react";
+
 export default () => (
   <div align="left" className="container instruction">
     <div className="column is-one-third">

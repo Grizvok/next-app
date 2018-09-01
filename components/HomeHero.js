@@ -1,3 +1,4 @@
+import React from 'react';
 import HomeInstruction from "../components/HomeInstruction";
 
 const HomeHero = () => (

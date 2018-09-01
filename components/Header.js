@@ -1,7 +1,6 @@
-import Link from "next/link";
-import { Subscribe } from "unstated";
-import usercontainer from "../Containers/UserContainer";
-import LoginButtonControl from "./LoginButton";
+import React from 'react';
+import Link from 'next/link';
+import LoginButtonControl  from './LoginButton';
 
 class Header extends React.Component {
   constructor(props) {
@@ -11,11 +10,11 @@ class Header extends React.Component {
   }
 
   handleClick() {
-    const burger = document.querySelector(".burger");
-    const nav = document.querySelector("#" + burger.dataset.target);
+    const burger = document.querySelector('.burger');
+    const nav = document.querySelector('#' + burger.dataset.target);
 
-    burger.classList.toggle("is-active");
-    nav.classList.toggle("is-active");
+    burger.classList.toggle('is-active');
+    nav.classList.toggle('is-active');
   }
 
   render() {

@@ -1,3 +1,4 @@
+import React from 'react';
 import Layout from '../components/MyLayout.js'
 import Link from 'next/link'
 import HomeHero from '../components/HomeHero'

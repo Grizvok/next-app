@@ -1,20 +1,21 @@
-import axios from "axios";
-import classNames from "classnames";
-import UserContainer from "../Containers/UserContainer";
-import { Subscribe } from "unstated";
-import usercontainer from "../Containers/UserContainer";
-import Router from "next/router";
+import React from 'react';
+import axios from 'axios';
+import classNames from 'classnames';
+import UserContainer from '../Containers/UserContainer';
+import { Subscribe } from 'unstated';
+import usercontainer from '../Containers/UserContainer';
+import Router from 'next/router';
 
 class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      emailError: "",
-      password: "",
-      confirmPassword: "",
-      passwordError: "",
-      confirmPasswordError: ""
+      user: '',
+      userError: '',
+      password: '',
+      confirmPassword: '',
+      passwordError: '',
+      confirmPasswordError: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,26 +28,26 @@ class RegisterForm extends React.Component {
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
   validate = () => {
     let isError = false;
     const errors = {
-      passwordError: "",
-      confirmPasswordError: ""
+      passwordError: '',
+      confirmPasswordError: '',
     };
 
     if (this.state.password.length < 5) {
       isError = true;
-      errors.passwordError = "Password needs to be atleast 6 characters long";
+      errors.passwordError = 'Password needs to be atleast 6 characters long';
     }
 
     if (this.state.password !== this.state.confirmPassword) {
       isError = true;
       errors.confirmPasswordError =
-        "Confirm password does not match your password";
+        'Confirm password does not match your password';
     }
 
     this.setState({ ...errors });
@@ -55,42 +56,42 @@ class RegisterForm extends React.Component {
   };
 
   handleSubmit(e) {
-    const email = this.state.email;
+    const user = this.state.user;
     const password = this.state.password;
     const confirmPassword = this.state.confirmPassword;
     let err = this.validate();
     e.preventDefault();
     if (!err) {
       this.setState({
-        email: "",
-        password: "",
-        confirmPassword: "",
-        passwordError: "",
-        confirmPasswordError: "",
-        emailError: ""
+        user: '',
+        password: '',
+        confirmPassword: '',
+        passwordError: '',
+        confirmPasswordError: '',
+        userError: '',
       });
       axios
-        .post("/api/register", {
-          email: email,
+        .post('/api/register', {
+          user: user,
           password: password,
-          confirmPassword: confirmPassword
+          confirmPassword: confirmPassword,
         })
-        .then(response => {
+        .then((response) => {
           axios
-            .post("/api/login", {
-              email: email,
-              password: password
+            .post('/api/login', {
+              user: user,
+              password: password,
             })
-            .then(response => {
-              usercontainer.addCurrentUser(email);
-              Router.push("/dashboard");
+            .then((response) => {
+              usercontainer.addCurrentUser(user);
+              Router.push('/dashboard');
             })
-            .catch(error => {
-              Router.push("/register");
+            .catch((error) => {
+              Router.push('/register');
             });
         })
-        .catch(error => {
-          this.setState({ emailError: error.response.data.error });
+        .catch((error) => {
+          this.setState({ userError: error.response.data.error });
           console.log(error.response.data.error);
         });
     }
@@ -98,51 +99,51 @@ class RegisterForm extends React.Component {
 
   render() {
     if (usercontainer.state.currentUser) {
-      Router.push("/dashboard");
+      Router.push('/dashboard');
     }
-    let emailSpanClass = classNames({
+    let userSpanClass = classNames({
       help: true,
-      "is-danger": true,
-      "is-invisible": !this.state.emailError
+      'is-danger': true,
+      'is-invisible': !this.state.userError,
     });
     let passwordInputClass = classNames({
       input: true,
-      "register-input": true,
-      "is-danger": this.state.passwordError && this.state.password.length < 6,
-      "is-success": this.state.password.length > 5
+      'register-input': true,
+      'is-danger': this.state.passwordError && this.state.password.length < 6,
+      'is-success': this.state.password.length > 5,
     });
     let confirmPasswordClass = classNames({
       input: true,
-      "register-input": true,
-      "is-danger":
+      'register-input': true,
+      'is-danger':
         this.state.confirmPasswordError &&
         !(
           this.state.password.length > 5 &&
           this.state.password === this.state.confirmPassword
         ),
-      "is-success":
+      'is-success':
         this.state.confirmPassword.length > 5 &&
-        this.state.password === this.state.confirmPassword
+        this.state.password === this.state.confirmPassword,
     });
     let passwordSpanClass = classNames({
       help: true,
-      "is-danger": true,
-      "is-invisible": !(
+      'is-danger': true,
+      'is-invisible': !(
         this.state.passwordError && this.state.password.length < 6
-      )
+      ),
     });
     let confirmPasswordSpanClass = classNames({
       help: true,
-      "is-danger": true,
-      "is-invisible":
+      'is-danger': true,
+      'is-invisible':
         !this.state.confirmPasswordError ||
         (this.state.password.length > 5 &&
-          this.state.password === this.state.confirmPassword)
+          this.state.password === this.state.confirmPassword),
     });
 
     return (
       <Subscribe to={[UserContainer]}>
-        {usercontainer => (
+        {(usercontainer) => (
           <form method="POST" onSubmit={this.handleSubmit}>
             <div
               align="center"
@@ -153,10 +154,10 @@ class RegisterForm extends React.Component {
                   <p className="control has-icons-left has-icons-right">
                     <input
                       className="input register-input"
-                      name="email"
-                      type="email"
-                      placeholder="Email"
-                      value={this.state.email}
+                      name="user"
+                      type="text"
+                      placeholder="Username"
+                      value={this.state.user}
                       onChange={this.handleChange}
                       required
                     />
@@ -164,8 +165,8 @@ class RegisterForm extends React.Component {
                       <i className="fas fa-envelope" />
                     </span>
                   </p>
-                  <span className={emailSpanClass}>
-                    That email is already taken
+                  <span className={userSpanClass}>
+                    That Username is already taken
                   </span>
                 </div>
                 <div className="field">

@@ -12,12 +12,12 @@ passport.deserializeUser(async (id, done) => {
   let user = null;
   try {
     const rows = await db.query(
-      "SELECT email FROM users.client WHERE email = $1",
+      "SELECT sci_user FROM users.client WHERE sci_user = $1",
       [id]
     );
-    user = rows.rows[0].email;
+    user = rows.rows[0].sci_user;
   } catch (e) {
-    done(e, false);
+    done(e, false);user
     return;
   }
   return done(null, user);
@@ -25,25 +25,24 @@ passport.deserializeUser(async (id, done) => {
 
 passport.use(
   new LocalStrategy(
-    { usernameField: "email" },
-    async (email, password, done) => {
+    { usernameField: "username" },
+    async (user, password, done) => {
       //find all users with matching login
-      console.log("This ran 3");
       const users = await db.query(
-        "SELECT email, hash FROM users.client WHERE email = $1",
-        [email]
+        "SELECT sci_user, hash FROM users.client WHERE sci_user = $1",
+        [user]
       );
-      const user = users.rows[0].email;
+      const username = users.rows[0].user;
       const hash = users.rows[0].hash;
       const hashStatus = await hasher.compareHash(password, hash);
-      if (!user) {
+      if (!username) {
         return done(null, false, { message: "Incorrect username." });
       }
       if (!hashStatus) {
         return done(null, false, { message: "Incorrect password." });
       }
-      console.log(user);
-      return done(null, user);
+    
+      return done(null, username);
     }
   )
 );

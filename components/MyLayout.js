@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from "./Header";
 import "../scss/style.scss";
 import { Provider } from "unstated";

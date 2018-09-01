@@ -1,5 +1,5 @@
+import React from "react"
 import Document, { Main, Head, NextScript } from "next/document";
-import { Provider } from "unstated";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {

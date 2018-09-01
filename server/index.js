@@ -57,7 +57,7 @@ app
       return app.render(req, res, "/register", req.query);
     });
 
-    server.get("/dashboard/:id", (req, res) => {
+    server.get("/dashboard", (req, res) => {
       
       if (!req.user) {
         console.log("Hello!");

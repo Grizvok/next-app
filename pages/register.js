@@ -1,3 +1,4 @@
+import React from 'react';
 import Layout from "../components/MyLayout";
 import RegisterForm from "../components/RegisterForm";
 import UserContainer from "../Containers/UserContainer";

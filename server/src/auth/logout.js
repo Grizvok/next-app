@@ -1,11 +1,11 @@
-const Router = require("express-promise-router");
+const Router = require('express-promise-router');
 
 const router = new Router();
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   if (req.user) {
     req.session.destroy();
-    res.redirect("/login");
+    res.redirect('/login');
   }
 });
 
