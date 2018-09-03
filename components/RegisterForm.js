@@ -72,14 +72,14 @@ class RegisterForm extends React.Component {
       });
       axios
         .post('/api/register', {
-          user: user,
+          sci_user: user,
           password: password,
           confirmPassword: confirmPassword,
         })
         .then((response) => {
           axios
             .post('/api/login', {
-              user: user,
+              sci_user: user,
               password: password,
             })
             .then((response) => {

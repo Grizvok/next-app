@@ -15,9 +15,10 @@ passport.deserializeUser(async (id, done) => {
       "SELECT sci_user FROM users.client WHERE sci_user = $1",
       [id]
     );
+    console.log('this runs');
     user = rows.rows[0].sci_user;
   } catch (e) {
-    done(e, false);user
+    done(e, false);
     return;
   }
   return done(null, user);
@@ -25,14 +26,14 @@ passport.deserializeUser(async (id, done) => {
 
 passport.use(
   new LocalStrategy(
-    { usernameField: "username" },
+    { usernameField: "user" },
     async (user, password, done) => {
       //find all users with matching login
       const users = await db.query(
         "SELECT sci_user, hash FROM users.client WHERE sci_user = $1",
         [user]
       );
-      const username = users.rows[0].user;
+      const username = users.rows[0].sci_user;
       const hash = users.rows[0].hash;
       const hashStatus = await hasher.compareHash(password, hash);
       if (!username) {

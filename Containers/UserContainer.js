@@ -20,17 +20,18 @@ class UserContainer extends Container {
       })
       .then((response) => ({ currentUser: response.data }))
       .catch((error) => ({ error }));
+      
     await this.setState({ currentUser, error });
-
+    
     if (this.state.currentUser) {
-      Router.push('/dashboard/');
+      Router.push('/dashboard');
     }
   };
 
   handleUserUpdate = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const user = await formData.get('username');
+    const user = await formData.get('user');
     const password = await formData.get('password');
 
     const { currentUser, error } = await axios

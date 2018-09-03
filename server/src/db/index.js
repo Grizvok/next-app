@@ -1,11 +1,13 @@
-const knex = require('knex')({
-  client: 'pg',
-  connection: {
-    host : '127.0.0.1',
-    user : 'grizvok',
-    password : 'grizvok5',
-    database : 'scisport'
-  }
+const { Pool } = require("pg");
+
+const pool = new Pool({
+  user: "grizvok",
+  password: "grizvok5",
+  host: "localhost",
+  database: "scisport",
+  port: 5432
 });
 
-export default knex;
+module.exports = {
+  query: (text, params) => pool.query(text, params)
+};

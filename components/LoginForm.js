@@ -21,6 +21,7 @@ class LoginForm extends React.Component {
   };
 
   handleSubmit = async e => {
+    console.log('this runs');
     e.preventDefault();
     const error = await usercontainer.handleUserUpdate(e);
     this.setState({
@@ -49,7 +50,7 @@ class LoginForm extends React.Component {
                   <p className="control has-icons-left has-icons-right">
                     <input
                       className="input"
-                      name="username"
+                      name="user"
                       type="text"
                       placeholder="Username"
                       value={this.state.user}
