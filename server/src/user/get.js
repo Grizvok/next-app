@@ -1,8 +1,6 @@
 //npm packages
 const Router = require('express-promise-router');
 const cors = require('cors');
-const serializeError = require('serialize-error');
-
 //our packages
 const db = require('../db/index');
 
@@ -22,8 +20,8 @@ router.get('/:id', cors(), async (req, res) => {
     const user = rows.rows[0].sci_user;
     res.send(user);
   } catch (e) {
-    //const error = await serializeError(e);
-    res.status(404).send({ error: 'Page not found' });
+    const Error = JSON.stringify(e);
+    res.status(404).send({ error: "This resource does not exist"});
   }
 });
 
