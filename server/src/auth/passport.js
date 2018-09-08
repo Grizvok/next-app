@@ -15,7 +15,6 @@ passport.deserializeUser(async (id, done) => {
       "SELECT sci_user FROM users.client WHERE sci_user = $1",
       [id]
     );
-    console.log('this runs');
     user = rows.rows[0].sci_user;
   } catch (e) {
     done(e, false);

@@ -44,6 +44,7 @@ class LogoutButton extends React.Component {
 
 class LoginButtonControl extends React.Component {
   render() {
+    console.log(usercontainer.state.currentUser);
     let button;
     if (usercontainer.state.currentUser) {
       button = <LogoutButton />;

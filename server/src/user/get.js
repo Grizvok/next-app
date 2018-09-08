@@ -18,7 +18,7 @@ router.get('/:id', cors(), async (req, res) => {
       [req.params.id]
     );
     const user = rows.rows[0].sci_user;
-    res.send(user);
+    res.send({user});
   } catch (e) {
     const Error = JSON.stringify(e);
     res.status(404).send({ error: "This resource does not exist"});

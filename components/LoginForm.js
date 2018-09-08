@@ -21,7 +21,6 @@ class LoginForm extends React.Component {
   };
 
   handleSubmit = async e => {
-    console.log('this runs');
     e.preventDefault();
     const error = await usercontainer.handleUserUpdate(e);
     this.setState({
@@ -32,6 +31,7 @@ class LoginForm extends React.Component {
   };
 
   render() {
+    console.log(usercontainer.state.currentUser);
     let loginErrorClass = classNames({
       help: true,
       "is-danger": true,

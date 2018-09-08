@@ -57,7 +57,6 @@ app
     server.get('/register', (req, res) => {
       if (req.user) {
         console.log('This function ran');
-        res.redirect('/dashboard');
       }
       return app.render(req, res, '/register', req.query);
     });

@@ -56,7 +56,7 @@ class RegisterForm extends React.Component {
   };
 
   handleSubmit(e) {
-    const user = this.state.user;
+    const user = this.state.user.toUpperCase();
     const password = this.state.password;
     const confirmPassword = this.state.confirmPassword;
     let err = this.validate();
@@ -72,19 +72,19 @@ class RegisterForm extends React.Component {
       });
       axios
         .post('/api/register', {
-          sci_user: user,
+          user: user,
           password: password,
           confirmPassword: confirmPassword,
         })
         .then((response) => {
           axios
             .post('/api/login', {
-              sci_user: user,
+              user: user,
               password: password,
             })
             .then((response) => {
               usercontainer.addCurrentUser(user);
-              Router.push('/dashboard');
+              Router.push(`/user/${user}`);
             })
             .catch((error) => {
               Router.push('/register');
@@ -99,7 +99,7 @@ class RegisterForm extends React.Component {
 
   render() {
     if (usercontainer.state.currentUser) {
-      Router.push('/dashboard');
+      Router.push(`/user/${usercontainer.state.currentUser}`);
     }
     let userSpanClass = classNames({
       help: true,
