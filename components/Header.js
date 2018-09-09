@@ -41,8 +41,8 @@ class Header extends React.Component {
           </div>
           <div id="navMenu" className="navbar-menu">
             <div className="navbar-end">
-              <Link prefetch href="/shop">
-                <a className="navbar-item">Shop</a>
+              <Link prefetch href="/trainers">
+                <a className="navbar-item">Trainers</a>
               </Link>
               <Link prefetch href="/dashboard">
                 <a className="navbar-item">Dashboard</a>
