@@ -9,6 +9,7 @@ export default class UserPage extends React.Component {
     const res = await fetch(`http://localhost:3000/api/user/${context.query.id}`);
     const statusCode = res.status > 200 ? res.status: false;
     const json = await res.json();
+    console.log(json);
     
     return {statusCode, user: json.user};
     

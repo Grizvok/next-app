@@ -20,9 +20,9 @@ class UserContainer extends Container {
       })
       .then((response) => ({ currentUser: response.data }))
       .catch((error) => ({ error }));
-      
+
     await this.setState({ currentUser, error });
-    
+
     if (this.state.currentUser) {
       Router.push('/dashboard');
     }
@@ -41,11 +41,10 @@ class UserContainer extends Container {
       })
       .then((response) => ({ currentUser: response.data }))
       .catch((error) => ({ error }));
-      console.log(currentUser);
     await this.setState({ currentUser, error });
 
     if (this.state.currentUser) {
-      Router.push(`/user/${this.state.currentUser}`);
+      Router.push(`/user/?id=${this.state.currentUser}`);
     }
   };
 
