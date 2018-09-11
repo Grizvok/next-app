@@ -1,4 +1,7 @@
+//npm packages
 import React from 'react';
+
+//our packages
 import HomeInstruction from "../components/HomeInstruction";
 
 const HomeHero = () => (

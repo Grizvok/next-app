@@ -1,45 +1,47 @@
+//npm packages
 import React from 'react';
-import usercontainer from "../Containers/UserContainer";
-import { Subscribe } from "unstated";
-import classNames from "classnames";
+import { Subscribe } from 'unstated';
+import classNames from 'classnames';
+
+//our packages
+import UserContainer from '../Containers/UserContainer';
 
 class LoginForm extends React.Component {
   state = {
-    user: "",
-    password: "",
-    error: ""
+    user: '',
+    password: '',
+    error: '',
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     const target = e.target;
     const value = e.target.value;
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-    const error = await usercontainer.handleUserUpdate(e);
+    const error = await UserContainer.handleUserUpdate(e);
     this.setState({
-      user: "",
-      password: "",
-      error: error
+      user: '',
+      password: '',
+      error: error,
     });
   };
 
   render() {
-    console.log(usercontainer.state.currentUser);
     let loginErrorClass = classNames({
       help: true,
-      "is-danger": true,
-      "is-invisible": !usercontainer.state.error
+      'is-danger': true,
+      'is-invisible': !UserContainer.state.error,
     });
     return (
-      <Subscribe to={[usercontainer]}>
-        {usercontainer => (
+      <Subscribe to={[UserContainer]}>
+        {(usercontainer) => (
           <form method="POST" onSubmit={this.handleSubmit}>
             <div
               align="center"

@@ -1,6 +1,8 @@
+//npm packages
 import { Container } from 'unstated';
 import axios from 'axios';
 import Router from 'next/router';
+import fetch from 'isomorphic-unfetch';
 
 class UserContainer extends Container {
   constructor() {
@@ -12,19 +14,26 @@ class UserContainer extends Container {
     };
   }
 
-  handleUserRegister = async (user, password) => {
-    const { currentUser, error } = await axios
-      .post('/api/login', {
-        user,
-        password,
-      })
-      .then((response) => ({ currentUser: response.data }))
-      .catch((error) => ({ error }));
+  handleUserRegister = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const user = await formData.get('user');
+    const password = await formData.get('password');
 
-    await this.setState({ currentUser, error });
-
-    if (this.state.currentUser) {
-      Router.push('/dashboard');
+    const payload = {
+      user: user,
+      password: password,
+    };
+    //create user
+    const res = await fetch('http://localhost:3000/api/register', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (res.status === 200) {
+      Router.push('/login');
     }
   };
 
@@ -44,7 +53,8 @@ class UserContainer extends Container {
     await this.setState({ currentUser, error });
 
     if (this.state.currentUser) {
-      Router.push(`/user/?id=${this.state.currentUser}`);
+      const as = `/user/${this.state.currentUser}`;
+      Router.push(`/user/?id=${this.state.currentUser}`, as);
     }
   };
 

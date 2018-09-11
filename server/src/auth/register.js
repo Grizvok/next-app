@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
       'INSERT INTO users.client(sci_user, hash, join_date) VALUES ($1, $2, $3) RETURNING sci_user',
       [user, hash, joinDate]
     );
-    res.status(200).send(user);
+    res.status(200).send({user});
   }
 });
 

@@ -66,14 +66,6 @@ app
       return app.render(req, res, '/user', queryParams);
     });
 
-    server.get('/dashboard', (req, res) => {
-      if (!req.user) {
-        console.log('Hello!');
-        return res.redirect('/register');
-      }
-      return app.render(req, res, '/dashboard', req.query);
-    });
-
     server.get('*', (req, res) => {
       return handle(req, res);
     });

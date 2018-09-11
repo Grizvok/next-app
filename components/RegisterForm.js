@@ -1,10 +1,11 @@
+//npm packages
 import React from 'react';
-import axios from 'axios';
 import classNames from 'classnames';
-import UserContainer from '../Containers/UserContainer';
 import { Subscribe } from 'unstated';
-import usercontainer from '../Containers/UserContainer';
 import Router from 'next/router';
+
+//our packages
+import UserContainer from '../Containers/UserContainer';
 
 class RegisterForm extends React.Component {
   constructor(props) {
@@ -55,7 +56,7 @@ class RegisterForm extends React.Component {
     return isError;
   };
 
-  handleSubmit(e) {
+  handleSubmit = async (e) => {
     const user = this.state.user.toUpperCase();
     const password = this.state.password;
     const confirmPassword = this.state.confirmPassword;
@@ -70,32 +71,9 @@ class RegisterForm extends React.Component {
         confirmPasswordError: '',
         userError: '',
       });
-      axios
-        .post('/api/register', {
-          user: user,
-          password: password,
-          confirmPassword: confirmPassword,
-        })
-        .then((response) => {
-          axios
-            .post('/api/login', {
-              user: user,
-              password: password,
-            })
-            .then((response) => {
-              usercontainer.addCurrentUser(user);
-              Router.push(`/user/${user}`);
-            })
-            .catch((error) => {
-              Router.push('/register');
-            });
-        })
-        .catch((error) => {
-          this.setState({ userError: error.response.data.error });
-          console.log(error.response.data.error);
-        });
+      const error = await usercontainer.handleUserRegister(e);
     }
-  }
+  };
 
   render() {
     if (usercontainer.state.currentUser) {

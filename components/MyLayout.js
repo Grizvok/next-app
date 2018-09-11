@@ -1,7 +1,9 @@
+//npm packages
 import React from 'react';
+
+//our packages
 import Header from "./Header";
 import "../scss/style.scss";
-import { Provider } from "unstated";
 
 const Layout = props => (
     <div>

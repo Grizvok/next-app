@@ -1,9 +1,12 @@
+//npm packages
 import React from 'react';
-import usercontainer from "../Containers/UserContainer";
-import { Subscribe } from "unstated";
-import Link from "next/link";
-import axios from "axios";
-import Router from "next/router";
+import { Subscribe } from 'unstated';
+import Link from 'next/link';
+import axios from 'axios';
+import Router from 'next/router';
+
+//our packages
+import usercontainer from '../Containers/UserContainer';
 
 function LoginButton(props) {
   return (
@@ -20,23 +23,23 @@ class LogoutButton extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  //refactor to fetch
   handleClick() {
-    console.log("This function runs");
     axios
-      .post("/api/logout", { withCredentials: true }, {})
-      .then(response => {
+      .post('/api/logout', { withCredentials: true }, {})
+      .then((response) => {
         usercontainer.removeCurrentUser();
-        Router.push("/login");
+        Router.push('/login');
       })
-      .catch(error => {
-        console.log(error.response.data);
-      });
+      .catch((error) => {});
   }
 
   render() {
     return (
       <Link href="#">
-        <a onClick={this.handleClick} className="navbar-item">Logout</a>
+        <a onClick={this.handleClick} className="navbar-item">
+          Logout
+        </a>
       </Link>
     );
   }
@@ -52,7 +55,7 @@ class LoginButtonControl extends React.Component {
       button = <LoginButton />;
     }
     return (
-      <Subscribe to={[usercontainer]}>{usercontainer => button}</Subscribe>
+      <Subscribe to={[usercontainer]}>{(usercontainer) => button}</Subscribe>
     );
   }
 }
