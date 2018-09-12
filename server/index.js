@@ -61,8 +61,8 @@ app
       return app.render(req, res, '/register', req.query);
     });
 
-    server.get('/u/:id', (req, res) => {
-      const queryParams = { title: req.params.id };
+    server.get('/user/:id', (req, res) => {
+      const queryParams = { id: req.params.id };
       return app.render(req, res, '/user', queryParams);
     });
 

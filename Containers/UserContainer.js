@@ -53,7 +53,7 @@ class UserContainer extends Container {
     await this.setState({ currentUser, error });
 
     if (this.state.currentUser) {
-      Router.push(`/user/${this.state.currentUser}`, `/u/${this.state.currentUser}`);
+      Router.push(`/user?id=${this.state.currentUser}`, `/user/${this.state.currentUser}`);
     }
   };
 
