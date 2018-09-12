@@ -9,3 +9,7 @@ module.exports = withSass(withCss({
     return config
   }
 }))
+
+// module.exports = {
+//   useFileSystemPublicRoutes: false
+// }

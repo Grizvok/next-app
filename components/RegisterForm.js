@@ -71,13 +71,13 @@ class RegisterForm extends React.Component {
         confirmPasswordError: '',
         userError: '',
       });
-      const error = await usercontainer.handleUserRegister(e);
+      const error = await UserContainer.handleUserRegister(e);
     }
   };
 
   render() {
-    if (usercontainer.state.currentUser) {
-      Router.push(`/user/${usercontainer.state.currentUser}`);
+    if (UserContainer.state.currentUser) {
+      Router.push(`/user/${UserContainer.state.currentUser}`);
     }
     let userSpanClass = classNames({
       help: true,
