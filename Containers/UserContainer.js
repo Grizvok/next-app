@@ -1,71 +1,82 @@
 //npm packages
-import { Container } from "unstated";
-import axios from "axios";
-import Router from "next/router";
-import fetch from "isomorphic-unfetch";
+import { Container } from 'unstated';
+import axios from 'axios';
+import Router from 'next/router';
+import fetch from 'isomorphic-unfetch';
 
 class UserContainer extends Container {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      currentUser: "",
-      error: ""
+      currentUser: '',
+      error: '',
     };
   }
 
-  handleUserRegister = async e => {
+  handleUserRegister = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const user = await formData.get("user");
-    const password = await formData.get("password");
+    const user = await formData.get('user');
+    const password = await formData.get('password');
 
     const payload = {
       user: user,
-      password: password
+      password: password,
     };
     //create user
-    const res = await fetch("http://localhost:3000/api/register", {
-      method: "POST",
+    const res = await fetch('http://localhost:3000/api/register', {
+      method: 'POST',
       body: JSON.stringify(payload),
       headers: {
-        "Content-Type": "application/json"
-      }
+        'Content-Type': 'application/json',
+      },
     });
     if (res.status === 200) {
-      Router.push("/login");
+      Router.push('/login');
     }
   };
 
-  handleUserUpdate = async e => {
+  handleUserUpdate = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const user = await formData.get("user");
-    const password = await formData.get("password");
+    const user = await formData.get('user');
+    const password = await formData.get('password');
 
     const { currentUser, error } = await axios
-      .post("/api/login", {
+      .post('/api/login', {
         user: user,
-        password: password
+        password: password,
       })
-      .then(response => ({ currentUser: response.data }))
-      .catch(error => ({ error }));
+      .then((response) => ({ currentUser: response.data }))
+      .catch((error) => ({ error }));
     await this.setState({ currentUser, error });
 
     if (this.state.currentUser) {
-      Router.push(`/user?id=${this.state.currentUser}`, `/user/${this.state.currentUser}`);
+      Router.push(
+        `/user?id=${this.state.currentUser}`,
+        `/user/${this.state.currentUser}`
+      );
     }
   };
 
-  addCurrentUser = async user => {
-    await this.setState({ currentUser: user });
+  getCurrentUser = async () => {
+    return this.state.currentUser;
+  };
+
+  addCurrentUser = async (user) => {
+    //called on _app getInitialProps during SSR passing req.user from context object
+    await this.setState((state, props) => ({
+      currentUser: user,
+    }));
+    console.log(await this.getCurrentUser(user));
   };
 
   removeCurrentUser = async () => {
-    await this.setState({ currentUser: "" });
+    await this.setState({ currentUser: '' });
   };
 }
 
-let usercontainer = new UserContainer();
+const usercontainer = new UserContainer();
 
 export default usercontainer;

@@ -55,9 +55,6 @@ app
     });
 
     server.get('/register', (req, res) => {
-      if (req.user) {
-        console.log('This function ran');
-      }
       return app.render(req, res, '/register', req.query);
     });
 

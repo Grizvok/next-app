@@ -6,7 +6,6 @@ class UserNav extends React.Component {
     super(props);
   }
   render() {
-    console.log(this.props);
     return (
       <div className="tabs has-background-white is-centered is-boxed">
         <ul>
@@ -21,7 +20,7 @@ class UserNav extends React.Component {
             </Link>
           </li>
           <li>
-            <Link>
+            <Link prefetch href="">
               <a>
                 <span className="icon is-small">
                   <i className="fas fa-receipt" aria-hidden="true" />
@@ -31,7 +30,7 @@ class UserNav extends React.Component {
             </Link>
           </li>
           <li>
-            <Link>
+            <Link prefetch href="">
               <a>
                 <span className="icon is-small">
                   <i className="fas fa-film" aria-hidden="true" />

@@ -6,7 +6,7 @@ import axios from 'axios';
 import Router from 'next/router';
 
 //our packages
-import usercontainer from '../Containers/UserContainer';
+import UserContainer from '../Containers/UserContainer';
 
 function LoginButton(props) {
   return (
@@ -28,7 +28,7 @@ class LogoutButton extends React.Component {
     axios
       .post('/api/logout', { withCredentials: true }, {})
       .then((response) => {
-        usercontainer.removeCurrentUser();
+        UserContainer.removeCurrentUser();
         Router.push('/login');
       })
       .catch((error) => {});
@@ -45,19 +45,23 @@ class LogoutButton extends React.Component {
   }
 }
 
-class LoginButtonControl extends React.Component {
-  render() {
-    console.log(usercontainer.state.currentUser);
-    let button;
-    if (usercontainer.state.currentUser) {
-      button = <LogoutButton />;
-    } else {
-      button = <LoginButton />;
-    }
-    return (
-      <Subscribe to={[usercontainer]}>{(usercontainer) => button}</Subscribe>
-    );
-  }
-}
+const LoginButtonControl = () => (
+  <Subscribe to={[UserContainer]}>
+    {(usercontainer) => {
+      const user = usercontainer.state.currentUser;
+      if (user) {
+        return <LogoutButton />;
+      }
+      return <LoginButton />;
+    }}
+  </Subscribe>
+);
+
+// class LoginButtonControl extends React.Component {
+//   return (
+//     <Subscribe to={[usercontainer]}>
+//       {}
+//   )
+// }
 
 export default LoginButtonControl;

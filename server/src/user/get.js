@@ -19,7 +19,6 @@ router.get('/:id', cors(), async (req, res) => {
       [req.params.id]
     );
     const user = rows.rows[0].sci_user;
-    console.log(user);
     res.send({user});
   } catch (e) {
     const Error = JSON.stringify(e);
