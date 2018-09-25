@@ -6,6 +6,16 @@ const db = require('../db/index');
 
 const router = new Router();
 
+router.get('/', async (req, res) => {
+  let user;
+  if (req.user) {
+    user = req.user;
+    res.send({user});
+    return;
+  }
+  res.send({error: "You are not authorized"});
+});
+
 router.get('/:id', cors(), async (req, res) => {
   if (req.params.id === req.user) {
     const user = req.user;

@@ -58,6 +58,34 @@ const LoginButtonControl = () => (
 );
 
 // class LoginButtonControl extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <UserConsumer>
+//           {(state)} => (
+//             <p>
+
+//             </p>
+//           )
+//         </UserConsumer>
+//       </div>
+//     );
+//   }
+// }
+
+// const LoginButtonControl = () => (
+//   <Subscribe to={[UserContainer]}>
+//     {(usercontainer) => {
+//       const user = usercontainer.state.currentUser;
+//       if (user) {
+//         return <LogoutButton />;
+//       }
+//       return <LoginButton />;
+//     }}
+//   </Subscribe>
+// );
+
+// class LoginButtonControl extends React.Component {
 //   return (
 //     <Subscribe to={[usercontainer]}>
 //       {}

@@ -37,6 +37,12 @@ class UserContainer extends Container {
     }
   };
 
+  getAuthedUser = async () => {
+    const res = fetch('http://localhost:3000/api/user');
+    const data = await res.json();
+    await this.setState({ currentUser: data.user });
+  };
+
   handleUserUpdate = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);

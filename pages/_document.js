@@ -1,9 +1,8 @@
-import React from "react"
-import Document, { Main, Head, NextScript } from "next/document";
+import React from 'react';
+import Document, { Main, Head, NextScript } from 'next/document';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
-
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
   }
@@ -21,7 +20,6 @@ export default class MyDocument extends Document {
             integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
             crossOrigin="anonymous"
           />
-          <link rel="stylesheet" href="/_next/static/style.css" />
         </Head>
         <body className="custom_class">
           <Main />
