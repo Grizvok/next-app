@@ -3,6 +3,10 @@ import React from 'react';
 import { Provider } from 'unstated';
 import UserContainer from '../Containers/UserContainer';
 
+let usercontainer = new UserContainer();
+
+
+
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     //declare user and call container method only on SSR
@@ -18,7 +22,7 @@ export default class MyApp extends App {
     const { Component, pageProps } = this.props;
     return (
       <Container>
-        <Provider>
+        <Provider inject={[usercontainer]}>
           <Component {...pageProps} />
         </Provider>
       </Container>

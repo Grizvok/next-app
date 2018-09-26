@@ -36,11 +36,15 @@ class LogoutButton extends React.Component {
 
   render() {
     return (
-      <Link href="#">
-        <a onClick={this.handleClick} className="navbar-item">
-          Logout
-        </a>
-      </Link>
+      <Subscribe to={[UserContainer]}>
+        {(usercontainer) => (
+          <Link href="#">
+            <a onClick={usercontainer.removeCurrentUser} className="navbar-item">
+              Logout
+            </a>
+          </Link>
+        )}
+      </Subscribe>
     );
   }
 }
@@ -48,10 +52,12 @@ class LogoutButton extends React.Component {
 const LoginButtonControl = () => (
   <Subscribe to={[UserContainer]}>
     {(usercontainer) => {
-      const user = usercontainer.state.currentUser;
-      if (user) {
+      
+      if (usercontainer.state.currentUser) {
         return <LogoutButton />;
+        console.log(usercontainer.state.currentUser);
       }
+      console.log(usercontainer.state.currentUser);
       return <LoginButton />;
     }}
   </Subscribe>

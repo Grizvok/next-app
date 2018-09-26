@@ -23,26 +23,17 @@ class LoginForm extends React.Component {
     });
   };
 
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    const error = await UserContainer.handleUserUpdate(e);
-    this.setState({
-      user: '',
-      password: '',
-      error: error,
-    });
-  };
-
   render() {
     let loginErrorClass = classNames({
       help: true,
       'is-danger': true,
-      'is-invisible': !UserContainer.state.error,
+      'is-invisible': true
     });
+    //now conditionally render if there is an error after handling login
     return (
       <Subscribe to={[UserContainer]}>
         {(usercontainer) => (
-          <form method="POST" onSubmit={this.handleSubmit}>
+          <form method="POST" onSubmit={usercontainer.handleUserUpdate}>
             <div
               align="center"
               className="column is-half container form-container"
