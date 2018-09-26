@@ -4,15 +4,11 @@ import axios from 'axios';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 
-class UserContainer extends Container {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentUser: '',
-      error: '',
-    };
-  }
+export default class UserContainer extends Container {
+  state = {
+    currentUser: '',
+    error: '',
+  };
 
   handleUserRegister = async (e) => {
     e.preventDefault();
@@ -56,7 +52,7 @@ class UserContainer extends Container {
       })
       .then((response) => ({ currentUser: response.data }))
       .catch((error) => ({ error }));
-    await this.setState({ currentUser, error });
+    await this.setState(() => ({ currentUser, error }));
 
     if (this.state.currentUser) {
       Router.push(
@@ -64,6 +60,7 @@ class UserContainer extends Container {
         `/user/${this.state.currentUser}`
       );
     }
+    console.log(this.state);
   };
 
   getCurrentUser = async () => {
@@ -80,9 +77,6 @@ class UserContainer extends Container {
 
   removeCurrentUser = async () => {
     await this.setState({ currentUser: '' });
+    console.log('this runs');
   };
 }
-
-const usercontainer = new UserContainer();
-
-export default usercontainer;
