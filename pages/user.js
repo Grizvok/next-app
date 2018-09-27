@@ -7,6 +7,7 @@ import Error from 'next/error';
 //our packages
 import Layout from '../components/MyLayout';
 import UserNav from '../components/UserNav';
+import AddVideoModal from '../components/AddVideoModal';
 
 export default class UserPage extends React.Component {
   static async getInitialProps(context) {
@@ -27,6 +28,7 @@ export default class UserPage extends React.Component {
     return (
       <Layout>
         <UserNav />
+        <AddVideoModal />
         <div>{this.props.user}</div>
       </Layout>
     );
