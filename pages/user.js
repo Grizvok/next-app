@@ -7,7 +7,6 @@ import Error from 'next/error';
 //our packages
 import Layout from '../components/MyLayout';
 import UserNav from '../components/UserNav';
-import AddVideoModal from '../components/AddVideoModal';
 import UserHero from '../components/UserHero';
 
 export default class UserPage extends React.Component {
