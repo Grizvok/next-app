@@ -1,3 +1,4 @@
 import UserContainer from './UserContainer';
+import ModalContainer from './ModalContainer';
 
-export { UserContainer };
+export { UserContainer, ModalContainer };
