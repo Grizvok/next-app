@@ -1,6 +1,8 @@
 //npm packages
 import React from 'react';
 import { Subscribe } from 'unstated';
+import Link from 'next/link';
+
 //our packages
 import UserContainer from '../Containers/UserContainer';
 import ModalContainer from '../Containers/ModalContainer';
@@ -11,7 +13,7 @@ const FollowButton = () => (
 const NewVideoButton = () => (
   <Subscribe to={[ModalContainer]}>
     {(modalcontainer) => (
-      <a onClick={modalcontainer.showAddVideoModal} className="button is-fullwidth is-link">Add new video</a>
+      <Link href="/submit"><a className="button is-fullwidth is-link">Add new video</a></Link>
     )}
   </Subscribe>
 );
