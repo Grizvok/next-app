@@ -3,20 +3,18 @@ import React from 'react';
 import classNames from 'classnames';
 import { Subscribe } from 'unstated';
 import Link from 'next/link';
+import fetch from 'isomorphic-unfetch';
 
-export default class AddVideoForm extends React.Component {
+export default class AddTicketForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      videoURL: '',
-      videoURLError: '',
-      videoTitle: '',
+      ticketTitle: '',
       videoTitleError: '',
-      videoDescription: '',
+      ticketDescription: '',
       videoDescriptionError: '',
-      videoCategory: '',
+      ticketCategory: '',
       videoCategoryError: '',
-      videoDate: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,14 +23,25 @@ export default class AddVideoForm extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const vidoeURL = this.state.videoURL;
+
+    const payload = {
+      ticketTitle: this.state.ticketTitle,
+      ticketCategory: this.state.ticketCategory,
+      ticketDescription: this.state.ticketDescription,
+    };
+
+    const res = await fetch('http://localhost:3000/api/ticket', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   };
 
   handleChange(e) {
     const target = e.target;
-    console.log(target);
     const value = e.target.value;
-
     const name = target.name;
 
     this.setState({
@@ -43,7 +52,6 @@ export default class AddVideoForm extends React.Component {
   validate = () => {
     let isError = false;
     const errors = {
-      videoURLError: '',
       videoTitleError: '',
       videoDescriptionError: '',
       videoCategoryError: '',
@@ -85,29 +93,15 @@ export default class AddVideoForm extends React.Component {
         <div className="box form-container">
           <form method="POST" onSubmit={this.handleSubmit}>
             <div className="field">
-              <label className="label">Video URL</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  placeholder="Your Video URL here"
-                  name="videoURL"
-                  onChange={this.handleChange}
-                  value={this.state.videoURL}
-                  required
-                />
-              </div>
-            </div>
-            <div className="field">
-              <label className="label">Video Title</label>
+              <label className="label">Ticket Title</label>
               <div className="control">
                 <input
                   className="input"
                   type="text"
                   placeholder="Your Title Here"
-                  value={this.state.videoTitle}
+                  value={this.state.ticketTitle}
                   onChange={this.handleChange}
-                  name="video-title"
+                  name="ticketTitle"
                 />
               </div>
             </div>
@@ -120,42 +114,33 @@ export default class AddVideoForm extends React.Component {
                   <select
                     id="category-select"
                     onChange={this.handleChange}
-                    value={this.state.videoCategory}
+                    value={this.state.ticketCategory}
+                    name="ticketCategory"
                   >
-                    <option>Full Swing (iron)</option>
-                    <option>Full Swing (driver)</option>
-                    <option>Full Swing (wood)</option>
-                    <option>Pitching</option>
-                    <option>Chipping</option>
-                    <option>Putting</option>
+                    <option value="finance">Finance</option>
+                    <option value="programming">Programming</option>
+                    <option value="fitness">Fitness</option>
+                    <option value="business">Business</option>
+                    <option value="writing">Writing</option>
                   </select>
                 </div>
               </div>
             </div>
             <div className="field">
-              <label className="label">Video Description</label>
+              <label className="label">Ticket Description</label>
               <div className="control">
                 <textarea
                   className="textarea"
-                  placeholder="Textarea"
-                  value={this.state.videoDescription}
+                  name="ticketDescription"
+                  placeholder="Describe your ticket"
+                  value={this.state.ticketDescription}
                   onChange={this.handleChange}
                 />
               </div>
             </div>
             <div className="field">
-              <div className="control">
-                <label className="checkbox">
-                  <input type="checkbox" />I agree to the{' '}
-                  <Link href="/terms">
-                    <a>terms and conditions</a>
-                  </Link>
-                </label>
-              </div>
-            </div>
-            <div className="field">
               <p className="control">
-                <button className="button is-link">Add Video</button>
+                <button className="button is-link">Add Ticket</button>
               </p>
             </div>
           </form>

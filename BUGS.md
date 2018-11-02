@@ -1,0 +1,2 @@
+--Hydrate unstated stores on SSR
+--Protect routes and endpoints from non-authed users

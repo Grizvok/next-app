@@ -4,13 +4,15 @@ import { Subscribe } from 'unstated';
 //our packages
 import AvatarButtonControl from './AvatarButtonControl';
 import UserContainer from '../Containers/UserContainer';
+import UserVideos from "../components/UserVideos";
 
 const AvatarCard = (props) => {
   return (
     <Subscribe to={[UserContainer]}>
       {(usercontainer) => (
         <div className="columns">
-          <div className="column avatarcard is-one-quarter is-offset-8">
+        <UserVideos />
+          <div className="column avatarcard is-one-quarter">
             <div className="card">
               <header className="card-header">
                 <p className="card-header-title is-centered">{props.user}</p>

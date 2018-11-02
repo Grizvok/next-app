@@ -1,2 +1,5 @@
---Create schema for table that will hold the list of videos that the user has uploaded for instruction using id as a primary key and upload date
---
+--Create API endpoint to get user videos
+
+
+
+READ https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes

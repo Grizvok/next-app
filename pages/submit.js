@@ -3,13 +3,13 @@ import React from 'react';
 
 //our packages
 import Layout from '../components/MyLayout.js';
-import AddVideoForm from '../components/AddVideoForm';
+import AddTicketForm from '../components/AddTicketForm';
 
 export default class Submit extends React.Component {
   render() {
     return (
       <Layout>
-        <AddVideoForm />
+        <AddTicketForm />
       </Layout>
     );
   }

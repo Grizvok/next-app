@@ -76,9 +76,6 @@ class RegisterForm extends React.Component {
   };
 
   render() {
-    if (UserContainer.state.currentUser) {
-      Router.push(`/user/${UserContainer.state.currentUser}`);
-    }
     let userSpanClass = classNames({
       help: true,
       'is-danger': true,
@@ -119,79 +116,87 @@ class RegisterForm extends React.Component {
           this.state.password === this.state.confirmPassword),
     });
 
+    //TODO: refactor so that all of the submit logic and error handling is done inside of the unstated usercontainer
+
     return (
       <Subscribe to={[UserContainer]}>
-        {(usercontainer) => (
-          <form method="POST" onSubmit={this.handleSubmit}>
-            <div
-              align="center"
-              className="column is-half container form-container"
-            >
-              <div className="box">
-                <div className="field">
-                  <p className="control has-icons-left has-icons-right">
-                    <input
-                      className="input register-input"
-                      name="user"
-                      type="text"
-                      placeholder="Username"
-                      value={this.state.user}
-                      onChange={this.handleChange}
-                      required
-                    />
-                    <span className="icon is-small is-left">
-                      <i className="fas fa-envelope" />
-                    </span>
-                  </p>
-                  <span className={userSpanClass}>
-                    That Username is already taken
-                  </span>
+        {(usercontainer) => {
+          if (usercontainer.state.currentUser) {
+            Router.push(`/user/${usercontainer.state.currentUser}`);
+          } else {
+            return (
+              <form method="POST" onSubmit={this.handleSubmit}>
+                <div
+                  align="center"
+                  className="column is-half container form-container"
+                >
+                  <div className="box">
+                    <div className="field">
+                      <p className="control has-icons-left has-icons-right">
+                        <input
+                          className="input register-input"
+                          name="user"
+                          type="text"
+                          placeholder="Username"
+                          value={this.state.user}
+                          onChange={this.handleChange}
+                          required
+                        />
+                        <span className="icon is-small is-left">
+                          <i className="fas fa-envelope" />
+                        </span>
+                      </p>
+                      <span className={userSpanClass}>
+                        That Username is already taken
+                      </span>
+                    </div>
+                    <div className="field">
+                      <p className="control has-icons-left">
+                        <input
+                          className={passwordInputClass}
+                          type="password"
+                          name="password"
+                          placeholder="Password"
+                          value={this.state.password}
+                          onChange={this.handleChange}
+                        />
+                        <span className="icon is-small is-left">
+                          <i className="fas fa-lock" />
+                        </span>
+                      </p>
+                      <span className={passwordSpanClass}>
+                        Password needs to be atleast 6 characters long
+                      </span>
+                    </div>
+                    <div className="field">
+                      <p className="control has-icons-left">
+                        <input
+                          className={confirmPasswordClass}
+                          name="confirmPassword"
+                          type="password"
+                          placeholder="Confirm Password"
+                          value={this.state.confirmPassword}
+                          onChange={this.handleChange}
+                        />
+                        <span className="icon is-small is-left">
+                          <i className="fas fa-lock" />
+                        </span>
+                      </p>
+                      <span className={confirmPasswordSpanClass}>
+                        Confirm password does not match your password
+                      </span>
+                    </div>
+                    <div align="left" className="field">
+                      <p className="control">
+                        <button className="button is-success">Register</button>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="field">
-                  <p className="control has-icons-left">
-                    <input
-                      className={passwordInputClass}
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      value={this.state.password}
-                      onChange={this.handleChange}
-                    />
-                    <span className="icon is-small is-left">
-                      <i className="fas fa-lock" />
-                    </span>
-                  </p>
-                  <span className={passwordSpanClass}>
-                    Password needs to be atleast 6 characters long
-                  </span>
-                </div>
-                <div className="field">
-                  <p className="control has-icons-left">
-                    <input
-                      className={confirmPasswordClass}
-                      name="confirmPassword"
-                      type="password"
-                      placeholder="Confirm Password"
-                      value={this.state.confirmPassword}
-                      onChange={this.handleChange}
-                    />
-                    <span className="icon is-small is-left">
-                      <i className="fas fa-lock" />
-                    </span>
-                  </p>
-                  <span className={confirmPasswordSpanClass}>
-                    Confirm password does not match your password
-                  </span>
-                </div>
-                <div align="left" className="field">
-                  <p className="control">
-                    <button className="button is-success">Register</button>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </form>
-        )}
+              </form>
+            );
+          }
+        }}
       </Subscribe>
     );
   }
