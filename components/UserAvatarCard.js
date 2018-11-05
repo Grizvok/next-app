@@ -11,7 +11,7 @@ const AvatarCard = (props) => {
     <Subscribe to={[UserContainer]}>
       {(usercontainer) => (
         <div className="columns">
-        <UserVideos />
+        <UserVideos tickets={props.tickets} />
           <div className="column avatarcard is-one-quarter">
             <div className="card">
               <header className="card-header">

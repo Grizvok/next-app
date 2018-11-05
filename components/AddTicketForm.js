@@ -57,15 +57,15 @@ export default class AddTicketForm extends React.Component {
       videoCategoryError: '',
     };
 
-    if (this.state.videoTitle.length < 5) {
+    if (this.state.videoTitle.length < 9) {
       (isError = true),
         (errors.videoTitleError =
-          'Your title must be at least 6 characters long');
+          'Your title must be at least 10 characters long');
     }
-    if (this.state.videoTitle.length > 30) {
+    if (this.state.videoTitle.length > 40) {
       (isError = true),
         (errors.videoTitleError =
-          'Your title must be less than 30 characters long');
+          'Your title must be 40 or less characters long');
     }
     if (this.state.videoDescription.length < 99) {
       (isError = true),

@@ -15,7 +15,7 @@ const winston = require('./src/util/logger');
 const setupAuthRoutes = require('./src/auth/index');
 const setupVideoRoutes = require('./src/video/index');
 const setupUserRoutes = require('./src/user/index');
-//const setupTicketRoutes = require('./src/ticket/index');
+const setupTicketRoutes = require('./src/ticket/index');
 
 app
   .prepare()
@@ -46,7 +46,7 @@ app
     //setup video routes
     setupVideoRoutes(server);
     //setup ticket routes
-    //setupTicketRoutes(server);
+    setupTicketRoutes(server);
 
     //setup SSR routes
     server.get('/', (req, res) => {
