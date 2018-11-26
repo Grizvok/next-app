@@ -20,9 +20,9 @@ export default class UserPage extends React.Component {
     );
     const ticketJSON = await userTickets.json();
     const json = await res.json();
-    const statusCode = res.status > 200 ? res.status : false;
+    const statusCode = res.status > 200 ? res.status : false
 
-    return { statusCode, user: json.user, tickets: ticketJSON.tickets  };
+    return { statusCode, user: json.user, tickets: ticketJSON.tickets };
   }
 
   render() {

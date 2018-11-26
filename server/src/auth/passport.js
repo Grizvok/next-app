@@ -12,10 +12,10 @@ passport.deserializeUser(async (id, done) => {
   let user = null;
   try {
     const rows = await db.query(
-      "SELECT sci_user FROM users.client WHERE sci_user = $1",
+      "SELECT sci_user, id FROM users.client WHERE sci_user = $1",
       [id]
     );
-    user = rows.rows[0].sci_user;
+    user = rows.rows[0].id;
   } catch (e) {
     done(e, false);
     return;

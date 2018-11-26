@@ -1,5 +1,7 @@
---Create API endpoint to get user videos
+Complete ticket CRUD operations
+--DELETE tickets
+--UPDATE tickets
 
 
-
-READ https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
+--LOOK INTO PASSPORT-JWT
+--IMPLEMENT https://github.com/fridays/next-routes#readme FOR NEXT ROUTING

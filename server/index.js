@@ -66,6 +66,12 @@ app
       return app.render(req, res, '/user', queryParams);
     });
 
+    server.get('/ticket/:id', (req, res) => {
+      const actualPage = '/ticket'
+      const queryParams = { id: req.params.id } 
+      app.render(req, res, actualPage, queryParams)
+    });
+
     server.get('*', (req, res) => {
       return handle(req, res);
     });

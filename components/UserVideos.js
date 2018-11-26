@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default (props) => (
   <div className="column videocontainer is-three-fifths">
@@ -9,16 +10,17 @@ export default (props) => (
       </header>
       <div className="card-content">
         <div className="content">
-          {props.tickets.map((anObjectMapped, index) => {
+          {props.tickets.map((tickets, index) => {
+            console.log(tickets);
             return (
-              //TODO return the ticket id from my API to use as a key
-              <p
-                key={`${
-                  anObjectMapped.ticket_category
-                }_{anObjectMapped.ticket_title}`}
-              >
-                {anObjectMapped.ticket_category} - {anObjectMapped.ticket_title}
-              </p>
+              <li key={tickets.id}>
+                <Link as={`/ticket/${tickets.id}`} href={`/ticket?id=${tickets.id}`}>
+                  <a>
+                    {tickets.ticket_category} - {tickets.ticket_title} -{' '}
+                    {tickets.ticket_creation_date} - {tickets.id}
+                  </a>
+                </Link>
+              </li>
             );
           })}
         </div>

@@ -5,25 +5,26 @@ const Router = require('express-promise-router');
 const db = require('../db/index');
 
 const router = new Router();
+//get specific ticket
+router.get('/user/:ticketID', async (req, res) => {
+  const ticketID = req.params.ticketID;
+  const rows = await db.query(
+    'SELECT ticket_title, ticket_category, ticket_creation_date, ticket_description, sci_user FROM users.ticket INNER JOIN users.client ON(client.id = user_id_fkey) WHERE ticket.id = $1',
+    [ticketID]
+  );
+  const ticket = rows.rows;
+  res.status(200).send({ ticket });
+});
 
-router.get('/:id', async (req, res) => {
-  const user = req.params.id;
-  const row = await db.query(
-    'SELECT id from users.client WHERE sci_user = $1',
+//get all tickets by a certain user
+router.get('/:userID', async (req, res) => {
+  const user = req.params.userID;
+  const rows = await db.query(
+    'SELECT ticket.id, ticket_title, ticket_category, ticket_creation_date FROM users.ticket INNER JOIN users.client ON(client.id = user_id_fkey) WHERE sci_user = $1 ORDER BY ID DESC',
     [user]
   );
-  const userID = row.rows[0].id;
-
-  try {
-    const rows = await db.query(
-      'SELECT ticket_title, ticket_category FROM users.ticket LEFT JOIN users.client ON(client.id = user_id_fkey) WHERE client.id = $1',
-      [userID]
-    );
-    const tickets = rows.rows;
-    res.status(200).send({ tickets });
-  } catch (e) {
-    console.log(e);
-  }
+  const tickets = rows.rows;
+  res.status(200).send({ tickets });
 });
 
 module.exports = router;
