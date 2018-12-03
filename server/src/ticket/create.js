@@ -16,13 +16,14 @@ router.post('/', async (req, res) => {
   const ticketTitle = req.body.ticketTitle.trim();
   const ticketCategory = req.body.ticketCategory;
   const ticketDescription = req.body.ticketDescription.trim();
-  const user = req.user;
-  const row = await db.query(
-    'SELECT id FROM users.client WHERE sci_user = $1',
-    [user]
-  );
-
-  const userID = row.rows[0].id;
+  const userID = req.user;
+  // console.log(user);
+  // const row = await db.query(
+  //   'SELECT id FROM users.client WHERE sci_user = $1',
+  //   [user]
+  // );
+  // console.log(row);
+  // const userID = row.rows[0].id;
 
   //form validation and sql insert
   if (ticketTitle.length > 9 && ticketTitle.length < 76) {
@@ -33,11 +34,12 @@ router.post('/', async (req, res) => {
           [ticketTitle, ticketDescription, ticketCategory, userID]
         );
         res.status(200).send({ ticket: ticketTitle });
+        return;
       }
     }
   }
 
-  res.status(200).send({ test: 'this is just a test' });
+  res.status(400).send({ error: 'something went wrong' });
 });
 
 module.exports = router;

@@ -6,17 +6,15 @@ const db = require('../db/index');
 
 const router = new Router();
 
-router.delete('/:id', async (req, res) => {
-  //get question
-  const question = req.params.questionID;
-  
-
+router.delete('/:ticketID', async (req, res) => {
+  //get ticket to delete
+  const ticketID = req.params.ticketID;
   const user = req.user;
-  const row = await db.query(
-    'SELECT id from users.client WHERE sci_user = $1',
-    [user]
+  const rows = await db.query(
+    'DELETE FROM users.ticket WHERE ticket.id = $1',
+    [ticketID]
   );
-  const userID = row.rows[0].id;
+  res.status(200);
 });
 
 module.exports = router;

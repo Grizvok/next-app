@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/MyLayout.js';
 import fetch from 'isomorphic-unfetch';
-// import Ticket from '../components/TicketDescription.js';
+import TicketHero from '../components/TicketDescription.js';
 
 // export default class Tickets extends React.Component {
 //   static async getInitialProps({ req }) {
@@ -24,8 +24,7 @@ import fetch from 'isomorphic-unfetch';
 
 const Ticket = (props) => (
   <Layout>
-    {console.log(props.ticketData.ticket[0])}
-    <h1>{props.ticketData.ticket[0].ticket_title}</h1>
+    <TicketHero ticket={props.ticketData.ticket[0]} />
   </Layout>
 );
 
