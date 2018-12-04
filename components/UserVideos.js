@@ -6,7 +6,7 @@ import fetch from 'isomorphic-unfetch';
 
 //our packages
 import UserContainer from '../Containers/UserContainer';
-import DeleteButtonControl from '../components/DeleteTicketButton';
+import TicketItem from '../components/TicketItem';
 
 class UserVideos extends React.Component {
   constructor(props) {
@@ -34,13 +34,15 @@ class UserVideos extends React.Component {
   }
 
   async handleTicketDelete(ticketID) {
-   const res = await fetch(`http://localhost:3000/api/ticket/${ticketID}`, {
+    const res = await fetch(`http://localhost:3000/api/ticket/${ticketID}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    console.log(res);
+    if (res.status === 200) {
+      this.fetchAllTickets();
+    }
   }
 
   render() {
@@ -57,28 +59,10 @@ class UserVideos extends React.Component {
                   aria-label="more options"
                 />
               </header>
-              <div className="card-content">
-                <div className="content">
-                  {this.state.tickets.map((tickets, index) => (
-                    <div className="box" key={tickets.id}>
-                      <Link
-                        prefetch
-                        as={`/ticket/${tickets.id}`}
-                        href={`/ticket?id=${tickets.id}`}
-                      >
-                        <a>
-                          {tickets.ticket_category} - {tickets.ticket_title} -{' '}
-                          {tickets.ticket_creation_date} - {tickets.sci_user}
-                        </a>
-                      </Link>
-                      <DeleteButtonControl
-                        ticketID={tickets.id}
-                        ticketOwner={tickets.sci_user}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <TicketItem
+                handleTicketDelete={this.handleTicketDelete}
+                tickets={this.state.tickets}
+              />
               <footer className="card-footer" />
             </div>
           </div>

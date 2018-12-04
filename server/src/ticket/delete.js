@@ -14,7 +14,7 @@ router.delete('/:ticketID', async (req, res) => {
     'DELETE FROM users.ticket WHERE ticket.id = $1',
     [ticketID]
   );
-  res.status(200);
+  res.status(200).send({message: 'this ticket was successfully deleted'});
 });
 
 module.exports = router;
