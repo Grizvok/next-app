@@ -17,15 +17,7 @@ router.post('/', async (req, res) => {
   const ticketCategory = req.body.ticketCategory;
   const ticketDescription = req.body.ticketDescription.trim();
   const userID = req.user;
-  // console.log(user);
-  // const row = await db.query(
-  //   'SELECT id FROM users.client WHERE sci_user = $1',
-  //   [user]
-  // );
-  // console.log(row);
-  // const userID = row.rows[0].id;
 
-  //form validation and sql insert
   if (ticketTitle.length > 9 && ticketTitle.length < 76) {
     if (ticketCategory) {
       if (ticketDescription.length > 99 && ticketDescription.length < 700) {

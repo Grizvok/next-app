@@ -5,24 +5,31 @@ import fetch from 'isomorphic-unfetch';
 class DeleteConfirmationButton extends React.Component {
   constructor(props) {
     super(props);
-    // this.handleDelete = this.handleDelete.bind(this);
   }
 
   render() {
     return (
-      <div className="confirm-delete-button">
-        Are you sure?
+      <React.Fragment>
+        <span className="confirm-delete-text">Are you sure?</span>
         <Link>
-          <a onClick={() => this.props.handleTicketDelete(this.props.ticketID)}>
-            {' '}
-            Yes{' '}
+          <a
+            className="ticket-actions"
+            href="javascript:void(0)"
+            onClick={() => this.props.handleTicketDelete(this.props.ticketID)}
+          >
+            Yes
           </a>
         </Link>{' '}
         /{' '}
         <Link>
-          <a onClick={() => this.props.handleDeleteAbort()}> No</a>
+          <a
+            className="ticket-actions"
+            href="javascript:void(0)"
+            onClick={() => this.props.handleDeleteAbort()}
+          >No
+          </a>
         </Link>
-      </div>
+      </React.Fragment>
     );
   }
 }

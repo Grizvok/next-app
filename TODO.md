@@ -1,7 +1,16 @@
 Complete ticket CRUD operations
---DELETE tickets
 --UPDATE tickets
 
 
+
+
+
+
+
+
+
+
+
+--Implement something similar to reddit.com/explore (give lists of open tickets from a smattering of categories)
+
 --LOOK INTO PASSPORT-JWT
---MAYBE IMPLEMENT https://github.com/fridays/next-routes#readme FOR NEXT ROUTING

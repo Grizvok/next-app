@@ -51,12 +51,13 @@ class DeleteTicketButton extends React.Component {
             usercontainer.state.currentUser === this.props.ticketOwner
           ) {
             return (
-              <button
+              <a
+                
+                href="javascript:void(0)"
                 onClick={() => this.handleDeleteAbort()}
-                className="is-link is-small button delete-ticket-button"
               >
-                Delete Ticket{' '}
-              </button>
+                <i className="fas ticket-actions fa-trash">delete</i>
+              </a>
             );
           }
           return null;

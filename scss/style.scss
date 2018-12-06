@@ -11,17 +11,31 @@ $info: #417e8d;
   padding-top: 5%;
 }
 
-.confirm-delete-button {
-  margin-top: 2%;
-  display: inline-block;
+.confirm-delete-text {
+  font-size: .75em;
+}
+
+.ticket-title {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.2em;
 }
 
 .homehero {
   padding-top: 5%;
 }
 
-.delete-ticket-button {
-  margin-top: 2%;
+.expand-content-icon {
+  font-size: 2em;
+  margin-right: 4%;
+}
+
+.ticket-creation-info {
+  font-size: .75em;
+  color: $grey-light;
+}
+
+.expand-content-icon:hover {
+  color: $blue;
 }
 
 .avatarcard {
@@ -38,6 +52,16 @@ $info: #417e8d;
 
 .add-video-form {
   margin-top: 5%;
+}
+
+.ticket-actions:hover {
+  text-decoration: underline;
+}
+
+.ticket-actions {
+  font-size: .75em;
+  font-family: monospace;
+  margin-left: 1%;
 }
 
 .videocontainer {
