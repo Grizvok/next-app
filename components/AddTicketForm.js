@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Subscribe } from 'unstated';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
+import Router from 'next/router';
 
 export default class AddTicketForm extends React.Component {
   constructor(props) {
@@ -37,6 +38,11 @@ export default class AddTicketForm extends React.Component {
         'Content-Type': 'application/json',
       },
     });
+    const resJSON = await res.json();
+    if (res.status === 200) {
+      Router.push(`/ticket?id=${resJSON.ticket}`, `/ticket/${resJSON.ticket}`);
+      return;
+    }
   };
 
   handleChange(e) {
@@ -117,6 +123,7 @@ export default class AddTicketForm extends React.Component {
                     value={this.state.ticketCategory}
                     name="ticketCategory"
                   >
+                    <option value="" disabled="disabled" selected="true">Choose a category:</option>
                     <option value="finance">Finance</option>
                     <option value="programming">Programming</option>
                     <option value="fitness">Fitness</option>

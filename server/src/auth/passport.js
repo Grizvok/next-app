@@ -6,7 +6,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const db = require("../db/index");
 const hasher = require("../util/hash");
 
-passport.serializeUser((user, done) => done(null, user));
+passport.serializeUser(async (user, done) => await done(null, user));
 
 passport.deserializeUser(async (id, done) => {
   let user = null;
@@ -41,7 +41,7 @@ passport.use(
       if (!hashStatus) {
         return done(null, false, { message: "Incorrect password." });
       }
-    
+      
       return done(null, username);
     }
   )

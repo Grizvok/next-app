@@ -5,10 +5,14 @@ import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 
 export default class UserContainer extends Container {
-  state = {
-    currentUser: '',
-    error: '',
-  };
+  constructor(props = {}) {
+    super();
+
+    this.state = {
+      currentUser: props.initialUser || '',
+      error: '',
+    };
+  }
 
   handleUserRegister = async (e) => {
     e.preventDefault();

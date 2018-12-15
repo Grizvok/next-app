@@ -21,16 +21,16 @@ router.post('/', async (req, res) => {
   if (ticketTitle.length > 9 && ticketTitle.length < 76) {
     if (ticketCategory) {
       if (ticketDescription.length > 99 && ticketDescription.length < 700) {
-        await db.query(
-          'INSERT INTO users.ticket(ticket_title, ticket_description, ticket_category, user_id_fkey) VALUES ($1, $2, $3, $4)',
+        const result = await db.query(
+          'INSERT INTO users.ticket(ticket_title, ticket_description, ticket_category, user_id_fkey) VALUES ($1, $2, $3, $4) RETURNING id',
           [ticketTitle, ticketDescription, ticketCategory, userID]
         );
-        res.status(200).send({ ticket: ticketTitle });
+        const ticket = result.rows[0].id;
+        res.status(200).send({ticket});
         return;
       }
     }
   }
-
   res.status(400).send({ error: 'something went wrong' });
 });
 

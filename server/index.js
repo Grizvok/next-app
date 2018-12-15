@@ -26,13 +26,14 @@ app
 
     server.use(bodyParser.json());
     server.use(bodyParser.urlencoded({ extended: true }));
-    server.use(cookieParser());
+    server.use(cookieParser('asfgaergadfvaerg'));
     server.use(
       session({
         secret: 'asfgaergadfvaerg',
         resave: true,
         saveUninitialized: true,
         secure: false,
+        cookie: { secure: false },
       })
     );
 
@@ -67,9 +68,9 @@ app
     });
 
     server.get('/ticket/:id', (req, res) => {
-      const actualPage = '/ticket'
-      const queryParams = { id: req.params.id } 
-      app.render(req, res, actualPage, queryParams)
+      const actualPage = '/ticket';
+      const queryParams = { id: req.params.id };
+      app.render(req, res, actualPage, queryParams);
     });
 
     server.get('*', (req, res) => {
