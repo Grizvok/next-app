@@ -4,6 +4,7 @@ const router = new Router();
 
 router.post('/', (req, res) => {
   if (req.user) {
+    console.log(req.user);
     req.session.destroy();
     res.redirect('/login');
   }

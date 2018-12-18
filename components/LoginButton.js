@@ -19,19 +19,6 @@ function LoginButton(props) {
 class LogoutButton extends React.Component {
   constructor(props) {
     super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  //refactor to fetch
-  handleClick() {
-    axios
-      .post('/api/logout', { withCredentials: true }, {})
-      .then((response) => {
-        UserContainer.removeCurrentUser();
-        Router.push('/login');
-      })
-      .catch((error) => {});
   }
 
   render() {
@@ -39,10 +26,7 @@ class LogoutButton extends React.Component {
       <Subscribe to={[UserContainer]}>
         {(usercontainer) => (
           <Link href="#">
-            <a
-              onClick={usercontainer.removeCurrentUser}
-              className="navbar-item"
-            >
+            <a onClick={this.props.handleLogout} className="navbar-item">
               Logout
             </a>
           </Link>
@@ -56,10 +40,8 @@ const LoginButtonControl = () => (
   <Subscribe to={[UserContainer]}>
     {(usercontainer) => {
       if (usercontainer.state.currentUser) {
-        return <LogoutButton />;
-        console.log(usercontainer.state.currentUser);
+        return <LogoutButton handleLogout={usercontainer.removeCurrentUser} />;
       }
-      console.log(usercontainer.state.currentUser);
       return <LoginButton />;
     }}
   </Subscribe>

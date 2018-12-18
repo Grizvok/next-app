@@ -19,7 +19,6 @@ class TicketItem extends React.Component {
       <div className="card-content">
         <div className="content">
           {this.props.tickets.map((tickets, index) => {
-            console.log(tickets);
             let date = tickets.ticket_creation_date;
             let momentDate = moment(date).format('MMMM Do YYYY, h:mm a');
             let href = `http://localhost:3000/ticket/${tickets.id}`;

@@ -4,12 +4,26 @@ import axios from 'axios';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 
+import storageCheck from '../helpers/storageCheck';
+
+const getInitialState = () => {
+  let user = '';
+  try {
+    user = localStorage.getItem('user');
+    return user;
+  } catch (e) {
+    user = '';
+    return user;
+  }
+};
+
+const userTest = getInitialState();
+
 export default class UserContainer extends Container {
   constructor(props = {}) {
     super();
-
     this.state = {
-      currentUser: props.initialUser || '',
+      currentUser: props.initialUser || userTest,
       error: '',
     };
   }
@@ -57,14 +71,16 @@ export default class UserContainer extends Container {
       .then((response) => ({ currentUser: response.data }))
       .catch((error) => ({ error }));
     await this.setState(() => ({ currentUser, error }));
+    //check if localstorage is available and use it
+    localStorage.setItem('user', this.state.currentUser);
 
+    //redirect to dashboard
     if (this.state.currentUser) {
       Router.push(
         `/user?id=${this.state.currentUser}`,
         `/user/${this.state.currentUser}`
       );
     }
-    console.log(this.state);
   };
 
   getCurrentUser = async () => {
@@ -80,7 +96,12 @@ export default class UserContainer extends Container {
   };
 
   removeCurrentUser = async () => {
-    await this.setState({ currentUser: '' });
-    console.log('this runs');
+    localStorage.removeItem('user');
+    await this.setState((prevState) => ({
+      currentUser: '',
+    }));
+    const res = await fetch('http://localhost:3000/api/logout', {
+      method: 'POST',
+    });
   };
 }
