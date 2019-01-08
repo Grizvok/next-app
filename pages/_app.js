@@ -6,14 +6,17 @@ import fetch from 'isomorphic-unfetch';
 
 //our packages
 import UserContainer from '../Containers/UserContainer';
+import FollowedUserContainer from '../Containers/FollowedUsersContainer';
 
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    let usercontainer;
+    let followedUserContainer;
+    let userContainer;
+    let user;
 
     if (typeof Storage !== 'undefined') {
-      const user = localStorage.getItem('user');
-      usercontainer = new UserContainer({
+      user = localStorage.getItem('user');
+      userContainer = new UserContainer({
         initialUser: user || '',
       });
     }
@@ -21,14 +24,20 @@ export default class MyApp extends App {
     if (ctx.req) {
       try {
         if (ctx.req.session.passport.user) {
-          console.log('does this run?');
-          usercontainer = new UserContainer({
+          user = ctx.req.session.passport.user;
+          userContainer = new UserContainer({
             initialUser: ctx.req.session.passport.user || '',
           });
         }
       } catch (e) {
-        usercontainer = new UserContainer();
+        userContainer = new UserContainer();
       }
+    }
+
+    if (ctx.req) {
+      console.log('this runs');
+      const res = await fetch('http://localhost:3000/api/user/follow');
+      console.log(res);
     }
     //declare user and call container method only on SSR
     let pageProps = {};
@@ -36,15 +45,14 @@ export default class MyApp extends App {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
-    return { pageProps, usercontainer };
+    return { pageProps, userContainer };
   }
 
   render() {
-    const { Component, pageProps, usercontainer } = this.props;
-    console.log(this.props.usercontainer);
+    const { Component, pageProps, userContainer } = this.props;
     return (
       <Container>
-        <Provider inject={[this.props.usercontainer]}>
+        <Provider inject={[this.props.userContainer]}>
           <Component {...pageProps} />
         </Provider>
       </Container>

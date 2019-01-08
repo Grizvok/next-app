@@ -2,11 +2,10 @@ const Router = require('express-promise-router');
 
 const router = new Router();
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   if (req.user) {
-    console.log(req.user);
     req.session.destroy();
-    res.redirect('/login');
+    res.status(200).send({ message: 'You were successfully logged out' });
   }
 });
 

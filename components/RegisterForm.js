@@ -125,7 +125,7 @@ class RegisterForm extends React.Component {
             Router.push(`/user/${usercontainer.state.currentUser}`);
           } else {
             return (
-              <form method="POST" onSubmit={this.handleSubmit}>
+              <form method="POST" onSubmit={usercontainer.handleUserRegister}>
                 <div
                   align="center"
                   className="column is-half container form-container"

@@ -2,13 +2,33 @@
 import React from 'react';
 import { Subscribe } from 'unstated';
 import Link from 'next/link';
+import { withRouter } from 'next/router';
 
 //our packages
 import UserContainer from '../Containers/UserContainer';
+import FollowedUsersContainer from '../Containers/FollowedUsersContainer';
 
-const FollowButton = () => (
-  <a className="button is-fullwidth is-link">Follow</a>
+const FollowButton = ({ router }) => (
+  <Subscribe to={[FollowedUsersContainer, UserContainer]}>
+    {(followcontainer, usercontainer) => {
+      return (
+        <a
+          className="button is-fullwidth is-link"
+          onClick={() =>
+            followcontainer.handleAddFollowedUser(
+              usercontainer.state.currentUser,
+              router.query.id
+            )
+          }
+        >
+          Follow
+        </a>
+      );
+    }}
+  </Subscribe>
 );
+
+const FollowButtonWithRouter = withRouter(FollowButton);
 
 const NewVideoButton = () => (
   <Link href="/submit">
@@ -22,7 +42,7 @@ const AvatarButtonControl = (props) => (
       if (usercontainer.state.currentUser === props.user) {
         return <NewVideoButton />;
       }
-      return <FollowButton />;
+      return <FollowButtonWithRouter />;
     }}
   </Subscribe>
 );

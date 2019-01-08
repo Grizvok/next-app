@@ -4,8 +4,6 @@ import axios from 'axios';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 
-import storageCheck from '../helpers/storageCheck';
-
 const getInitialState = () => {
   let user = '';
   try {
@@ -33,6 +31,7 @@ export default class UserContainer extends Container {
     const formData = new FormData(e.target);
     const user = await formData.get('user');
     const password = await formData.get('password');
+    const confirmPassword = await formData.get('confirmPassword');
 
     const payload = {
       user: user,
@@ -71,6 +70,7 @@ export default class UserContainer extends Container {
       .then((response) => ({ currentUser: response.data }))
       .catch((error) => ({ error }));
     await this.setState(() => ({ currentUser, error }));
+    console.log('this runs?!');
     //check if localstorage is available and use it
     localStorage.setItem('user', this.state.currentUser);
 
@@ -97,11 +97,17 @@ export default class UserContainer extends Container {
 
   removeCurrentUser = async () => {
     localStorage.removeItem('user');
-    await this.setState((prevState) => ({
+    await this.setState({
       currentUser: '',
-    }));
+    });
     const res = await fetch('http://localhost:3000/api/logout', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }
     });
+    if (res.status === 200) {
+      Router.push('/');
+    }
   };
 }

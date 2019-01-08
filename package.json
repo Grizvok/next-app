@@ -13,6 +13,7 @@
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
+    "acorn": "^6.0.4",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
@@ -45,7 +46,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
-    "eslint": "^5.4.0",
+    "eslint": "^5.10.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",

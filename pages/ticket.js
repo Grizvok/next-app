@@ -1,30 +1,14 @@
+//npm packages
 import React from 'react';
-import Layout from '../components/MyLayout.js';
 import fetch from 'isomorphic-unfetch';
-import TicketHero from '../components/TicketDescription.js';
 
-// export default class Tickets extends React.Component {
-//   static async getInitialProps({ req }) {
-//     const res = await fetch(
-//       `http://localhost:3000/api/ticket/user/${req.params.ticketID}`
-//     );
-//     const json = await res.json();
-//     console.log('this runs');
-//     return { json };
-//   }
-
-//   render() {
-//     return (
-//       <Layout>
-//         <Ticket tickets={this.props.json.ticket} />
-//       </Layout>
-//     );
-//   }
-// }
+//our packages
+import Layout from '../components/MyLayout.js';
+import TicketDescription from '../components/TicketDescription.js';
 
 const Ticket = (props) => (
   <Layout>
-    <TicketHero ticket={props.ticketData.ticket[0]} />
+    <TicketDescription ticket={props.ticketData.ticket[0]} />
   </Layout>
 );
 
