@@ -7,18 +7,19 @@ const db = require('../db/index');
 const router = new Router();
 
 //get a list of a who a user is following
-router.get('/', async (req, res) => {
+router.get('/follow', async (req, res) => {
   console.log('this runs?');
-  if (req.user) {
-    const rows = await db.query(
-      'SELECT following FROM users.client_follow WHERE follower = $1',
-      []
-    );
-  }
-  res.send(200);
+  // if (req.user) {
+  //   const rows = await db.query(
+  //     'SELECT following FROM users.client_follow WHERE follower = $1',
+  //     [req.user]
+  //   );
+  //   res.status(200).send({ data: 'Hello World!' });
+  // }
 });
 
-router.post('/', async (req, res) => {
+router.post('/follow', async (req, res) => {
+  console.log('does this not run now fuckkkk');
   const followerRows = await db.query(
     'SELECT id FROM users.client WHERE sci_user = $1',
     [req.body.followerUser]
@@ -35,8 +36,7 @@ router.post('/', async (req, res) => {
     [follower, following]
   );
   res.status(200).send({ data: 'Hello World!' });
+  console.log('that worked fine!');
 });
-
-router.delete('/:id', async (req, res) => {});
 
 module.exports = router;

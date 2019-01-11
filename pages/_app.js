@@ -24,6 +24,7 @@ export default class MyApp extends App {
     if (ctx.req) {
       try {
         if (ctx.req.session.passport.user) {
+          console.log(ctx.req.session.passport.user);
           user = ctx.req.session.passport.user;
           userContainer = new UserContainer({
             initialUser: ctx.req.session.passport.user || '',
@@ -35,9 +36,18 @@ export default class MyApp extends App {
     }
 
     if (ctx.req) {
-      console.log('this runs');
-      const res = await fetch('http://localhost:3000/api/user/follow');
-      console.log(res);
+      try {
+        if (ctx.req.session.passport.user) {
+          const res = await fetch('http://localhost:3000/api/follow');
+          const resJSON = await res.json();
+          console.log(ctx.req.session.passport.user);
+          if (res.status === 200) {
+            console.log(res.status);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
     //declare user and call container method only on SSR
     let pageProps = {};
