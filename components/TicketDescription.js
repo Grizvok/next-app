@@ -32,7 +32,7 @@ class TicketDescription extends React.Component {
                     as={`/user/${this.props.ticket.sci_user}`}
                     href={`/user?id=${this.props.ticket.sci_user}`}
                   >
-                    {this.props.ticket.sci_user}
+                    <a> {this.props.ticket.sci_user}</a>
                   </Link>{' '}
                   {timeSinceCreation} ago
                 </p>

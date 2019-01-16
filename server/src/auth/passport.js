@@ -49,7 +49,24 @@ passport.use(
 //implementation of json web tokens
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = 'secret';
-opts.issuer = 'trevorhunka.xyz';
+opts.secretOrKey = process.env.JWT_SECRET;
+
+passport.use(
+  new JwtStrategy(opts, async (jwt_payload, done) => {
+    console.log(jwt_payload.id + 'from here');
+    let user;
+    try {
+      user = await db.query('SELECT id FROM users.client WHERE sci_user = $1', [
+        jwt_payload.id,
+      ]);
+    } catch (e) {
+      return done(e, false);
+    }
+    if (!user) {
+      return done(null, false);
+    }
+    return done(null, user);
+  })
+);
 
 module.exports = passport;

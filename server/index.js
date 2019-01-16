@@ -28,10 +28,10 @@ app
 
     server.use(bodyParser.json());
     server.use(bodyParser.urlencoded({ extended: true }));
-    server.use(cookieParser('asfgaergadfvaerg'));
+    server.use(cookieParser(process.env.SESSION_SECRET));
     server.use(
       session({
-        secret: 'asfgaergadfvaerg',
+        secret: process.env.SESSION_SECRET,
         resave: true,
         saveUninitialized: true,
         secure: false,

@@ -3,6 +3,7 @@ import { Container } from 'unstated';
 import axios from 'axios';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
+import localForage from 'localforage';
 
 const getInitialState = () => {
   let user = '';
@@ -23,6 +24,7 @@ export default class UserContainer extends Container {
     this.state = {
       currentUser: props.initialUser || userTest,
       error: '',
+      token: '',
     };
   }
 
@@ -62,25 +64,64 @@ export default class UserContainer extends Container {
     const user = await formData.get('user');
     const password = await formData.get('password');
 
-    const { currentUser, error } = await axios
-      .post('/api/login', {
-        user: user,
-        password: password,
-      })
-      .then((response) => ({ currentUser: response.data }))
-      .catch((error) => ({ error }));
-    await this.setState(() => ({ currentUser, error }));
-    console.log('this runs?!');
-    //check if localstorage is available and use it
-    localStorage.setItem('user', this.state.currentUser);
+    const payload = {
+      user: user,
+      password: password,
+    };
 
-    //redirect to dashboard
+    let data;
+
+    try {
+      data = await fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (e) {
+      Router.push('/login');
+    }
+
+    const resJSON = await data.json();
+    await this.setState(() => ({
+      currentUser: resJSON.user,
+      token: resJSON.token,
+    }));
+    localStorage.setItem('user', this.state.currentUser);
+    localStorage.setItem('usertoken', this.state.token);
+    const cookieString = `user_cookie=${this.state.token}`;
+
+    document.cookie = cookieString;
+
     if (this.state.currentUser) {
+      console.log(this.state.token);
       Router.push(
         `/user?id=${this.state.currentUser}`,
         `/user/${this.state.currentUser}`
       );
     }
+
+    // const { currentUser, error } = await axios
+    //   .post('/api/login', {
+    //     user: user,
+    //     password: password,
+    //   })
+    //   .then((response) => ({ currentUser: response.data.user }))
+    //   .catch((error) => ({ error }));
+    // await this.setState(() => ({ currentUser, error }));
+    // console.log(this.state.currentUser);
+    // //check if localstorage is available and use it
+    // localStorage.setItem('user', this.state.currentUser);
+
+    // //redirect to dashboard
+    // if (this.state.currentUser) {
+    //   console.log(this.state.currentUser);
+    //   Router.push(
+    //     `/user?id=${this.state.currentUser}`,
+    //     `/user/${this.state.currentUser}`
+    //   );
+    // }
   };
 
   getCurrentUser = async () => {
@@ -104,10 +145,10 @@ export default class UserContainer extends Container {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     });
     if (res.status === 200) {
-      Router.push('/');
+      Router.push('/login');
     }
   };
 }

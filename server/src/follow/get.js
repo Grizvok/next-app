@@ -8,7 +8,7 @@ const router = new Router();
 //get all followed users for a specific user
 // router.get('/', async (req, res) => {});
 
-//get all followed users for a specific user
+//get all followed users of a specific user
 router.get('/', async (req, res) => {
   console.log('not logged in as', req.user);
   if (req.user) {

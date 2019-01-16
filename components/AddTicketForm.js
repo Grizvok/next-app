@@ -6,6 +6,8 @@ import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 import Router from 'next/router';
 
+import UserContainer from '../Containers/UserContainer';
+
 export default class AddTicketForm extends React.Component {
   constructor(props) {
     super(props);
@@ -19,26 +21,35 @@ export default class AddTicketForm extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit = async (e) => {
+  handleSubmit = async (e, token) => {
     e.preventDefault();
-
+    const userToken = localStorage.getItem('usertoken');
+    console.log(userToken);
     const payload = {
       ticketTitle: this.state.ticketTitle,
       ticketCategory: this.state.ticketCategory,
       ticketDescription: this.state.ticketDescription,
     };
 
+    console.log(payload);
+
     const res = await fetch('http://localhost:3000/api/ticket', {
       method: 'POST',
+      withCredentials: true,
+      credentials: 'include',
       body: JSON.stringify(payload),
       headers: {
+        Authorization:
+          'Bearer ' +
+          'eyJhbGciOiJIUzI1NiJ9.R3JpenZvaw.Z9DrrJKETt8i_nZh4Fme2P5snwvgfhzfHpqFqrH5k5g',
         'Content-Type': 'application/json',
       },
     });
     const resJSON = await res.json();
+    console.log(resJSON);
     if (res.status === 200) {
       Router.push(`/ticket?id=${resJSON.ticket}`, `/ticket/${resJSON.ticket}`);
       return;
@@ -95,64 +106,82 @@ export default class AddTicketForm extends React.Component {
 
   render() {
     return (
-      <div align="center" className="column is-half container add-video-form">
-        <div className="box form-container">
-          <form method="POST" onSubmit={this.handleSubmit}>
-            <div className="field">
-              <label className="label">Ticket Title</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  placeholder="Your Title Here"
-                  value={this.state.ticketTitle}
-                  onChange={this.handleChange}
-                  name="ticketTitle"
-                />
+      <Subscribe to={[UserContainer]}>
+        {(usercontainer) => {
+          console.log(usercontainer.state.currentUser);
+          return (
+            <div
+              align="center"
+              className="column is-half container add-video-form"
+            >
+              <div className="box form-container">
+                <form
+                  method="POST"
+                  onSubmit={(e) => {
+                    console.log(usercontainer.state.currentUser);
+                    this.handleSubmit(e, usercontainer.state.token);
+                  }}
+                >
+                  <div className="field">
+                    <label className="label">Ticket Title</label>
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="Your Title Here"
+                        value={this.state.ticketTitle}
+                        onChange={this.handleChange}
+                        name="ticketTitle"
+                      />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label htmlFor="category-select" className="label">
+                      Category
+                    </label>
+                    <div className="control" required>
+                      <div className="select">
+                        <select
+                          id="category-select"
+                          onChange={this.handleChange}
+                          value={this.state.ticketCategory}
+                          name="ticketCategory"
+                        >
+                          <option value="" disabled="disabled" selected="true">
+                            Choose a category:
+                          </option>
+                          <option value="finance">Finance</option>
+                          <option value="programming">Programming</option>
+                          <option value="fitness">Fitness</option>
+                          <option value="business">Business</option>
+                          <option value="writing">Writing</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="label">Ticket Description</label>
+                    <div className="control">
+                      <textarea
+                        className="textarea"
+                        name="ticketDescription"
+                        placeholder="Describe your ticket"
+                        value={this.state.ticketDescription}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <p className="control">
+                      <button className="button is-link">Add Ticket</button>
+                    </p>
+                  </div>
+                </form>
               </div>
             </div>
-            <div className="field">
-              <label htmlFor="category-select" className="label">
-                Category
-              </label>
-              <div className="control" required>
-                <div className="select">
-                  <select
-                    id="category-select"
-                    onChange={this.handleChange}
-                    value={this.state.ticketCategory}
-                    name="ticketCategory"
-                  >
-                    <option value="" disabled="disabled" selected="true">Choose a category:</option>
-                    <option value="finance">Finance</option>
-                    <option value="programming">Programming</option>
-                    <option value="fitness">Fitness</option>
-                    <option value="business">Business</option>
-                    <option value="writing">Writing</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className="field">
-              <label className="label">Ticket Description</label>
-              <div className="control">
-                <textarea
-                  className="textarea"
-                  name="ticketDescription"
-                  placeholder="Describe your ticket"
-                  value={this.state.ticketDescription}
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            <div className="field">
-              <p className="control">
-                <button className="button is-link">Add Ticket</button>
-              </p>
-            </div>
-          </form>
-        </div>
-      </div>
+          );
+        }}
+      </Subscribe>
     );
   }
 }

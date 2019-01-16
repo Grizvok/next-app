@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 
 //our packages
-import LoginButtonControl  from './LoginButton';
+import LoginButtonControl from './LoginButton';
 
 class Header extends React.Component {
   constructor(props) {
