@@ -2,7 +2,7 @@
 import React from 'react';
 
 //our packages
-import HomeInstruction from "../components/HomeInstruction";
+import HomeInstruction from '../components/HomeInstruction';
 
 const HomeHero = () => (
   <section className="hero is-light is-bold is-fullheight homehero">
@@ -15,8 +15,7 @@ const HomeHero = () => (
         <i className="fas fa-angle-double-down has-text-info fa-2x" />
       </p>
       <h2 className=" is-size-4 has-text-danger subtitle">
-        <br />
-        A platform for systematic sport improvement
+        <br />A platform for systematic sport improvement
       </h2>
       <HomeInstruction />
     </div>

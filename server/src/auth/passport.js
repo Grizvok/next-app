@@ -17,7 +17,7 @@ passport.deserializeUser(async (id, done) => {
       'SELECT sci_user, id FROM users.client WHERE sci_user = $1',
       [id]
     );
-    user = rows.rows[0].id;
+    user = rows.rows[0];
   } catch (e) {
     done(e, false);
     return;
@@ -53,7 +53,6 @@ opts.secretOrKey = process.env.JWT_SECRET;
 
 passport.use(
   new JwtStrategy(opts, async (jwt_payload, done) => {
-    console.log(jwt_payload.id + 'from here');
     let user;
     try {
       user = await db.query('SELECT id FROM users.client WHERE sci_user = $1', [

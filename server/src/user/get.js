@@ -19,11 +19,9 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', cors(), async (req, res) => {
-  console.log('this endpoint was hit!');
-  console.log(req.params);
   if (req.params.id === req.user) {
     const user = req.user;
-    console.log('i assume this runs?');
+    // console.log('i assume this runs?');
     res.send({ user });
     return;
   }

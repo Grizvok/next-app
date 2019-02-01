@@ -52,7 +52,6 @@ class DeleteTicketButton extends React.Component {
           ) {
             return (
               <a
-                
                 href="javascript:void(0)"
                 onClick={() => this.handleDeleteAbort()}
               >

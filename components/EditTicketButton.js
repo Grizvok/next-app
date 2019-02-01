@@ -9,12 +9,29 @@ class EditTicketButton extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      editView: false,
+    };
   }
-  
+
   render() {
     return (
-      <div>Hello World!</div>
+      <Subscribe to={[UserContainer]}>
+        {(usercontainer) => {
+          if (usercontainer.state.currentUser === this.props.ticketOwner) {
+            return (
+              <a
+                href="javascript:void(0)"
+                onClick={() => this.props.handleEditMode()}
+              >
+                <i className="fas specific-ticket-action fa-edit">Edit</i>
+              </a>
+            );
+          } else {
+            return null;
+          }
+        }}
+      </Subscribe>
     );
   }
 }

@@ -1,22 +1,32 @@
 //npm packages
 const Router = require('express-promise-router');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 //our packages
 const db = require('../db/index');
 
 const router = new Router();
 
-router.put('/:ticketID', async (req, res) => {
-  if (!req.user) {
-    res.status(400).send({ error: 'You must be logged in to update a ticket!' });
-    return;
+router.patch(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const { id } = req.params;
+    //get changed ticket description
+    const { description, ticketOwner } = req.body;
+    console.log(ticketOwner);
+
+    //check if ticketOwner is the same as user in jwt
+    const token = req.headers['authorization'].split(' ')[1];
+    const user = await jwt.verify(token, process.env.JWT_SECRET);
+
+    const rows = await db.query(
+      'UPDATE users.ticket SET ticket_description = ($1) WHERE id = ($2)',
+      [description, id]
+    );
+    res.status(200).send({ description });
   }
-  const user = req.user;
-  const ticketID = req.params.ticketID;
-  const rows = await db.query(
-    'SELECT * FROM users.ticket WHERE ticket.id = $1 AND user_id_fkey = $2',
-    [ticketID, user]
-  );
-});
+);
 
 module.exports = router;

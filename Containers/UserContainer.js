@@ -5,24 +5,24 @@ import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import localForage from 'localforage';
 
-const getInitialState = () => {
-  let user = '';
-  try {
-    user = localStorage.getItem('user');
-    return user;
-  } catch (e) {
-    user = '';
-    return user;
-  }
-};
+// const getInitialState = () => {
+//   let user = '';
+//   try {
+//     user = localStorage.getItem('user');
+//     return user;
+//   } catch (e) {
+//     user = '';
+//     return user;
+//   }
+// };
 
-const userTest = getInitialState();
+// const userTest = getInitialState();
 
 export default class UserContainer extends Container {
   constructor(props = {}) {
     super();
     this.state = {
-      currentUser: props.initialUser || userTest,
+      currentUser: props.initialUser || '',
       error: '',
       token: '',
     };
@@ -88,19 +88,24 @@ export default class UserContainer extends Container {
       currentUser: resJSON.user,
       token: resJSON.token,
     }));
-    localStorage.setItem('user', this.state.currentUser);
-    localStorage.setItem('usertoken', this.state.token);
-    const cookieString = `user_cookie=${this.state.token}`;
 
-    document.cookie = cookieString;
+    if (data.status === 200) {
+      localStorage.setItem('user', this.state.currentUser);
+      const cookieString = `user_cookie=${this.state.token}`;
 
-    if (this.state.currentUser) {
-      console.log(this.state.token);
+      document.cookie = cookieString;
+
       Router.push(
         `/user?id=${this.state.currentUser}`,
         `/user/${this.state.currentUser}`
       );
     }
+    // if (this.state.currentUser) {
+    //   Router.push(
+    //     `/user?id=${this.state.currentUser}`,
+    //     `/user/${this.state.currentUser}`
+    //   );
+    // }
 
     // const { currentUser, error } = await axios
     //   .post('/api/login', {

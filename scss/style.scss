@@ -1,5 +1,5 @@
-@import "../node_modules/bulma/sass/utilities/initial-variables";
-@import "../node_modules/bulma/sass/utilities/functions";
+@import '../node_modules/bulma/sass/utilities/initial-variables';
+@import '../node_modules/bulma/sass/utilities/functions';
 
 $orange: #d17c56;
 
@@ -11,8 +11,12 @@ $info: #417e8d;
   padding-top: 5%;
 }
 
+.ticket-controls {
+  margin-left: 7%;
+}
+
 .confirm-delete-text {
-  font-size: .75em;
+  font-size: 0.75em;
 }
 
 .ticket-body {
@@ -21,10 +25,11 @@ $info: #417e8d;
 
 .ticket-box {
   margin-left: 2%;
+  margin-top: 1%;
 }
 
 .ticketpage-creator {
-  font-size: .7em;
+  font-size: 0.7em;
   margin-left: 7%;
 }
 
@@ -52,7 +57,7 @@ $info: #417e8d;
 }
 
 .ticket-creation-info {
-  font-size: .75em;
+  font-size: 0.75em;
   color: $grey-light;
 }
 
@@ -81,9 +86,19 @@ $info: #417e8d;
 }
 
 .ticket-actions {
-  font-size: .75em;
+  font-size: 0.75em;
   font-family: monospace;
   margin-left: 1%;
+}
+
+.specific-ticket-action {
+  font-size: 0.75em;
+  font-family: monospace;
+  color: #000;
+}
+
+.specific-ticket-action:hover {
+  text-decoration: underline;
 }
 
 .videocontainer {
@@ -97,4 +112,4 @@ $info: #417e8d;
 .register-error-text {
   visibility: hidden;
 }
-@import "../node_modules/bulma/bulma.sass";
+@import '../node_modules/bulma/bulma.sass';
