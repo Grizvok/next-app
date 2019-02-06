@@ -20,10 +20,11 @@ router.patch(
     //check if ticketOwner is the same as user in jwt
     const token = req.headers['authorization'].split(' ')[1];
     const user = await jwt.verify(token, process.env.JWT_SECRET);
+    const editDate = new Date();
 
     const rows = await db.query(
-      'UPDATE users.ticket SET ticket_description = ($1) WHERE id = ($2)',
-      [description, id]
+      'UPDATE users.ticket SET ticket_description = ($1), last_edit = ($2) WHERE id = ($3)',
+      [description, editDate, id]
     );
     res.status(200).send({ description });
   }
