@@ -8,6 +8,7 @@ import { Subscribe } from 'unstated';
 import TicketBody from './TicketBody';
 import UserContainer from '../Containers/UserContainer';
 import EditTicketButton from './EditTicketButton';
+import EditInformation from './EditInformation';
 
 class TicketDescription extends React.Component {
   constructor(props) {
@@ -36,6 +37,9 @@ class TicketDescription extends React.Component {
     const currentDate = moment();
     const momentDate = moment(creationDate).format('MMMM Do YYYY, h:mm a');
     const timeSinceCreation = moment(creationDate).toNow(currentDate);
+    const timeSinceEdit = moment(this.props.ticket.last_edit).toNow(
+      currentDate
+    );
 
     return (
       <Subscribe to={[UserContainer]}>
@@ -58,6 +62,7 @@ class TicketDescription extends React.Component {
                         <a> {this.props.ticket.sci_user}</a>
                       </Link>{' '}
                       {timeSinceCreation} ago
+                      <EditInformation editDate={timeSinceEdit} />
                     </p>
                     <TicketBody
                       ticketBody={this.props.ticket.ticket_description}

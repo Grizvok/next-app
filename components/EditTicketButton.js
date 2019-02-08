@@ -8,10 +8,6 @@ import UserContainer from '../Containers/UserContainer';
 class EditTicketButton extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      editView: false,
-    };
   }
 
   render() {
