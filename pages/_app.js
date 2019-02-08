@@ -22,6 +22,7 @@ export default class MyApp extends App {
       }
     }
     if (process.browser) {
+      // maybe refactor so this as an api call to get currently authed user if they exist?
       user = await localStorage.getItem('user');
     }
 
