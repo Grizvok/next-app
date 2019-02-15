@@ -6,10 +6,22 @@ import Link from 'next/link';
 //our packages
 import UserContainer from '../Containers/UserContainer';
 
+export default () => (
+  <Subscribe to={[UserContainer]}>
+    {(usercontainer) => {
+      if (usercontainer.state.currentUser) {
+        return null;
+      } else {
+        return <LoginButton />;
+      }
+    }}
+  </Subscribe>
+);
+
 function LoginButton(props) {
   return (
     <Link prefetch href="/login" as="/login">
-      <a className="navbar-item">Login</a>
+      <a className="button is-light">Login</a>
     </Link>
   );
 }
@@ -23,7 +35,7 @@ class LogoutButton extends React.Component {
       <Subscribe to={[UserContainer]}>
         {(usercontainer) => (
           <Link href="javascript:void(0)">
-            <a onClick={this.props.handleLogout} className="navbar-item">
+            <a onClick={this.props.handleLogout} className="button is-light">
               Logout
             </a>
           </Link>
@@ -37,11 +49,11 @@ const LoginButtonControl = () => (
   <Subscribe to={[UserContainer]}>
     {(usercontainer) => {
       if (usercontainer.state.currentUser) {
-        return <LogoutButton handleLogout={usercontainer.removeCurrentUser} />;
+        return null;
       }
       return <LoginButton />;
     }}
   </Subscribe>
 );
 
-export default LoginButtonControl;
+//export default LoginButtonControl;

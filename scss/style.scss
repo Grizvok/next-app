@@ -97,6 +97,15 @@ $info: #417e8d;
   color: #000;
 }
 
+.search-field {
+  margin-top: 1.25%;
+}
+
+.navbar-user-icon {
+  margin-bottom: 3%;
+  font-size: 1.8em;
+}
+
 .specific-ticket-action:hover {
   text-decoration: underline;
 }
@@ -107,6 +116,26 @@ $info: #417e8d;
 
 .sport-select {
   margin-right: 50%;
+}
+
+.result-header-text {
+  font-family: monospace;
+  margin-left: 2%;
+  font-weight: bold;
+}
+
+.dropdown.is-fullwidth {
+  display: flex;
+
+  .dropdown-trigger,
+  .dropdown-menu {
+    width: 94%;
+    margin-left: 3%;
+  }
+}
+
+.search-input {
+  width: 30em !important;
 }
 
 .register-error-text {

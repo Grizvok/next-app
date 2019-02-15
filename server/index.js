@@ -1,4 +1,4 @@
-//npm packages
+// npm packages
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -11,13 +11,14 @@ const morgan = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
 
-//our packages
+// our packages
 const winston = require('./src/util/logger');
 const setupAuthRoutes = require('./src/auth/index');
 const setupVideoRoutes = require('./src/video/index');
 const setupUserRoutes = require('./src/user/index');
 const setupTicketRoutes = require('./src/ticket/index');
 const setupFollowRoutes = require('./src/follow/index');
+const setupSearchRoutes = require('./src/search');
 
 app
   .prepare()
@@ -52,6 +53,8 @@ app
     setupTicketRoutes(server);
     //setup follow routes
     setupFollowRoutes(server);
+    //setup search routes
+    setupSearchRoutes(server);
 
     //setup SSR routes
     server.get('/', (req, res) => {

@@ -34,8 +34,8 @@ class TicketBody extends React.Component {
             <div className="control">
               <button
                 onClick={this.props.handleEditCancel}
-                className="button is-text"
-                type="button"
+                className="button"
+                type="button is-grey"
               >
                 Cancel
               </button>
