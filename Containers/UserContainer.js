@@ -1,32 +1,56 @@
 //npm packages
 import { Container } from 'unstated';
-import axios from 'axios';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
-import localForage from 'localforage';
+import userStore from '../helpers/localForage';
 
-// const getInitialState = () => {
-//   let user = '';
-//   try {
-//     user = localStorage.getItem('user');
-//     return user;
-//   } catch (e) {
-//     user = '';
-//     return user;
-//   }
-// };
-
-// const userTest = getInitialState();
+const getAuthedUserTickets = async (user) => {
+  let userTickets;
+  try {
+    const res = await fetch(`http://localhost:3000/api/ticket/${user}`);
+    userTickets = await res.json();
+    return userTickets;
+  } catch (e) {
+    return (userTickets = []);
+  }
+};
 
 export default class UserContainer extends Container {
   constructor(props = {}) {
-    super();
+    super(props);
+
     this.state = {
       currentUser: props.initialUser || '',
+      userTickets: props.initialTickets || [],
+      followedUsers: props.initialFollowedUsers || [],
       error: '',
       token: '',
     };
   }
+
+  handleTicketDelete = async (ticketID) => {
+    const res = await fetch(`http://localhost:3000/api/ticket/${ticketID}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (res.status === 200) {
+      console.log(this.state.userTickets);
+      const newArray = this.state.userTickets.filter((ticket) => {
+        ticket.id !== ticketID;
+      });
+      const deletedTickets = await userStore.getItem('tickets');
+      const newLocalArray = deletedTickets.filter((ticket) => {
+        return ticket.id !== ticketID;
+      });
+      await userStore.setItem('tickets', newLocalArray);
+      await this.setState({
+        userTickets: newArray,
+      });
+    }
+  };
 
   handleUserRegister = async (e) => {
     e.preventDefault();
@@ -84,14 +108,22 @@ export default class UserContainer extends Container {
     }
 
     const resJSON = await data.json();
-    await this.setState(() => ({
-      currentUser: resJSON.user,
-      token: resJSON.token,
-    }));
 
     if (data.status === 200) {
-      localStorage.setItem('user', this.state.currentUser);
+      const userTickets = await getAuthedUserTickets(user);
+      await this.setState({
+        currentUser: resJSON.user,
+        token: resJSON.token,
+        userTickets: userTickets.tickets,
+      });
+
+      await userStore.setItem('tickets', this.state.userTickets);
+
       const cookieString = `user_cookie=${this.state.token}`;
+      const foragedUser = await userStore.setItem(
+        'user',
+        this.state.currentUser
+      );
 
       document.cookie = cookieString;
 
@@ -100,49 +132,10 @@ export default class UserContainer extends Container {
         `/user/${this.state.currentUser}`
       );
     }
-    // if (this.state.currentUser) {
-    //   Router.push(
-    //     `/user?id=${this.state.currentUser}`,
-    //     `/user/${this.state.currentUser}`
-    //   );
-    // }
-
-    // const { currentUser, error } = await axios
-    //   .post('/api/login', {
-    //     user: user,
-    //     password: password,
-    //   })
-    //   .then((response) => ({ currentUser: response.data.user }))
-    //   .catch((error) => ({ error }));
-    // await this.setState(() => ({ currentUser, error }));
-    // console.log(this.state.currentUser);
-    // //check if localstorage is available and use it
-    // localStorage.setItem('user', this.state.currentUser);
-
-    // //redirect to dashboard
-    // if (this.state.currentUser) {
-    //   console.log(this.state.currentUser);
-    //   Router.push(
-    //     `/user?id=${this.state.currentUser}`,
-    //     `/user/${this.state.currentUser}`
-    //   );
-    // }
-  };
-
-  getCurrentUser = async () => {
-    return this.state.currentUser;
-  };
-
-  addCurrentUser = async (user) => {
-    //called on _app getInitialProps during SSR passing req.user from context object
-    await this.setState((state, props) => ({
-      currentUser: user,
-    }));
-    console.log(await this.getCurrentUser(user));
   };
 
   removeCurrentUser = async () => {
-    localStorage.removeItem('user');
+    await userStore.removeItem('user');
     await this.setState({
       currentUser: '',
     });

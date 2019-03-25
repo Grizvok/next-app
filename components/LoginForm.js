@@ -27,7 +27,7 @@ class LoginForm extends React.Component {
     let loginErrorClass = classNames({
       help: true,
       'is-danger': true,
-      'is-invisible': true
+      'is-invisible': true,
     });
     //now conditionally render if there is an error after handling login
     return (
@@ -64,6 +64,7 @@ class LoginForm extends React.Component {
                       className="input"
                       name="password"
                       type="password"
+                      autoComplete="off"
                       placeholder="Password"
                       value={this.state.password}
                       onChange={this.handleChange}

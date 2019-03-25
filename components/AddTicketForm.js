@@ -147,7 +147,11 @@ export default class AddTicketForm extends React.Component {
                           value={this.state.ticketCategory}
                           name="ticketCategory"
                         >
-                          <option value="" disabled="disabled" selected="true">
+                          <option
+                            value=""
+                            disabled="disabled"
+                            defaultValue="true"
+                          >
                             Choose a category:
                           </option>
                           <option value="finance">Finance</option>

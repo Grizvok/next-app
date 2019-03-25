@@ -20,7 +20,9 @@ class EditTicketButton extends React.Component {
                 href="javascript:void(0)"
                 onClick={() => this.props.handleEditMode()}
               >
-                <i className="fas specific-ticket-action fa-edit">Edit</i>
+                <i className="fas specific-ticket-action fa-edit">
+                  <span className="ticket-action-text">edit</span>
+                </i>
               </a>
             );
           } else {

@@ -7,15 +7,14 @@ const db = require('../db/index');
 const router = new Router();
 
 router.get('/', async (req, res) => {
-  console.log('does this run?!');
-  // console.log(req);
   let user;
   if (req.user) {
-    user = req.user;
-    res.send({ user });
+    user = req.user.sci_user;
+    res.status(200).send({ user });
     return;
+  } else {
+    res.status(401).send({ error: 'You are not authorized' });
   }
-  res.send({ error: 'You are not authorized' });
 });
 
 router.get('/:id', cors(), async (req, res) => {

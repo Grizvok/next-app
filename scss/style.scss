@@ -19,6 +19,9 @@ $info: #417e8d;
   font-size: 0.75em;
 }
 
+.confirm-ticket-delete {
+  margin-right: 3%;
+}
 .ticket-body {
   margin-left: 7%;
 }
@@ -81,19 +84,30 @@ $info: #417e8d;
   margin-top: 5%;
 }
 
+.ticket-action-text:hover {
+  text-decoration: underline;
+}
+
 .ticket-actions:hover {
   text-decoration: underline;
 }
 
+.ticket-action-text {
+  font-family: monospace;
+  font-size: 0.65em;
+}
+
+.delete-span-text {
+  margin-right: 2%;
+}
+
 .ticket-actions {
   font-size: 0.75em;
-  font-family: monospace;
   margin-left: 1%;
 }
 
 .specific-ticket-action {
   font-size: 0.75em;
-  font-family: monospace;
   color: #000;
 }
 

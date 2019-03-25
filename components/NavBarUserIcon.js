@@ -1,5 +1,6 @@
 import React from 'react';
 import { Subscribe } from 'unstated';
+import Link from 'next/link';
 
 import UserContainer from '../Containers/UserContainer';
 import LogoutButton from './LogoutButton';
@@ -28,12 +29,14 @@ export default class NavBarUserIcon extends React.Component {
                 </div>
                 <div className="dropdown-menu" id="dropdown-menu2" role="menu">
                   <div className="dropdown-content">
-                    <div className="dropdown-item">
-                      <p>
-                        You can insert <strong>any type of content</strong>{' '}
-                        within the dropdown menu.
-                      </p>
-                    </div>
+                    <Link
+                      prefetch
+                      as={`/user/${usercontainer.state.currentUser}`}
+                      href={`/user?id=${usercontainer.state.currentUser}`}
+                    >
+                      <a className="dropdown-item">Dashboard</a>
+                    </Link>
+
                     <hr className="dropdown-divider" />
                     <div className="dropdown-item">
                       <p>

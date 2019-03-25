@@ -20,7 +20,7 @@ class ShareTicketLink extends React.Component {
       return (
         <React.Fragment>
           <a href="javascript:void(0)" onClick={this.handleClick}>
-          <i className="fas fa-share ticket-actions">share</i>
+            <span className="ticket-action-text">share</span>
           </a>
           <div className="box">{this.props.ticketHref}</div>
         </React.Fragment>
@@ -28,7 +28,7 @@ class ShareTicketLink extends React.Component {
     } else {
       return (
         <a onClick={this.handleClick} href="javascript:void(0)">
-          <i className="fas fa-share ticket-actions">share</i>
+          <span className="ticket-action-text">share</span>
         </a>
       );
     }

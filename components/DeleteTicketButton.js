@@ -39,7 +39,6 @@ class DeleteTicketButton extends React.Component {
             usercontainer.state.currentUser === this.props.ticketOwner &&
             this.state.showConfirmation
           ) {
-            console.log('this runs!');
             return (
               <DeleteConfirmationButton
                 handleTicketDelete={this.props.handleTicketDelete}
@@ -55,7 +54,9 @@ class DeleteTicketButton extends React.Component {
                 href="javascript:void(0)"
                 onClick={() => this.handleDeleteAbort()}
               >
-                <i className="fas ticket-actions fa-trash">delete</i>
+                <span className="ticket-action-text delete-span-text">
+                  delete
+                </span>
               </a>
             );
           }

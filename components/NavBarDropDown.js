@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import NavSearchField from './NavSearchField';
+import NavSearchComponent from './NavSearchComponent';
 
 export default class NavBarDropDown extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class NavBarDropDown extends React.Component {
             <a className="navbar-item">Report an issue</a>
           </div>
         </div>
-        <NavSearchField />
+        <NavSearchComponent />
       </div>
     );
   }

@@ -13,25 +13,21 @@ class UserVideos extends React.Component {
     super(props);
 
     this.state = {
-      tickets: [],
       loading: true,
+      tickets: [],
     };
-    this.fetchAllTickets = this.fetchAllTickets.bind(this);
+    //this.fetchAllTickets = this.fetchAllTickets.bind(this);
     this.handleTicketDelete = this.handleTicketDelete.bind(this);
   }
 
-  async componentDidMount() {
-    await this.fetchAllTickets();
-  }
-
-  async fetchAllTickets() {
-    const userTickets = await fetch(
-      `http://localhost:3000/api/ticket/${this.props.user}`
-    );
-    const ticketJSON = await userTickets.json();
-    const tickets = ticketJSON.tickets;
-    this.setState({ tickets, loading: false });
-  }
+  // async fetchAllTickets() {
+  //   const userTickets = await fetch(
+  //     `http://localhost:3000/api/ticket/${this.props.user}`
+  //   );
+  //   const ticketJSON = await userTickets.json();
+  //   const tickets = ticketJSON.tickets;
+  //   this.setState({ tickets, loading: false });
+  // }
 
   async handleTicketDelete(ticketID) {
     const res = await fetch(`http://localhost:3000/api/ticket/${ticketID}`, {
@@ -41,7 +37,7 @@ class UserVideos extends React.Component {
       },
     });
     if (res.status === 200) {
-      this.fetchAllTickets();
+      console.log('hello world!');
     }
   }
 
@@ -61,7 +57,8 @@ class UserVideos extends React.Component {
               </header>
               <TicketItem
                 handleTicketDelete={this.handleTicketDelete}
-                tickets={this.state.tickets}
+                tickets={this.props.tickets}
+                user={this.props.user}
               />
               <footer className="card-footer" />
             </div>

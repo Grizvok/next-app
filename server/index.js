@@ -71,6 +71,7 @@ app
 
     server.get('/user/:id', (req, res) => {
       const queryParams = { id: req.params.id };
+      console.log(queryParams);
       return app.render(req, res, '/user', queryParams);
     });
 

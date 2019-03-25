@@ -3,11 +3,13 @@ import React from 'react';
 import fetch from 'isomorphic-unfetch';
 import PropTypes from 'prop-types';
 import Error from 'next/error';
+import { Subscribe } from 'unstated';
 
 //our packages
 import Layout from '../components/MyLayout';
 import UserNav from '../components/UserNav';
 import UserHero from '../components/UserHero';
+import UserContainer from '../Containers/UserContainer';
 
 export default class UserPage extends React.Component {
   static async getInitialProps(context) {
@@ -17,11 +19,16 @@ export default class UserPage extends React.Component {
     const userTickets = await fetch(
       `http://localhost:3000/api/ticket/${context.query.id}`
     );
+
     const ticketJSON = await userTickets.json();
     const json = await res.json();
     const statusCode = res.status > 200 ? res.status : false;
 
-    return { statusCode, user: json.user, tickets: ticketJSON.tickets };
+    return {
+      statusCode,
+      user: json.user,
+      tickets: ticketJSON.tickets,
+    };
   }
 
   render() {
@@ -38,4 +45,4 @@ export default class UserPage extends React.Component {
   }
 }
 
-UserPage.propTypes = { user: PropTypes.string };
+UserPage.propTypes = { user: PropTypes.string, tickets: PropTypes.array };
