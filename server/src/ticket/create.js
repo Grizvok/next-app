@@ -14,7 +14,7 @@ router.post(
   async (req, res) => {
     const token = req.headers['authorization'].split(' ')[1];
 
-    const verify = await jwt.verify(token, process.env.JWT_SECRET);
+    const user = await jwt.verify(token, process.env.JWT_SECRET);
 
     if (!req.user) {
       res
@@ -31,16 +31,18 @@ router.post(
         if (ticketDescription.length > 99 && ticketDescription.length < 700) {
           const getUserID = await db.query(
             'SELECT id FROM users.client WHERE sci_user = $1',
-            [verify]
+            [user]
           );
           const userID = getUserID.rows[0].id;
           const result = await db.query(
-            'INSERT INTO users.ticket(ticket_title, ticket_description, ticket_category, user_id_fkey) VALUES ($1, $2, $3, $4) RETURNING id',
+            'INSERT INTO users.ticket(ticket_title, ticket_description, ticket_category, user_id_fkey) VALUES ($1, $2, $3, $4) RETURNING *',
             [ticketTitle, ticketDescription, ticketCategory, userID]
           );
-          const ticket = result.rows[0].id;
-          console.log(ticket);
-          res.status(200).send({ ticket: ticket });
+          console.log(result);
+          const ticket = result.rows[0];
+          ticket.sci_user = user;
+          // console.log(ticket);
+          res.status(200).send({ ticket });
           return;
         }
       }

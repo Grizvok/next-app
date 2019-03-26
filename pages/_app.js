@@ -5,54 +5,51 @@ import { Provider } from 'unstated';
 import fetch from 'isomorphic-unfetch';
 
 //our packages
-import UserContainer from '../Containers/UserContainer';
-import userStore from '../helpers/localForage';
+import { userStore } from '../Containers/UserContainer';
 
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     const isServer = !!ctx.req;
-    let user;
-    let tickets;
+    const userState = {};
+    let pageProps = {};
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
 
     // if SSR
     if (isServer) {
       if (ctx.req.user) {
-        user = ctx.req.user.sci_user;
-        const res = await fetch(`http://localhost:3000/api/ticket/${user}`);
-        const ticketObj = await res.json();
-        tickets = ticketObj.tickets;
+        userState.currentUser = ctx.req.user.sci_user;
+        try {
+          const res = await fetch(
+            `http://localhost:3000/api/ticket/${ctx.req.user.sci_user}`
+          ).then((r) => r.json());
+          console.log(ctx.req.user);
+          userState.userTickets = res.tickets;
+          await userStore.initState(userState);
+          return { serverState: userStore.state, pageProps };
+        } catch (e) {
+          console.log(e);
+        }
       }
-      if (!ctx.req.user) {
-        user = '';
-        tickets = [];
-      }
+      return { pageProps };
     }
+    return { pageProps };
+  }
 
+  constructor(props) {
+    super(props);
     if (process.browser) {
-      // maybe refactor so this as an api call to get currently authed user if they exist?
-      user = await userStore.getItem('user');
-      tickets = await userStore.getItem('tickets');
+      userStore.initState(props.serverState);
     }
-
-    //declare user and call container method only on SSR
-    let pageProps = {};
-    //if getInitialProps is run on specific page component return those props
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
-    return { pageProps, user, tickets };
   }
 
   render() {
     const { Component, pageProps } = this.props;
-    const user = new UserContainer({
-      initialUser: this.props.user || '',
-      initialTickets: this.props.tickets || [],
-    });
 
     return (
       <Container>
-        <Provider inject={[user]}>
+        <Provider inject={[userStore]}>
           <Component {...pageProps} />
         </Provider>
       </Container>

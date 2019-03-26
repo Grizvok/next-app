@@ -2,7 +2,6 @@
 import { Container } from 'unstated';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
-import userStore from '../helpers/localForage';
 
 const getAuthedUserTickets = async (user) => {
   let userTickets;
@@ -20,13 +19,45 @@ export default class UserContainer extends Container {
     super(props);
 
     this.state = {
-      currentUser: props.initialUser || '',
-      userTickets: props.initialTickets || [],
-      followedUsers: props.initialFollowedUsers || [],
+      currentUser: '',
+      userTickets: [],
+      followedUsers: [],
       error: '',
-      token: '',
     };
   }
+
+  initState = async (state) => {
+    this.state = { ...state };
+  };
+
+  handleTicketCreation = async (e, payload) => {
+    e.preventDefault();
+    const res = await fetch('http://localhost:3000/api/ticket', {
+      method: 'POST',
+      withCredentials: true,
+      credentials: 'include',
+      body: JSON.stringify(payload),
+      headers: {
+        Authorization:
+          'Bearer ' +
+          'eyJhbGciOiJIUzI1NiJ9.R3JpenZvaw.Z9DrrJKETt8i_nZh4Fme2P5snwvgfhzfHpqFqrH5k5g',
+        'Content-Type': 'application/json',
+      },
+    });
+    const resJSON = await res.json();
+    console.log(resJSON);
+    if (res.status === 200) {
+      this.setState({
+        userTickets: [resJSON.ticket, ...this.state.userTickets],
+      });
+      console.log(this.state.userTickets);
+      Router.push(
+        `/ticket?id=${resJSON.ticket.id}`,
+        `/ticket/${resJSON.ticket.id}`
+      );
+      return;
+    }
+  };
 
   handleTicketDelete = async (ticketID) => {
     const res = await fetch(`http://localhost:3000/api/ticket/${ticketID}`, {
@@ -37,15 +68,12 @@ export default class UserContainer extends Container {
     });
 
     if (res.status === 200) {
-      console.log(this.state.userTickets);
       const newArray = this.state.userTickets.filter((ticket) => {
         ticket.id !== ticketID;
       });
-      const deletedTickets = await userStore.getItem('tickets');
       const newLocalArray = deletedTickets.filter((ticket) => {
         return ticket.id !== ticketID;
       });
-      await userStore.setItem('tickets', newLocalArray);
       await this.setState({
         userTickets: newArray,
       });
@@ -105,25 +133,19 @@ export default class UserContainer extends Container {
       });
     } catch (e) {
       Router.push('/login');
+      return;
     }
 
-    const resJSON = await data.json();
+    const res = await data.json();
 
     if (data.status === 200) {
-      const userTickets = await getAuthedUserTickets(user);
+      const userTickets = await getAuthedUserTickets(res.user);
       await this.setState({
-        currentUser: resJSON.user,
-        token: resJSON.token,
+        currentUser: res.user,
         userTickets: userTickets.tickets,
       });
 
-      await userStore.setItem('tickets', this.state.userTickets);
-
       const cookieString = `user_cookie=${this.state.token}`;
-      const foragedUser = await userStore.setItem(
-        'user',
-        this.state.currentUser
-      );
 
       document.cookie = cookieString;
 
@@ -135,7 +157,6 @@ export default class UserContainer extends Container {
   };
 
   removeCurrentUser = async () => {
-    await userStore.removeItem('user');
     await this.setState({
       currentUser: '',
     });
@@ -150,3 +171,5 @@ export default class UserContainer extends Container {
     }
   };
 }
+
+export const userStore = new UserContainer();

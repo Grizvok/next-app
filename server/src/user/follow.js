@@ -8,7 +8,6 @@ const router = new Router();
 
 //get a list of a who a user is following
 router.get('/follow', async (req, res) => {
-  console.log('this runs?');
   // if (req.user) {
   //   const rows = await db.query(
   //     'SELECT following FROM users.client_follow WHERE follower = $1',
@@ -19,8 +18,6 @@ router.get('/follow', async (req, res) => {
 });
 
 router.post('/follow', async (req, res) => {
-  console.log('does this not run now fuckkkk');
-
   const followerRows = await db.query(
     'SELECT id FROM users.client WHERE sci_user = $1',
     [req.body.followerUser]
@@ -52,7 +49,6 @@ router.post('/follow', async (req, res) => {
     res.status(500).send({ error: 'something went wrong' });
   }
   res.status(200).send({ data: 'Hello World!' });
-  console.log('that worked fine!');
 });
 
 module.exports = router;

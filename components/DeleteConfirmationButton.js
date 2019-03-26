@@ -3,7 +3,7 @@ import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 import { Subscribe } from 'unstated';
 
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 
 class DeleteConfirmationButton extends React.Component {
   constructor(props) {
@@ -12,16 +12,14 @@ class DeleteConfirmationButton extends React.Component {
 
   render() {
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => (
+      <Subscribe to={[userStore]}>
+        {(userstore) => (
           <React.Fragment>
             <span className="confirm-delete-text">Are you sure?</span>
             <a
               className="ticket-actions"
               href="javascript:void(0)"
-              onClick={() =>
-                usercontainer.handleTicketDelete(this.props.ticketID)
-              }
+              onClick={() => userstore.handleTicketDelete(this.props.ticketID)}
             >
               Yes
             </a>{' '}

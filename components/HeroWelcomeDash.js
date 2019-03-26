@@ -4,21 +4,21 @@ import { Subscribe } from 'unstated';
 import Router from 'next/router';
 
 //our packages
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 
 class DashHero extends React.Component {
   render() {
-    if (!UserContainer.state.currentUser) {
+    if (!userStore.state.currentUser) {
       Router.push('/register');
     }
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => (
+      <Subscribe to={[userStore]}>
+        {(userstore) => (
           <section className="hero is-dark is-fullheight has-background-grey-light homehero">
             <div className="hero-head" />
             <div className="container has-text-centered is-fluid">
               <h1 className="title has-text-danger is-size-1">
-                Welcome to your dashboard {usercontainer.state.currentUser}
+                Welcome to your dashboard {userstore.state.currentUser}
               </h1>
               <p>
                 <i className="fas fa-angle-double-down has-text-info fa-2x" />

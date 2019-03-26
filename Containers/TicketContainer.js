@@ -1,7 +1,6 @@
 import { Container } from 'unstated';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
-import userStore from '../helpers/localForage';
 
 export default class TicketContainer extends Container {
   constructor(props = {}) {
@@ -13,6 +12,6 @@ export default class TicketContainer extends Container {
     };
   }
   handleAddTicket = async (e) => {
-    console.log('hello world!');
+    // console.log('hello world!');
   };
 }

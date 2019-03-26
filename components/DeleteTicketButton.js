@@ -4,7 +4,7 @@ import { Subscribe } from 'unstated';
 import Link from 'next/link';
 
 //our packages
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 import DeleteConfirmationButton from '../components/DeleteConfirmationButton';
 
 class DeleteTicketButton extends React.Component {
@@ -33,10 +33,10 @@ class DeleteTicketButton extends React.Component {
 
   render() {
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => {
+      <Subscribe to={[userStore]}>
+        {(userstore) => {
           if (
-            usercontainer.state.currentUser === this.props.ticketOwner &&
+            userstore.state.currentUser === this.props.ticketOwner &&
             this.state.showConfirmation
           ) {
             return (
@@ -46,9 +46,7 @@ class DeleteTicketButton extends React.Component {
                 handleDeleteAbort={this.handleDeleteAbort}
               />
             );
-          } else if (
-            usercontainer.state.currentUser === this.props.ticketOwner
-          ) {
+          } else if (userstore.state.currentUser === this.props.ticketOwner) {
             return (
               <a
                 href="javascript:void(0)"

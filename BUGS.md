@@ -1,2 +1,8 @@
---Hydrate unstated stores on SSR
---Protect routes and endpoints from non-authed users
+Priority Levels:
+CRITICAL (FIX IMMEDIATELY WHEN CURRENT TASK IS COMPLETED -- NO QUESTIONS ASKED)
+HIGH (FIX AFTER COMPLETION OF CURRENT MODULE GIVEN TIME TO COMPLETION LESS THAN 5 MINUTES ELSE SCHEDULE FIX)
+MEDIUM (SCHEDULE FIX)
+LOW (SCHEDULE FIX)
+
+--Disallow non-authed users from accessing submit new ticket form (CRITICAL PRIORITY)
+--STOP hardcoding authorization bearer token when sending jwt (HIGH PRIORITY)

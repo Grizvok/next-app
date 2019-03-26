@@ -4,12 +4,12 @@ import { Subscribe } from 'unstated';
 import Link from 'next/link';
 
 //our packages
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 
 export default () => (
-  <Subscribe to={[UserContainer]}>
-    {(usercontainer) => {
-      if (usercontainer.state.currentUser) {
+  <Subscribe to={[userStore]}>
+    {(userstore) => {
+      if (userstore.state.currentUser) {
         return null;
       } else {
         return <LoginButton />;
@@ -32,8 +32,8 @@ class LogoutButton extends React.Component {
   }
   render() {
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => (
+      <Subscribe to={[userStore]}>
+        {(userstore) => (
           <Link href="javascript:void(0)">
             <a onClick={this.props.handleLogout} className="button is-light">
               Logout
@@ -46,9 +46,9 @@ class LogoutButton extends React.Component {
 }
 
 const LoginButtonControl = () => (
-  <Subscribe to={[UserContainer]}>
-    {(usercontainer) => {
-      if (usercontainer.state.currentUser) {
+  <Subscribe to={[userStore]}>
+    {(userstore) => {
+      if (userstore.state.currentUser) {
         return null;
       }
       return <LoginButton />;

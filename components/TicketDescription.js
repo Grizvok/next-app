@@ -7,7 +7,7 @@ import fetch from 'isomorphic-unfetch';
 
 //our packages
 import TicketBody from './TicketBody';
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 import EditTicketButton from './EditTicketButton';
 import EditInformation from './EditInformation';
 
@@ -95,8 +95,8 @@ class TicketDescription extends React.Component {
     const timeSinceCreation = moment(creationDate).toNow(currentDate);
 
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => (
+      <Subscribe to={[userStore]}>
+        {(userstore) => (
           <div className="columns">
             <div className="box column is-four-fifths ticket-box">
               <article className="media">

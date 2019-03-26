@@ -2,15 +2,15 @@ import React from 'react';
 import { Subscribe } from 'unstated';
 import Link from 'next/link';
 
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 import LogoutButton from './LogoutButton';
 
 export default class NavBarUserIcon extends React.Component {
   render() {
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => {
-          if (usercontainer.state.currentUser) {
+      <Subscribe to={[userStore]}>
+        {(userstore) => {
+          if (userstore.state.currentUser) {
             return (
               <div className="dropdown is-right is-hoverable">
                 <div className="dropdown-trigger">
@@ -31,8 +31,8 @@ export default class NavBarUserIcon extends React.Component {
                   <div className="dropdown-content">
                     <Link
                       prefetch
-                      as={`/user/${usercontainer.state.currentUser}`}
-                      href={`/user?id=${usercontainer.state.currentUser}`}
+                      as={`/user/${userstore.state.currentUser}`}
+                      href={`/user?id=${userstore.state.currentUser}`}
                     >
                       <a className="dropdown-item">Dashboard</a>
                     </Link>

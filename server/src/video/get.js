@@ -1,21 +1,22 @@
-const Router = require("express-promise-router");
+const Router = require('express-promise-router');
 
 //our packages
-const db = require("../db/index");
+const db = require('../db/index');
 
 const router = new Router();
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   if (req.user) {
-    const rows = await db.query("SELECT id FROM users.client WHERE email = $1", [
-      req.user
-    ]);
-    console.log(rows);
+    const rows = await db.query(
+      'SELECT id FROM users.client WHERE email = $1',
+      [req.user]
+    );
   }
 
-
   if (!req.user) {
-    res.status(401).send({error: "You must be logged in to access your videos!"})
+    res
+      .status(401)
+      .send({ error: 'You must be logged in to access your videos!' });
   }
 });
 

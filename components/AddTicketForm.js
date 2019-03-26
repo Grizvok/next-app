@@ -6,7 +6,7 @@ import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 import Router from 'next/router';
 
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 
 export default class AddTicketForm extends React.Component {
   constructor(props) {
@@ -21,20 +21,16 @@ export default class AddTicketForm extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit = async (e, token) => {
     e.preventDefault();
-    const userToken = localStorage.getItem('usertoken');
-    console.log(userToken);
     const payload = {
       ticketTitle: this.state.ticketTitle,
       ticketCategory: this.state.ticketCategory,
       ticketDescription: this.state.ticketDescription,
     };
-
-    console.log(payload);
 
     const res = await fetch('http://localhost:3000/api/ticket', {
       method: 'POST',
@@ -106,9 +102,9 @@ export default class AddTicketForm extends React.Component {
 
   render() {
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => {
-          console.log(usercontainer.state.currentUser);
+      <Subscribe to={[userStore]}>
+        {(userstore) => {
+          console.log(userstore.state.currentUser);
           return (
             <div
               align="center"
@@ -118,8 +114,12 @@ export default class AddTicketForm extends React.Component {
                 <form
                   method="POST"
                   onSubmit={(e) => {
-                    console.log(usercontainer.state.currentUser);
-                    this.handleSubmit(e, usercontainer.state.token);
+                    const payload = {
+                      ticketTitle: this.state.ticketTitle,
+                      ticketCategory: this.state.ticketCategory,
+                      ticketDescription: this.state.ticketDescription,
+                    };
+                    userstore.handleTicketCreation(e, payload);
                   }}
                 >
                   <div className="field">
@@ -132,6 +132,7 @@ export default class AddTicketForm extends React.Component {
                         value={this.state.ticketTitle}
                         onChange={this.handleChange}
                         name="ticketTitle"
+                        required
                       />
                     </div>
                   </div>
@@ -146,6 +147,7 @@ export default class AddTicketForm extends React.Component {
                           onChange={this.handleChange}
                           value={this.state.ticketCategory}
                           name="ticketCategory"
+                          required
                         >
                           <option
                             value=""
@@ -172,6 +174,7 @@ export default class AddTicketForm extends React.Component {
                         placeholder="Describe your ticket"
                         value={this.state.ticketDescription}
                         onChange={this.handleChange}
+                        required
                       />
                     </div>
                   </div>

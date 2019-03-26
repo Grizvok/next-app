@@ -5,7 +5,7 @@ import { Subscribe } from 'unstated';
 import fetch from 'isomorphic-unfetch';
 
 //our packages
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 import TicketItem from '../components/TicketItem';
 
 class UserVideos extends React.Component {
@@ -37,14 +37,14 @@ class UserVideos extends React.Component {
       },
     });
     if (res.status === 200) {
-      console.log('hello world!');
+      // console.log('hello world!');
     }
   }
 
   render() {
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => (
+      <Subscribe to={[userStore]}>
+        {(userstore) => (
           <div className="column videocontainer is-three-fifths">
             <div className="card">
               <header className="card-header">

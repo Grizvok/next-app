@@ -8,7 +8,7 @@ import { Subscribe } from 'unstated';
 import DeleteTicketButton from './DeleteTicketButton';
 import ShareTicketLink from './ShareTicketLink';
 import ExpandTicketButton from './ExpandTicketButton';
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 
 class TicketItem extends React.Component {
   constructor(props) {
@@ -17,14 +17,13 @@ class TicketItem extends React.Component {
 
   render() {
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => {
-          if (usercontainer.state.currentUser === this.props.user) {
-            console.log('this ran');
+      <Subscribe to={[userStore]}>
+        {(userstore) => {
+          if (userstore.state.currentUser === this.props.user) {
             return (
               <div className="card-content">
                 <div className="content">
-                  {usercontainer.state.userTickets.map((tickets, index) => {
+                  {userstore.state.userTickets.map((tickets, index) => {
                     let date = tickets.ticket_creation_date;
                     let momentDate = moment(date).format(
                       'MMMM Do YYYY, h:mm a'

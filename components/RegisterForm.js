@@ -5,7 +5,7 @@ import { Subscribe } from 'unstated';
 import Router from 'next/router';
 
 //our packages
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 
 class RegisterForm extends React.Component {
   constructor(props) {
@@ -119,13 +119,13 @@ class RegisterForm extends React.Component {
     //TODO: refactor so that all of the submit logic and error handling is done inside of the unstated usercontainer
 
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => {
-          if (usercontainer.state.currentUser) {
-            Router.push(`/user/${usercontainer.state.currentUser}`);
+      <Subscribe to={[userStore]}>
+        {(userstore) => {
+          if (userstore.state.currentUser) {
+            Router.push(`/user/${userstore.state.currentUser}`);
           } else {
             return (
-              <form method="POST" onSubmit={usercontainer.handleUserRegister}>
+              <form method="POST" onSubmit={userstore.handleUserRegister}>
                 <div
                   align="center"
                   className="column is-half container form-container"

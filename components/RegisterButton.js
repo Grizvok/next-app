@@ -4,7 +4,7 @@ import { Subscribe } from 'unstated';
 import Link from 'next/link';
 
 //our packages
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 
 function RegisterButton() {
   return (
@@ -15,9 +15,9 @@ function RegisterButton() {
 }
 
 const RegisterButtonControl = () => (
-  <Subscribe to={[UserContainer]}>
-    {(usercontainer) => {
-      if (!usercontainer.state.currentUser) {
+  <Subscribe to={[userStore]}>
+    {(userstore) => {
+      if (!userstore.state.currentUser) {
         return <RegisterButton />;
       }
       return null;

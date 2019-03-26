@@ -3,7 +3,7 @@ import React from 'react';
 import { Subscribe } from 'unstated';
 
 //our packages
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 
 class EditTicketButton extends React.Component {
   constructor(props) {
@@ -12,9 +12,9 @@ class EditTicketButton extends React.Component {
 
   render() {
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => {
-          if (usercontainer.state.currentUser === this.props.ticketOwner) {
+      <Subscribe to={[userStore]}>
+        {(userstore) => {
+          if (userstore.state.currentUser === this.props.ticketOwner) {
             return (
               <a
                 href="javascript:void(0)"

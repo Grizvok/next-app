@@ -2,7 +2,7 @@ import React from 'react';
 import { Subscribe } from 'unstated';
 import Link from 'next/link';
 
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 
 class LogoutButton extends React.Component {
   constructor(props) {
@@ -10,13 +10,10 @@ class LogoutButton extends React.Component {
   }
   render() {
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => (
+      <Subscribe to={[userStore]}>
+        {(userstore) => (
           <Link href="javascript:void(0)">
-            <a
-              onClick={usercontainer.removeCurrentUser}
-              className="dropdown-item"
-            >
+            <a onClick={userstore.removeCurrentUser} className="dropdown-item">
               Logout
             </a>
           </Link>

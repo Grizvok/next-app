@@ -4,7 +4,7 @@ import { Subscribe } from 'unstated';
 import classNames from 'classnames';
 
 //our packages
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 
 class LoginForm extends React.Component {
   state = {
@@ -31,9 +31,9 @@ class LoginForm extends React.Component {
     });
     //now conditionally render if there is an error after handling login
     return (
-      <Subscribe to={[UserContainer]}>
-        {(usercontainer) => (
-          <form method="POST" onSubmit={usercontainer.handleUserUpdate}>
+      <Subscribe to={[userStore]}>
+        {(userstore) => (
+          <form method="POST" onSubmit={userstore.handleUserUpdate}>
             <div
               align="center"
               className="column is-half container form-container"

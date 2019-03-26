@@ -5,18 +5,18 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 
 //our packages
-import UserContainer from '../Containers/UserContainer';
+import { userStore } from '../Containers/UserContainer';
 import FollowedUsersContainer from '../Containers/FollowedUsersContainer';
 
 const FollowButton = ({ router }) => (
-  <Subscribe to={[FollowedUsersContainer, UserContainer]}>
-    {(followcontainer, usercontainer) => {
+  <Subscribe to={[FollowedUsersContainer, userStore]}>
+    {(followcontainer, userstore) => {
       return (
         <a
           className="button is-fullwidth is-link"
           onClick={() =>
             followcontainer.handleAddFollowedUser(
-              usercontainer.state.currentUser,
+              userstore.state.currentUser,
               router.query.id
             )
           }
@@ -37,9 +37,9 @@ const NewVideoButton = () => (
 );
 
 const AvatarButtonControl = (props) => (
-  <Subscribe to={[UserContainer]}>
-    {(usercontainer) => {
-      if (usercontainer.state.currentUser === props.user) {
+  <Subscribe to={[userStore]}>
+    {(userstore) => {
+      if (userstore.state.currentUser === props.user) {
         return <NewVideoButton />;
       }
       return <FollowButtonWithRouter />;
