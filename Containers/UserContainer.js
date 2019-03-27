@@ -26,7 +26,7 @@ export default class UserContainer extends Container {
     };
   }
 
-  initState = async (state) => {
+  initState = (state) => {
     this.state = { ...state };
   };
 
@@ -80,17 +80,6 @@ export default class UserContainer extends Container {
       throw Error(e);
     }
   };
-
-  //   if (res.status === 200) {
-  //     const newArray = this.state.userTickets.filter(
-  //       (ticket) => ticket.id !== ticketID
-  //     );
-
-  //     await this.setState({
-  //       userTickets: newArray,
-  //     });
-  //   }
-  // };
 
   handleUserRegister = async (e) => {
     e.preventDefault();

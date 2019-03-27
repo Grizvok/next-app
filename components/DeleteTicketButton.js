@@ -1,9 +1,9 @@
-//npm packages
+// npm packages
 import React from 'react';
 import { Subscribe } from 'unstated';
 import Link from 'next/link';
 
-//our packages
+// our packages
 import { userStore } from '../Containers/UserContainer';
 import DeleteConfirmationButton from '../components/DeleteConfirmationButton';
 
@@ -56,36 +56,5 @@ class DeleteTicketButton extends React.Component {
     );
   }
 }
-
-// render() {
-//   return (
-//     <Subscribe to={[UserContainer]}>
-//       {(usercontainer) => {
-//         if (usercontainer.state.currentUser === this.props.ticketOwner && this.state.showConfirmation) {
-//           return (
-//             <div>
-//               {this.state.showConfirmation ? (
-//                 <DeleteConfirmationButton
-//                   handleTicketDelete={this.props.handleTicketDelete}
-//                   ticketID={this.props.ticketID}
-//                   handleAbort={this.handleClick}
-
-//                 />
-//               ) : (
-//                 <button
-//                   onClick={this.handleClick}
-//                   className="is-link is-small button delete-ticket-button"
-//                 >
-//                   Delete Ticket
-//                 </button>
-//               )}
-//             </div>
-//           );
-//         }
-//         return null;
-//       }}
-//     </Subscribe>
-//   );
-// }
 
 export default DeleteTicketButton;

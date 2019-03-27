@@ -6,20 +6,14 @@ import { withRouter } from 'next/router';
 
 //our packages
 import { userStore } from '../Containers/UserContainer';
-import FollowedUsersContainer from '../Containers/FollowedUsersContainer';
 
 const FollowButton = ({ router }) => (
-  <Subscribe to={[FollowedUsersContainer, userStore]}>
-    {(followcontainer, userstore) => {
+  <Subscribe to={[userStore]}>
+    {(userstore) => {
       return (
         <a
           className="button is-fullwidth is-link"
-          onClick={() =>
-            followcontainer.handleAddFollowedUser(
-              userstore.state.currentUser,
-              router.query.id
-            )
-          }
+          onClick={() => console.log('clicked')}
         >
           Follow
         </a>

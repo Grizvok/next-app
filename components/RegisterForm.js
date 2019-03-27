@@ -116,8 +116,6 @@ class RegisterForm extends React.Component {
           this.state.password === this.state.confirmPassword),
     });
 
-    //TODO: refactor so that all of the submit logic and error handling is done inside of the unstated usercontainer
-
     return (
       <Subscribe to={[userStore]}>
         {(userstore) => {

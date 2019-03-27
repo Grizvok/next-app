@@ -43,20 +43,19 @@ app
     server.use(passport.initialize());
     server.use(passport.session());
 
-    //setup auth routes
     setupAuthRoutes(server);
-    //setup user routes
+
     setupUserRoutes(server);
-    //setup video routes
+
     setupVideoRoutes(server);
-    //setup ticket routes
+
     setupTicketRoutes(server);
-    //setup follow routes
+
     setupFollowRoutes(server);
-    //setup search routes
+
     setupSearchRoutes(server);
 
-    //setup SSR routes
+    // setup SSR routes
     server.get('/', (req, res) => {
       return app.render(req, res, '/', req.query);
     });
