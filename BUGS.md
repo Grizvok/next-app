@@ -4,5 +4,4 @@ HIGH (FIX AFTER COMPLETION OF CURRENT MODULE GIVEN TIME TO COMPLETION LESS THAN 
 MEDIUM (SCHEDULE FIX)
 LOW (SCHEDULE FIX)
 
---Disallow non-authed users from accessing submit new ticket form (CRITICAL PRIORITY)
 --STOP hardcoding authorization bearer token when sending jwt (HIGH PRIORITY)

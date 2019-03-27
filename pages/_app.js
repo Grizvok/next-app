@@ -56,5 +56,3 @@ export default class MyApp extends App {
     );
   }
 }
-
-//CLASS CONTAINER METHODS MUST BE RUN IN THE RENDER PROPS FUNCTION

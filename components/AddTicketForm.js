@@ -104,7 +104,6 @@ export default class AddTicketForm extends React.Component {
     return (
       <Subscribe to={[userStore]}>
         {(userstore) => {
-          console.log(userstore.state.currentUser);
           return (
             <div
               align="center"

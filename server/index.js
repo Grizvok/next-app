@@ -65,7 +65,20 @@ app
       return app.render(req, res, '/login', req.query);
     });
 
+    server.get('/submit', (req, res) => {
+      if (!req.user) {
+        res.redirect('/login');
+        return;
+      }
+      return app.render(req, res, '/');
+    });
+
     server.get('/register', (req, res) => {
+      console.log(req.user);
+      if (req.user) {
+        res.redirect(`/user/${req.user.sci_user}`);
+        return;
+      }
       return app.render(req, res, '/register', req.query);
     });
 
