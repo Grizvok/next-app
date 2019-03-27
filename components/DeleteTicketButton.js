@@ -16,16 +16,9 @@ class DeleteTicketButton extends React.Component {
     };
 
     this.handleDeleteAbort = this.handleDeleteAbort.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   handleDeleteAbort() {
-    this.setState({
-      showConfirmation: !this.state.showConfirmation,
-    });
-  }
-
-  handleClick() {
     this.setState({
       showConfirmation: !this.state.showConfirmation,
     });
@@ -41,7 +34,6 @@ class DeleteTicketButton extends React.Component {
           ) {
             return (
               <DeleteConfirmationButton
-                handleTicketDelete={this.props.handleTicketDelete}
                 ticketID={this.props.ticketID}
                 handleDeleteAbort={this.handleDeleteAbort}
               />

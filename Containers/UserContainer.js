@@ -60,25 +60,37 @@ export default class UserContainer extends Container {
   };
 
   handleTicketDelete = async (ticketID) => {
-    const res = await fetch(`http://localhost:3000/api/ticket/${ticketID}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (res.status === 200) {
-      const newArray = this.state.userTickets.filter((ticket) => {
-        ticket.id !== ticketID;
+    try {
+      const res = await fetch(`http://localhost:3000/api/ticket/${ticketID}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
-      const newLocalArray = deletedTickets.filter((ticket) => {
-        return ticket.id !== ticketID;
-      });
-      await this.setState({
+      if (res.status !== 200) {
+        throw Error(res.statusText);
+      }
+      const newArray = this.state.userTickets.filter(
+        (ticket) => ticket.id !== ticketID
+      );
+      this.setState({
         userTickets: newArray,
       });
+    } catch (e) {
+      throw Error(e);
     }
   };
+
+  //   if (res.status === 200) {
+  //     const newArray = this.state.userTickets.filter(
+  //       (ticket) => ticket.id !== ticketID
+  //     );
+
+  //     await this.setState({
+  //       userTickets: newArray,
+  //     });
+  //   }
+  // };
 
   handleUserRegister = async (e) => {
     e.preventDefault();
@@ -91,7 +103,7 @@ export default class UserContainer extends Container {
       user: user,
       password: password,
     };
-    //create user
+
     const res = await fetch('http://localhost:3000/api/register', {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -99,6 +111,7 @@ export default class UserContainer extends Container {
         'Content-Type': 'application/json',
       },
     });
+
     if (res.status === 200) {
       Router.push('/login');
     }

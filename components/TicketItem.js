@@ -45,7 +45,6 @@ class TicketItem extends React.Component {
                           ticketDescription={tickets.ticket_description}
                         />
                         <DeleteTicketButton
-                          handleTicketDelete={this.props.handleTicketDelete}
                           ticketID={tickets.id}
                           ticketOwner={tickets.sci_user}
                         />
@@ -82,7 +81,6 @@ class TicketItem extends React.Component {
                           ticketDescription={tickets.ticket_description}
                         />
                         <DeleteTicketButton
-                          handleTicketDelete={this.props.handleTicketDelete}
                           ticketID={tickets.id}
                           ticketOwner={tickets.sci_user}
                         />

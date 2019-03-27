@@ -16,29 +16,6 @@ class UserVideos extends React.Component {
       loading: true,
       tickets: [],
     };
-    //this.fetchAllTickets = this.fetchAllTickets.bind(this);
-    this.handleTicketDelete = this.handleTicketDelete.bind(this);
-  }
-
-  // async fetchAllTickets() {
-  //   const userTickets = await fetch(
-  //     `http://localhost:3000/api/ticket/${this.props.user}`
-  //   );
-  //   const ticketJSON = await userTickets.json();
-  //   const tickets = ticketJSON.tickets;
-  //   this.setState({ tickets, loading: false });
-  // }
-
-  async handleTicketDelete(ticketID) {
-    const res = await fetch(`http://localhost:3000/api/ticket/${ticketID}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (res.status === 200) {
-      // console.log('hello world!');
-    }
   }
 
   render() {
@@ -55,11 +32,7 @@ class UserVideos extends React.Component {
                   aria-label="more options"
                 />
               </header>
-              <TicketItem
-                handleTicketDelete={this.handleTicketDelete}
-                tickets={this.props.tickets}
-                user={this.props.user}
-              />
+              <TicketItem tickets={this.props.tickets} user={this.props.user} />
               <footer className="card-footer" />
             </div>
           </div>
