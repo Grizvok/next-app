@@ -14,6 +14,18 @@ const getAuthedUserTickets = async (user) => {
   }
 };
 
+// grab all followedUsers of the currently authed user
+const getAuthedFollowedUsers = async (user) => {
+  let followedUsers;
+  try {
+    const res = await fetch(`http://localhost:3000/api/user/follow/${user}`);
+    followedUsers = await res.json();
+    return followedUsers;
+  } catch (e) {
+    return (followedUsers = []);
+  }
+};
+
 export default class UserContainer extends Container {
   constructor(props = {}) {
     super(props);
@@ -28,6 +40,29 @@ export default class UserContainer extends Container {
 
   initState = (state) => {
     this.state = { ...state };
+  };
+
+  handleAddFollowedUser = async (followerUser, followingUser) => {
+    console.log(followingUser);
+    if (this.state.followedUsers.includes(followingUser)) {
+      return;
+    }
+    const payload = {
+      followerUser,
+      followingUser,
+    };
+    const res = await fetch('http://localhost:3000/api/user/follow', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (res.status === 200) {
+      await this.setState({
+        followedUsers: [...this.state.followedUsers, followingUser],
+      });
+    }
   };
 
   handleTicketCreation = async (e, payload) => {
@@ -142,11 +177,12 @@ export default class UserContainer extends Container {
 
     if (data.status === 200) {
       const userTickets = await getAuthedUserTickets(res.user);
+      const followedUsers = await getAuthedFollowedUsers(res.user);
       await this.setState({
         currentUser: res.user,
         userTickets: userTickets.tickets,
+        followedUsers: followedUsers.data,
       });
-
       const cookieString = `user_cookie=${this.state.token}`;
 
       document.cookie = cookieString;

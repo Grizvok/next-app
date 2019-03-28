@@ -13,7 +13,12 @@ const FollowButton = ({ router }) => (
       return (
         <a
           className="button is-fullwidth is-link"
-          onClick={() => console.log('clicked')}
+          onClick={() =>
+            userstore.handleAddFollowedUser(
+              userstore.state.currentUser,
+              router.query.id
+            )
+          }
         >
           Follow
         </a>

@@ -10,6 +10,8 @@ const handle = app.getRequestHandler();
 const morgan = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+const redis = require('redis').createClient();
 
 // our packages
 const winston = require('./src/util/logger');
@@ -29,12 +31,14 @@ app
 
     server.use(bodyParser.json());
     server.use(bodyParser.urlencoded({ extended: true }));
+    // we use the session secret for cookie-parser to keep them consistent between it and express-session or else errors can occur
     server.use(cookieParser(process.env.SESSION_SECRET));
     server.use(
       session({
         secret: process.env.SESSION_SECRET,
-        resave: true,
-        saveUninitialized: true,
+        resave: false,
+        store: new RedisStore({ host: 'localhost', port: 6379, client: redis }),
+        saveUninitialized: false,
         secure: false,
         cookie: { secure: false },
       })
@@ -69,7 +73,7 @@ app
         res.redirect('/login');
         return;
       }
-      return app.render(req, res, '/');
+      return app.render(req, res, '/submit');
     });
 
     server.get('/register', (req, res) => {

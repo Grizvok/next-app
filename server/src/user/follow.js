@@ -7,17 +7,25 @@ const db = require('../db/index');
 const router = new Router();
 
 //get a list of a who a user is following
-router.get('/follow', async (req, res) => {
-  // if (req.user) {
-  //   const rows = await db.query(
-  //     'SELECT following FROM users.client_follow WHERE follower = $1',
-  //     [req.user]
-  //   );
-  //   res.status(200).send({ data: 'Hello World!' });
-  // }
+router.get('/:user', async (req, res) => {
+  const { user } = req.params;
+  const rows = await db.query(
+    'SELECT id FROM users.client WHERE sci_user = $1',
+    [user]
+  );
+  const id = rows.rows[0].id;
+  const query = {
+    text:
+      'SELECT sci_user FROM users.client INNER JOIN users.client_follow ON(client.id = following) WHERE follower = $1',
+    values: [id],
+    rowMode: 'array',
+  };
+  const followedUserQuery = await db.query(query);
+  const followedUsers = followedUserQuery.rows[0];
+  res.status(200).send({ data: followedUsers });
 });
 
-router.post('/follow', async (req, res) => {
+router.post('/', async (req, res) => {
   const followerRows = await db.query(
     'SELECT id FROM users.client WHERE sci_user = $1',
     [req.body.followerUser]
