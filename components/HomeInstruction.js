@@ -1,26 +1,24 @@
 //npm packages
-import React from "react";
+import React from 'react';
 
 export default () => (
   <div align="left" className="container instruction">
     <div className="column is-one-third">
       <section className="section is-paddingless has-text-black instruction-section">
-        <i className="fab fa-youtube fa-lg" />&nbsp; Upload your swing videos to
-        Youtube
+        <i class="fas fa-money-bill-wave-alt fa-lg" />
+        &nbsp; Update your public knowledge bank
       </section>
       <section className="section is-paddingless has-text-black instruction-section">
-        <i className="fas fa-american-sign-language-interpreting fa-lg" />&nbsp;
-        Share them with your Sci Sport instructor
+        <i class="fas fa-receipt fa-lg" />
+        &nbsp; Create an acquisition ticket to seek new knowledge
       </section>
       <section className="section is-paddingless has-text-black instruction-section">
-        <i className="fas fa-hands" />&nbsp; Receive feedback and drills from your
-        instructor
+        <i class="fas fa-binoculars fa-lg" />
+        &nbsp; Search for suitable LedgeTrade opportunities
       </section>
       <section className="section is-paddingless has-text-black instruction-section">
-        <i className="fas fa-bullseye" />&nbsp; Practice to hone your skills
-      </section>
-      <section className="section has-text-black is-paddingless">
-        <i className="fas fa-sync" />&nbsp; Repeat
+        <i className="fas fa-american-sign-language-interpreting fa-lg" />
+        &nbsp; Conduct trading sessions to exchange knowledge
       </section>
     </div>
   </div>

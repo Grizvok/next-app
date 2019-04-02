@@ -30,6 +30,7 @@
     "express": "^4.16.4",
     "express-promise-router": "^3.0.3",
     "express-session": "^1.15.6",
+    "immutable": "^4.0.0-rc.12",
     "isomorphic-unfetch": "^2.1.1",
     "knex": "^0.15.2",
     "localforage": "^1.7.3",
@@ -48,6 +49,8 @@
     "react-dom": "^16.8.2",
     "redis": "^2.8.0",
     "serialize-error": "^2.1.0",
+    "slate": "^0.44.12",
+    "slate-react": "^0.21.18",
     "unstated": "^2.1.1",
     "winston": "^3.0.0"
   },

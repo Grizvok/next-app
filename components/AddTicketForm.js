@@ -38,9 +38,6 @@ export default class AddTicketForm extends React.Component {
       credentials: 'include',
       body: JSON.stringify(payload),
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJhbGciOiJIUzI1NiJ9.R3JpenZvaw.Z9DrrJKETt8i_nZh4Fme2P5snwvgfhzfHpqFqrH5k5g',
         'Content-Type': 'application/json',
       },
     });

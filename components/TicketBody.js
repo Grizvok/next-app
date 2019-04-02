@@ -14,7 +14,7 @@ class TicketBody extends React.Component {
           <div className="field">
             <div className="control">
               <textarea
-                className="column is-three-quarters"
+                className="column is-three-fifths"
                 value={this.props.editedTicketDescription}
                 name="editedTicketDescription"
                 onChange={this.props.handleTicketChange}
@@ -45,7 +45,7 @@ class TicketBody extends React.Component {
       );
     } else {
       return (
-        <div className="box ticket-body column is-three-quarters">
+        <div className="ticket-body column is-full">
           {this.props.ticketBody}
         </div>
       );

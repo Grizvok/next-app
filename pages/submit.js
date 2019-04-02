@@ -13,7 +13,6 @@ export default class Submit extends React.Component {
     return (
       <Subscribe to={[userStore]}>
         {(userstore) => {
-          console.log(userstore.state);
           if (userstore.state.currentUser) {
             return (
               <Layout>

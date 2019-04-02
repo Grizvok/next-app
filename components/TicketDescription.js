@@ -97,54 +97,48 @@ class TicketDescription extends React.Component {
     return (
       <Subscribe to={[userStore]}>
         {(userstore) => (
-          <div className="columns">
-            <div className="box column is-four-fifths ticket-box">
-              <article className="media">
-                <div className="media-left" />
-                <div className="media-content">
-                  <div className="content">
-                    <p className="ticketpage-title">
-                      {this.props.ticket.ticket_title}
-                    </p>
-                    <p className="ticketpage-creator">
-                      submitted by{' '}
-                      <Link
-                        as={`/user/${this.props.ticket.sci_user}`}
-                        href={`/user?id=${this.props.ticket.sci_user}`}
-                      >
-                        <a> {this.props.ticket.sci_user}</a>
-                      </Link>{' '}
-                      {timeSinceCreation} ago
-                      <EditInformation editDate={this.state.timeSinceEdit} />
-                    </p>
-                    <TicketBody
-                      ticketBody={this.state.ticketDescription}
-                      editedTicketDescription={
-                        this.state.editedTicketDescription
-                      }
-                      editMode={this.state.editView}
-                      handleEditCancel={this.handleEditCancel}
-                      handleSubmit={this.handleSubmit}
-                      handleTicketChange={this.handleTicketChange}
-                    />
-                  </div>
-                  <nav className="level ticket-controls is-mobile">
-                    <div className="level-left">
-                      <a className="level-item" aria-label="reply">
-                        <span className="icon is-small">
-                          <i className="fas fa-reply" aria-hidden="true" />
-                        </span>
-                      </a>
-                      <EditTicketButton
-                        ticketOwner={this.props.ticket.sci_user}
-                        handleEditMode={this.handleEditMode}
-                      />
-                    </div>
-                  </nav>
+          <article className="media">
+            <div className="media-left" />
+            <div className="media-content">
+              <div className="content">
+                <p className="ticketpage-title">
+                  {this.props.ticket.ticket_title}
+                </p>
+                <p className="ticketpage-creator">
+                  submitted by{' '}
+                  <Link
+                    as={`/user/${this.props.ticket.sci_user}`}
+                    href={`/user?id=${this.props.ticket.sci_user}`}
+                  >
+                    <a> {this.props.ticket.sci_user}</a>
+                  </Link>{' '}
+                  {timeSinceCreation} ago
+                  <EditInformation editDate={this.state.timeSinceEdit} />
+                </p>
+                <TicketBody
+                  ticketBody={this.state.ticketDescription}
+                  editedTicketDescription={this.state.editedTicketDescription}
+                  editMode={this.state.editView}
+                  handleEditCancel={this.handleEditCancel}
+                  handleSubmit={this.handleSubmit}
+                  handleTicketChange={this.handleTicketChange}
+                />
+              </div>
+              <nav className="level ticket-controls is-mobile">
+                <div className="level-left">
+                  <a className="level-item" aria-label="reply">
+                    <span className="icon is-small">
+                      <i className="fas fa-reply" aria-hidden="true" />
+                    </span>
+                  </a>
+                  <EditTicketButton
+                    ticketOwner={this.props.ticket.sci_user}
+                    handleEditMode={this.handleEditMode}
+                  />
                 </div>
-              </article>
+              </nav>
             </div>
-          </div>
+          </article>
         )}
       </Subscribe>
     );

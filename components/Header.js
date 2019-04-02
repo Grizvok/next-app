@@ -25,14 +25,10 @@ class Header extends React.Component {
 
   render() {
     return (
-      <nav className="navbar is-light is-info is-fixed-top">
+      <nav className="navbar is-light is-fixed-top">
         <div className="navbar-brand">
           <Link prefetch href="/">
-            <a className="navbar-item">
-              Sci&nbsp;
-              <i className="fas fa-flask" />
-              &nbsp;Sport
-            </a>
+            <a className="navbar-item">LedgeTrade</a>
           </Link>
           <BurgerIcon
             handleClick={this.handleClick}

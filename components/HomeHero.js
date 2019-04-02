@@ -9,13 +9,13 @@ const HomeHero = () => (
     <div className="hero-head" />
     <div className="container has-text-centered is-fluid">
       <h1 className="title has-text-danger is-size-1">
-        <em>Enter</em>&nbsp; Sci Sport
+        <em>Enter</em>&nbsp; LedgeTrade
       </h1>
       <p>
         <i className="fas fa-angle-double-down has-text-info fa-2x" />
       </p>
       <h2 className=" is-size-4 has-text-danger subtitle">
-        <br />A platform for systematic sport improvement
+        <br />A platform for person to person knowledge trading
       </h2>
       <HomeInstruction />
     </div>
