@@ -12,10 +12,9 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
-    console.log(req.headers);
-    const token = req.headers['authorization'].split(' ')[1];
-
-    const user = await jwt.verify(token, process.env.JWT_SECRET);
+    const { token } = req.cookies;
+    console.log(req.cookies);
+    const user = jwt.verify(token, process.env.JWT_SECRET);
 
     if (!req.user) {
       res

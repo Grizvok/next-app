@@ -7,6 +7,7 @@ const db = require('../db/index');
 const router = new Router();
 //get specific ticket
 router.get('/user/:ticketID', async (req, res) => {
+  console.log(req);
   const ticketID = req.params.ticketID;
   const rows = await db.query(
     'SELECT ticket.id, ticket_title, ticket_category, ticket_creation_date, ticket_description, last_edit, sci_user FROM users.ticket INNER JOIN users.client ON(client.id = user_id_fkey) WHERE ticket.id = $1',

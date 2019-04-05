@@ -2,7 +2,8 @@ import React from 'react';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import { BoldMark, ItalicMark } from './Marks';
-import { Bold, Italic, List, Code, UnderLine, ToolBar } from './components';
+import { Bold, Italic, List, Code, UnderLine } from './components';
+import { ToolBar } from './CommentToolBar';
 import { isKeyHotkey } from 'is-hotkey';
 import { KeyUtils } from 'slate';
 
@@ -45,6 +46,10 @@ class RichCommentBox extends React.Component {
 
   ref = (editor) => {
     this.editor = editor;
+  };
+
+  handleSubmit = (e) => {
+    console.log(this.state.value);
   };
 
   onChange = ({ value }) => {
@@ -145,12 +150,16 @@ class RichCommentBox extends React.Component {
           >
             <List />
           </button>
+          <button
+            onClick={this.handleSubmit}
+            className="button is-link submit-comment-button"
+          >
+            Comment
+          </button>
         </ToolBar>
       </div>
     );
   }
 }
-
-const placeHolderDiv = () => <p>Hello world!</p>;
 
 export default RichCommentBox;

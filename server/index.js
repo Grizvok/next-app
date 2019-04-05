@@ -15,12 +15,13 @@ const redis = require('redis').createClient();
 
 // our packages
 const winston = require('./src/util/logger');
-const setupAuthRoutes = require('./src/auth/index');
-const setupVideoRoutes = require('./src/video/index');
-const setupUserRoutes = require('./src/user/index');
-const setupTicketRoutes = require('./src/ticket/index');
-const setupFollowRoutes = require('./src/follow/index');
+const setupAuthRoutes = require('./src/auth');
+const setupVideoRoutes = require('./src/video');
+const setupUserRoutes = require('./src/user');
+const setupTicketRoutes = require('./src/ticket');
+const setupFollowRoutes = require('./src/follow');
 const setupSearchRoutes = require('./src/search');
+const setupCommentRoutes = require('./src/comment');
 
 app
   .prepare()
@@ -58,6 +59,8 @@ app
     setupFollowRoutes(server);
 
     setupSearchRoutes(server);
+
+    setupCommentRoutes(server);
 
     // setup SSR routes
     server.get('/', (req, res) => {

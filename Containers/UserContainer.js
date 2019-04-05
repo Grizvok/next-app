@@ -73,9 +73,6 @@ export default class UserContainer extends Container {
       credentials: 'include',
       body: JSON.stringify(payload),
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJhbGciOiJIUzI1NiJ9.R3JpenZvaw.Z9DrrJKETt8i_nZh4Fme2P5snwvgfhzfHpqFqrH5k5g',
         'Content-Type': 'application/json',
       },
     });
@@ -183,9 +180,6 @@ export default class UserContainer extends Container {
         userTickets: userTickets.tickets,
         followedUsers: followedUsers.data,
       });
-      const cookieString = `user_cookie=${this.state.token}`;
-
-      document.cookie = cookieString;
 
       Router.push(
         `/user?id=${this.state.currentUser}`,

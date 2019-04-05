@@ -9,7 +9,7 @@ import { userStore } from '../Containers/UserContainer';
 function RegisterButton() {
   return (
     <Link prefetch href="/register" as="/register">
-      <a className="button is-light">Register</a>
+      <a className="button">Register</a>
     </Link>
   );
 }

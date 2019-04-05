@@ -46,9 +46,17 @@ passport.use(
   })
 );
 
+const cookieExtractor = function(req) {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies['token'];
+  }
+  return token;
+};
+
 //implementation of json web tokens
 const opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = process.env.JWT_SECRET;
 
 passport.use(

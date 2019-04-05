@@ -2,6 +2,7 @@
 import React from 'react';
 import { Subscribe } from 'unstated';
 import classNames from 'classnames';
+import Link from 'next/link';
 
 //our packages
 import { userStore } from '../Containers/UserContainer';
@@ -29,20 +30,17 @@ class LoginForm extends React.Component {
       'is-danger': true,
       'is-invisible': true,
     });
-    //now conditionally render if there is an error after handling login
+
     return (
       <Subscribe to={[userStore]}>
         {(userstore) => (
           <form method="POST" onSubmit={userstore.handleUserUpdate}>
-            <div
-              align="center"
-              className="column is-half container form-container"
-            >
+            <div align="center" className="form-container">
               <div className="box">
-                <div className="field">
-                  <p className="control has-icons-left has-icons-right">
+                <div className="field username-input">
+                  <p className="control has-icons-left">
                     <input
-                      className="input"
+                      className="input is-medium"
                       name="user"
                       type="text"
                       placeholder="Username"
@@ -51,17 +49,17 @@ class LoginForm extends React.Component {
                       required
                     />
                     <span className="icon is-small is-left">
-                      <i className="fas fa-envelope" />
+                      <i className="fas fa-user" />
                     </span>
                   </p>
                   <span className={loginErrorClass}>
                     Incorrect username or password.
                   </span>
                 </div>
-                <div className="field">
+                <div className="field password-input">
                   <p className="control has-icons-left">
                     <input
-                      className="input"
+                      className="input is-medium"
                       name="password"
                       type="password"
                       autoComplete="off"
@@ -77,9 +75,17 @@ class LoginForm extends React.Component {
                 </div>
                 <div className="field">
                   <p className="control">
-                    <button className="button is-success">Login</button>
+                    <button className="button is-success is-fullwidth">
+                      Login
+                    </button>
                   </p>
                 </div>
+                <span className="not-registered-text">
+                  Not registered? Create an{' '}
+                  <Link href="/register" as="/register">
+                    account
+                  </Link>
+                </span>
               </div>
             </div>
           </form>

@@ -21,7 +21,7 @@ export default () => (
 function LoginButton(props) {
   return (
     <Link prefetch href="/login" as="/login">
-      <a className="button is-light">Login</a>
+      <a className="button">Login</a>
     </Link>
   );
 }
@@ -35,7 +35,7 @@ class LogoutButton extends React.Component {
       <Subscribe to={[userStore]}>
         {(userstore) => (
           <Link href="javascript:void(0)">
-            <a onClick={this.props.handleLogout} className="button is-light">
+            <a onClick={this.props.handleLogout} className="button">
               Logout
             </a>
           </Link>

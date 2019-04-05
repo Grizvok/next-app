@@ -5,6 +5,7 @@ import { Subscribe } from 'unstated';
 import { userStore } from '../Containers/UserContainer';
 import RichTextEditor from './RichTextEditor';
 import { KeyUtils } from 'slate';
+import CommentField from './CommentField';
 
 export default class CommentControl extends React.Component {
   constructor(props) {
@@ -17,11 +18,13 @@ export default class CommentControl extends React.Component {
         {(userstore) => {
           if (userstore.state.currentUser) {
             return (
-              <div className="column text-editor-column is-four-fifths">
-                <p className="current-comment-user">
-                  Comment as {userstore.state.currentUser}
-                </p>
-                <RichTextEditor />
+              <div className="columns is-centered">
+                <div className="column text-editor-column is-four-fifths">
+                  <p className="current-comment-user">
+                    Comment as {userstore.state.currentUser}
+                  </p>
+                  <CommentField />
+                </div>
               </div>
             );
           } else {

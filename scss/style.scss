@@ -5,10 +5,16 @@ $orange: #e74c3c;
 
 $danger: $orange;
 
-$info: #1abc9c;
+$info: #3498db;
+
+$box-radius: $radius-small;
 
 .instruction {
   padding-top: 5%;
+}
+
+.submit-comment-button {
+  margin-left: 70%;
 }
 
 .ticket-box {
@@ -18,11 +24,6 @@ $info: #1abc9c;
 
 .text-editor {
   padding-bottom: 10%;
-  margin-left: 2%;
-}
-
-.text-editor-column {
-  margin-left: 1%;
 }
 
 .current-comment-user {
@@ -86,8 +87,22 @@ $info: #1abc9c;
   color: $blue;
 }
 
+.username-input {
+  margin-top: 2%;
+}
+
+.password-input {
+  margin-top: 1%;
+  padding-bottom: 5%;
+}
+
 .avatarcard {
   margin-top: 2%;
+}
+
+.not-registered-text {
+  font-size: 0.75em;
+  padding-top: 3%;
 }
 
 .instruction-section {
@@ -96,6 +111,8 @@ $info: #1abc9c;
 
 .form-container {
   margin-top: 5%;
+  margin-left: 40%;
+  margin-right: 40%;
 }
 
 .add-video-form {

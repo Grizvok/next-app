@@ -29,9 +29,3 @@ export const UnderLine = () => (
     <i className="fas fa-underline" />
   </span>
 );
-
-export const ToolBar = (props) => (
-  <div className="comment-toolbar has-background-grey-lighter">
-    {props.children}
-  </div>
-);

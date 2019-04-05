@@ -4,10 +4,13 @@ const jwt = require('jsonwebtoken');
 
 const router = new Router();
 
-router.post('/', passport.authenticate('local'), (req, res) => {
+router.post('/', passport.authenticate('local'), async (req, res) => {
   if (req.user) {
-    const token = jwt.sign(req.user, process.env.JWT_SECRET);
-    res.send({ user: req.user, token: token });
+    const token = await jwt.sign(req.user, process.env.JWT_SECRET);
+    res
+      .status(200)
+      .cookie('token', token, { maxAge: 86400, httpOnly: true })
+      .send({ user: req.user, token });
   } else {
     res.status(401).send({ error: 'Error logging in' });
   }
