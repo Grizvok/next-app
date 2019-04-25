@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import Error from 'next/error';
 
 //our packages
-import Layout from '../components/MyLayout';
-import UserNav from '../components/UserNav';
-import UserHero from '../components/UserHero';
+import Layout from '../../components/MyLayout';
+import UserNav from '../../components/UserNav';
+import UserHero from '../../components/UserHero';
 
 export default class UserPage extends React.Component {
   static async getInitialProps(context) {
@@ -29,6 +29,10 @@ export default class UserPage extends React.Component {
     };
   }
 
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     if (this.props.statusCode) {
       return <Error statusCode={this.props.statusCode} />;
@@ -36,7 +40,7 @@ export default class UserPage extends React.Component {
 
     return (
       <Layout>
-        <UserNav />
+        <UserNav user={this.props.user} />
         <UserHero tickets={this.props.tickets} user={this.props.user} />
       </Layout>
     );

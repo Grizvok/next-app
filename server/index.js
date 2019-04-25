@@ -32,7 +32,7 @@ app
 
     server.use(bodyParser.json());
     server.use(bodyParser.urlencoded({ extended: true }));
-    // we use the session secret for cookie-parser to keep them consistent between it and express-session or else errors can occur
+    // we use the session secret for cookie-parser to keep the secret consistent between it and express-session or else errors can occur
     server.use(cookieParser(process.env.SESSION_SECRET));
     server.use(
       session({
@@ -80,7 +80,6 @@ app
     });
 
     server.get('/register', (req, res) => {
-      console.log(req.user);
       if (req.user) {
         res.redirect(`/user/${req.user.sci_user}`);
         return;
@@ -91,6 +90,16 @@ app
     server.get('/user/:id', (req, res) => {
       const queryParams = { id: req.params.id };
       return app.render(req, res, '/user', queryParams);
+    });
+
+    server.get('/user/:id/comments', (req, res) => {
+      const queryParams = { id: req.params.id };
+      return app.render(req, res, '/user/comments', queryParams);
+    });
+
+    server.get('/user/:id/skills', (req, res) => {
+      const queryParams = { id: req.params.id };
+      return app.render(req, res, '/user/skills', queryParams);
     });
 
     server.get('/ticket/:id', (req, res) => {

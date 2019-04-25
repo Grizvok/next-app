@@ -13,7 +13,6 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     const { token } = req.cookies;
-    console.log(req.cookies);
     const user = jwt.verify(token, process.env.JWT_SECRET);
 
     if (!req.user) {
@@ -38,10 +37,8 @@ router.post(
             'INSERT INTO users.ticket(ticket_title, ticket_description, ticket_category, user_id_fkey) VALUES ($1, $2, $3, $4) RETURNING *',
             [ticketTitle, ticketDescription, ticketCategory, userID]
           );
-          console.log(result);
           const ticket = result.rows[0];
           ticket.sci_user = user;
-          // console.log(ticket);
           res.status(200).send({ ticket });
           return;
         }

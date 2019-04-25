@@ -4,4 +4,4 @@ HIGH (FIX AFTER COMPLETION OF CURRENT MODULE GIVEN TIME TO COMPLETION LESS THAN 
 MEDIUM (SCHEDULE FIX)
 LOW (SCHEDULE FIX)
 
---STOP hardcoding authorization bearer token when sending jwt (HIGH PRIORITY)
+CRITICAL - Fix casing of usernames. Grizvok and gRizVok should NOT be two separate accounts!!

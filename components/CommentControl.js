@@ -23,7 +23,7 @@ export default class CommentControl extends React.Component {
                   <p className="current-comment-user">
                     Comment as {userstore.state.currentUser}
                   </p>
-                  <CommentField />
+                  <CommentField ticketID={this.props.ticketID} />
                 </div>
               </div>
             );

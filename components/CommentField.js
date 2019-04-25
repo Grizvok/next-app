@@ -25,24 +25,40 @@ export default class CommentField extends React.Component {
     });
   }
 
-  async handleSubmit(e) {
+  handleSubmit = async (e, payload) => {
     e.preventDefault();
-    const payload = {};
-
-    const res = await fetch('http://localhost:3000/api/comment/create', {
+    const res = await fetch('http://localhost:3000/api/comment', {
       method: 'POST',
       withCredentials: true,
       credentials: 'include',
       body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
-  }
+
+    if (res.status === 200) {
+      this.setState({
+        comment: '',
+      });
+    }
+  };
 
   render() {
     return (
       <Subscribe to={[userStore]}>
         {(userstore) => {
           return (
-            <form method="POST" onSubmit={this.handleSubmit}>
+            <form
+              onSubmit={(e) => {
+                const payload = {
+                  comment: this.state.comment.trim(),
+                  user: userstore.state.currentUser,
+                  ticket: this.props.ticketID,
+                };
+                this.handleSubmit(e, payload);
+              }}
+            >
               <textarea
                 className="textarea"
                 placeholder="Propose your LedgeTrade acquisition!"
@@ -51,9 +67,22 @@ export default class CommentField extends React.Component {
                 name="comment"
               />
               <div className="field is-grouped">
-                <div className="control">
-                  <button className="button is-link">Submit</button>
-                </div>
+                {this.state.comment.trim().length > 0 ? (
+                  <div className="control">
+                    <button className="button is-link">Comment</button>
+                  </div>
+                ) : (
+                  <div className="control">
+                    <button
+                      className="button is-link"
+                      title="Disabled button"
+                      disabled
+                    >
+                      Comment
+                    </button>
+                  </div>
+                )}
+
                 <div className="control">
                   <button className="button is-text">Cancel</button>
                 </div>

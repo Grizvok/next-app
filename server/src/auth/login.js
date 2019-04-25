@@ -9,7 +9,7 @@ router.post('/', passport.authenticate('local'), async (req, res) => {
     const token = await jwt.sign(req.user, process.env.JWT_SECRET);
     res
       .status(200)
-      .cookie('token', token, { maxAge: 86400, httpOnly: true })
+      .cookie('token', token, { maxAge: 1186400, httpOnly: true })
       .send({ user: req.user, token });
   } else {
     res.status(401).send({ error: 'Error logging in' });

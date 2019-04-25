@@ -8,7 +8,9 @@ const JwtStrategy = require('passport-jwt').Strategy,
 const db = require('../db/index');
 const hasher = require('../util/hash');
 
-passport.serializeUser(async (user, done) => await done(null, user));
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
 
 passport.deserializeUser(async (id, done) => {
   let user = null;
@@ -17,12 +19,11 @@ passport.deserializeUser(async (id, done) => {
       'SELECT sci_user, id FROM users.client WHERE sci_user = $1',
       [id]
     );
-    user = rows.rows[0];
+    return done(null, rows.rows[0]);
   } catch (e) {
     done(e, false);
     return;
   }
-  return done(null, user);
 });
 
 passport.use(
@@ -63,9 +64,11 @@ passport.use(
   new JwtStrategy(opts, async (jwt_payload, done) => {
     let user;
     try {
-      user = await db.query('SELECT id FROM users.client WHERE sci_user = $1', [
-        jwt_payload.id,
-      ]);
+      const rows = await db.query(
+        'SELECT sci_user, id FROM users.client WHERE sci_user = $1',
+        [jwt_payload]
+      );
+      user = rows.rows[0];
     } catch (e) {
       return done(e, false);
     }

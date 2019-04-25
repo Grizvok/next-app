@@ -31,7 +31,7 @@ const FollowButtonWithRouter = withRouter(FollowButton);
 
 const NewVideoButton = () => (
   <Link href="/submit">
-    <a className="button is-fullwidth is-link">Add new video</a>
+    <a className="button is-fullwidth is-link">Add new ticket</a>
   </Link>
 );
 

@@ -1,48 +1,29 @@
 import React from 'react';
 import Link from 'next/link';
+import { withRouter } from 'next/router';
+
+import TicketTab from './TicketTab';
+import CommentTab from './CommentTab';
+import SkillTab from './SkillTab';
 
 class UserNav extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
+    const { router } = this.props;
+    const { user } = this.props;
+
     return (
-      <div className="tabs has-background-white is-centered is-boxed">
+      <div className="tabs has-background-white">
         <ul>
-          <li className="is-active">
-            <Link prefetch href="">
-              <a>
-                <span className="icon is-small">
-                  <i className="fas fa-book-open" aria-hidden="true" />
-                </span>
-                <span>Overview</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link prefetch href="">
-              <a>
-                <span className="icon is-small">
-                  <i className="fas fa-receipt" aria-hidden="true" />
-                </span>
-                <span>Tickets</span>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link prefetch href="">
-              <a>
-                <span className="icon is-small">
-                  <i className="fas fa-film" aria-hidden="true" />
-                </span>
-                <span>Skills</span>
-              </a>
-            </Link>
-          </li>
+          <TicketTab activeTab={router.pathname} user={user} />
+          <CommentTab activeTab={router.pathname} user={user} />
+          <SkillTab activeTab={router.pathname} user={user} />
         </ul>
       </div>
     );
   }
 }
 
-export default UserNav;
+export default withRouter(UserNav);
