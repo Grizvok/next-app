@@ -102,11 +102,8 @@ export default class AddTicketForm extends React.Component {
       <Subscribe to={[userStore]}>
         {(userstore) => {
           return (
-            <div
-              align="center"
-              className="column is-half container add-video-form"
-            >
-              <div className="box form-container">
+            <div align="center" className="column is-half container">
+              <div className="box ticket-form-container">
                 <form
                   method="POST"
                   onSubmit={(e) => {

@@ -65,29 +65,3 @@ export default class MyApp extends App {
     );
   }
 }
-
-// if (isServer) {
-//   if (ctx.req.user) {
-//     userState.currentUser = ctx.req.user.sci_user;
-//     try {
-//       const res = await fetch(
-//         `http://localhost:3000/api/ticket/${ctx.req.user.sci_user}`
-//       ).then((r) => r.json());
-//       userState.userTickets = res.tickets;
-//       try {
-//         const res = await fetch(
-//           `http://localhost:3000/api/user/follow/${ctx.req.user.sci_user}`
-//         ).then((r) => r.json());
-//         userState.followedUsers = res.data;
-//       } catch (e) {
-//         throw Error(e);
-//       }
-//     } catch (e) {
-//       throw Error(e);
-//     } finally {
-//       await userStore.initState(userState);
-//       return { serverState: userStore.state, pageProps };
-//     }
-//   }
-//   return { pageProps };
-// }
