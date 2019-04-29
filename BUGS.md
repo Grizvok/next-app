@@ -5,5 +5,3 @@ MEDIUM (SCHEDULE FIX)
 LOW (SCHEDULE FIX)
 
 CRITICAL - Fix casing of usernames. Grizvok and gRizVok should NOT be two separate accounts!!
-
-MEDIUM - Look into dynamic imports and code splitting so that unnecessary components are not loaded until that absolutely need to be!

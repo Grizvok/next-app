@@ -7,7 +7,24 @@ import CommentDropDown from './CommentDropDown';
 export default class UserComment extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      editMode: false,
+    };
   }
+
+  openEditMode = () => {
+    this.setState({
+      editMode: true,
+    });
+  };
+
+  closeEditMode = () => {
+    this.setState({
+      editMode: false,
+    });
+  };
+
   render() {
     const currentDate = moment();
 

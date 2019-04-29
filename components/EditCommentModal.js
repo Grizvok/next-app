@@ -14,7 +14,7 @@ export default class EditCommentModal extends React.Component {
           <div className="box modal-confirmation-box">
             <div className="close-modal-div">
               <button
-                onClick={this.props.handleModalToggle}
+                onClick={this.props.close}
                 className="delete "
                 aria-label="close"
               />

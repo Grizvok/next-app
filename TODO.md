@@ -11,3 +11,8 @@
 -Clean up the presentation of search results
 
 --Implement something similar to reddit.com/explore (give lists of open tickets from a smattering of categories)
+
+--Look into dynamic imports and code splitting so that unnecessary components are not loaded until that absolutely need to be!
+
+April 29 2019
+--First task - Finish API and UI for editing comments.
