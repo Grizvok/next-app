@@ -19,7 +19,6 @@ router.delete('/:ticketID', async (req, res) => {
     [ticketID, user]
   );
   res.status(200).send({ message: 'this ticket was successfully deleted' });
-  return;
 });
 
 module.exports = router;

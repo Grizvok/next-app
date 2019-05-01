@@ -7,6 +7,14 @@ export default class MyDocument extends Document {
     return { ...initialProps };
   }
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isModalActive: false,
+    };
+  }
+
   render() {
     return (
       <html className="has-navbar-fixed-top">
@@ -26,7 +34,7 @@ export default class MyDocument extends Document {
         </Head>
         <body className="custom_class">
           <Main />
-          <div id="modal" />
+          <div className="is-clipped" id="modal" />
           <NextScript />
         </body>
       </html>

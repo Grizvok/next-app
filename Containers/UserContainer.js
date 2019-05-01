@@ -65,6 +65,25 @@ export default class UserContainer extends Container {
     }
   };
 
+  handleCommentEdit = async (e, payload) => {
+    console.log(payload);
+    e.preventDefault();
+
+    const res = await fetch(
+      `http://localhost:3000/api/comment/${payload.commentID}`,
+      {
+        method: 'PATCH',
+        withCredentialsL: true,
+        credentials: 'include',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return res.status;
+  };
+
   handleTicketCreation = async (e, payload) => {
     e.preventDefault();
     const res = await fetch('http://localhost:3000/api/ticket', {
@@ -77,17 +96,15 @@ export default class UserContainer extends Container {
       },
     });
     const resJSON = await res.json();
-    console.log(resJSON);
     if (res.status === 200) {
       this.setState({
         userTickets: [resJSON.ticket, ...this.state.userTickets],
       });
-      console.log(this.state.userTickets);
+
       Router.push(
         `/ticket?id=${resJSON.ticket.id}`,
         `/ticket/${resJSON.ticket.id}`
       );
-      return;
     }
   };
 
