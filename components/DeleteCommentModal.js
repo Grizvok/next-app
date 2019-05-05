@@ -7,19 +7,35 @@ export default class DeleteCommentModal extends React.Component {
 
   render() {
     return (
-      <div className="modal is-active delete-comment-modal">
+      <div className="modal is-active">
         <div className="modal-background" />
-        <div className="modal-content">
-          <div className="box modal-confirmation-box">
-            <div className="close-modal-div">
-              <button
-                onClick={this.props.close}
-                className="delete "
-                aria-label="close"
-              />
-            </div>
-            <h2 className="reset-password-h2">Delete your comment?</h2>
-          </div>
+        <div className="modal-card">
+          <header className="modal-card-head">
+            <p className="modal-card-title">Delete comment</p>
+            <button
+              onClick={this.props.close}
+              className="delete"
+              aria-label="close"
+            />
+          </header>
+          <section className="modal-card-body">
+            Are you sure you want to delete your comment?
+          </section>
+          <footer className="modal-card-foot">
+            <button
+              onClick={() => {
+                const id = this.props.id;
+
+                this.props.deleteComment(id);
+              }}
+              className="button is-danger"
+            >
+              Delete
+            </button>
+            <button onClick={this.props.close} className="button">
+              Cancel
+            </button>
+          </footer>
         </div>
       </div>
     );

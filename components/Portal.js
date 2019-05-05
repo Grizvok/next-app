@@ -8,7 +8,6 @@ export default class Portal extends React.Component {
   }
 
   render() {
-    console.log('rendered in the portal!');
     if (this.element === undefined) {
       return null;
     }

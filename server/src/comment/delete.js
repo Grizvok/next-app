@@ -4,9 +4,9 @@ const router = new Router();
 
 const checkAuthentication = require('../util/checkAuthentication');
 
-router.delete('/:ticketID', checkAuthentication, async (req, res) => {
+router.delete('/:id', checkAuthentication, async (req, res) => {
   const user = req.user.id;
-  const ticketID = req.params;
+  const { id } = req.params;
 
   const comment = await db.query(
     'SELECT user_id_fkey FROM users.ticket_comment WHERE id = $1',
@@ -19,6 +19,7 @@ router.delete('/:ticketID', checkAuthentication, async (req, res) => {
   }
 
   const commentOwner = comment.rows[0].user_id_fkey;
+  console.log(commentOwner, user, id);
 
   if (commentOwner !== user) {
     res
@@ -30,7 +31,7 @@ router.delete('/:ticketID', checkAuthentication, async (req, res) => {
   try {
     const rows = await db.query(
       'DELETE FROM users.ticket_comment WHERE ticket_comment.id = $1',
-      [ticketID]
+      [id]
     );
     res.status(200).send({ message: 'the comment was successfully deleted' });
   } catch (e) {

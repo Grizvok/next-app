@@ -65,15 +65,26 @@ export default class UserContainer extends Container {
     }
   };
 
+  handleCommentDelete = async (id) => {
+    const res = await fetch(`http://localhost:3000/api/comment/${id}`, {
+      method: 'DELETE',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return res.status;
+  };
+
   handleCommentEdit = async (e, payload) => {
-    console.log(payload);
     e.preventDefault();
 
     const res = await fetch(
       `http://localhost:3000/api/comment/${payload.commentID}`,
       {
         method: 'PATCH',
-        withCredentialsL: true,
+        withCredentials: true,
         credentials: 'include',
         body: JSON.stringify(payload),
         headers: {

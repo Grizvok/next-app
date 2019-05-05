@@ -27,11 +27,12 @@ $box-radius: $radius-small;
 .reset-password-h2 {
   font-size: 1.2em;
   font-weight: bold;
+  display: inline-block;
 }
 
-.close-modal-div {
-  margin-left: 95%;
-  margin-bottom: 5%;
+.close-modal-span {
+  margin-left: 60%;
+  display: inline-block;
 }
 
 .comment-time-separator {
