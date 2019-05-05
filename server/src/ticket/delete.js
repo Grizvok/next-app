@@ -3,21 +3,37 @@ const Router = require('express-promise-router');
 
 //our packages
 const db = require('../db/index');
+const checkAuthentication = require('../util/checkAuthentication');
 
 const router = new Router();
 
-router.delete('/:ticketID', async (req, res) => {
-  if (!req.user) {
-    res.status(400).send({ error: 'You do not have the required permissions' });
+router.delete('/:id', checkAuthentication, async (req, res) => {
+  const { id } = req.params;
+  const user = req.user.id;
+
+  const ticket = await db.query(
+    'SELECT user_id_fkey FROM users.ticket WHERE id = $1',
+    [id]
+  );
+
+  if (ticket.rowCount === 0) {
+    res.status(400).send({ error: 'That ticket does not exist' });
     return;
   }
-  //get ticket to delete
-  const ticketID = req.params.ticketID;
-  const user = req.user.id;
-  const rows = await db.query(
-    'DELETE FROM users.ticket WHERE ticket.id = $1 AND user_id_fkey = $2',
-    [ticketID, user]
-  );
+
+  const ticketOwner = ticket.rows[0].user_id_fkey;
+
+  if (ticketOwner !== user) {
+    res.status(403).send({ error: 'You are not authorized' });
+    return;
+  }
+
+  try {
+    await db.query('DELETE FROM users.ticket WHERE ticket.id = $1', [id]);
+  } catch (e) {
+    res.status(500).send({ error: 'Something went wrong' });
+    return;
+  }
   res.status(200).send({ message: 'this ticket was successfully deleted' });
 });
 

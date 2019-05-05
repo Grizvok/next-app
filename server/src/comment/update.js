@@ -17,7 +17,7 @@ router.patch('/:id', checkAuthentication, async (req, res) => {
   }
 
   const comment = await db.query(
-    'SELECT user_id_fkey from users.ticket_comment WHERE id = $1',
+    'SELECT user_id_fkey FROM users.ticket_comment WHERE id = $1',
     [id]
   );
 
