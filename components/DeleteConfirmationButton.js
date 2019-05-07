@@ -1,6 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
-import fetch from 'isomorphic-unfetch';
 import { Subscribe } from 'unstated';
 
 import { userStore } from '../Containers/UserContainer';

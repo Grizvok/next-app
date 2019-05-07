@@ -19,7 +19,6 @@ router.delete('/:id', checkAuthentication, async (req, res) => {
   }
 
   const commentOwner = comment.rows[0].user_id_fkey;
-  console.log(commentOwner, user, id);
 
   if (commentOwner !== user) {
     res
@@ -29,15 +28,15 @@ router.delete('/:id', checkAuthentication, async (req, res) => {
   }
 
   try {
-    const rows = await db.query(
+    await db.query(
       'DELETE FROM users.ticket_comment WHERE ticket_comment.id = $1',
       [id]
     );
-    res.status(200).send({ message: 'the comment was successfully deleted' });
   } catch (e) {
     res.status(500).send({ error: 'Something went wrong', e });
     return;
   }
+  res.status(200).send({ message: 'the comment was successfully deleted' });
 });
 
 module.exports = router;

@@ -10,12 +10,10 @@ const router = new Router();
 router.get('/user/:userID', async (req, res) => {
   const { userID } = req.params;
   const rows = await db.query(
-    'SELECT ticket.ticket_title, ticket_comment.id, comment, comment_creation_date, ticket_comment.last_edit, sci_user FROM users.ticket_comment INNER JOIN users.ticket ON(ticket.id = ticket_id_fkey) INNER JOIN users.client ON(client.id = ticket_comment.user_id_fkey) WHERE sci_user = $1',
+    'SELECT ticket.ticket_title, ticket_comment.ticket_id_fkey, ticket_comment.id, comment, comment_creation_date, ticket_comment.last_edit, sci_user FROM users.ticket_comment INNER JOIN users.ticket ON(ticket.id = ticket_id_fkey) INNER JOIN users.client ON(client.id = ticket_comment.user_id_fkey) WHERE sci_user = $1',
     [userID]
   );
   const comments = rows.rows;
-
-  console.log(comments);
 
   res.send({ comments });
 });
@@ -30,6 +28,13 @@ router.get('/ticket/:ticketID', async (req, res) => {
   const comments = rows.rows;
 
   res.send({ comments });
+});
+
+// get all comments and coordinating tickets a user has commented on
+router.get('/:userID/tickets', async (req, res) => {
+  const userID = req.params;
+
+  const rows = await db.query('SELECT ');
 });
 
 // get a specific comment
