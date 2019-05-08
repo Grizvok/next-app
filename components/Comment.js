@@ -1,26 +1,6 @@
-// import React from 'react';
-
-// export default (props) => {
-//   return props.comments.map((comment) => {
-//     return (
-//       <article class="media">
-//         <figure class="media-left">
-//           <p class="image is-48x48" />
-//         </figure>
-//         <div class="media-content">
-//           <div class="content">
-//             <p>
-
-//             </p>
-//           </div>
-//         </div>
-//       </article>
-//     );
-//   });
-// };
-
 import React from 'react';
 import moment from 'moment';
+import Link from 'next/link';
 import { Subscribe } from 'unstated';
 import { userStore } from '../Containers/UserContainer';
 import EditCommentTextArea from './EditCommentTextArea';
@@ -92,11 +72,16 @@ class Comment extends React.Component {
             return <DeletedComment />;
           }
           return (
-            <article className="media user-comment">
+            <article className="media user-comment box">
               <div className="media-content">
                 <div className="content">
-                  <p className="commenter-username">
-                    {this.props.comment.sci_user}
+                  <p className="commenter-username user-commenter-link">
+                    <Link
+                      as={`/user/${this.props.comment.ticket_commenter}`}
+                      href={`/user?id=${this.props.comment.ticket_commenter}`}
+                    >
+                      <a>{this.props.comment.ticket_commenter}</a>
+                    </Link>
                     <span className="comment-time-separator has-text-grey">
                       ·
                     </span>
@@ -125,7 +110,7 @@ class Comment extends React.Component {
                       <span className="comment-reply-text">Reply</span>
                     </a>
                     {userstore.state.currentUser ===
-                    this.props.comment.sci_user ? (
+                    this.props.comment.ticket_commenter ? (
                       <div className="level-item comment-level-item">
                         <span className="icon is-small">
                           <CommentDropDown

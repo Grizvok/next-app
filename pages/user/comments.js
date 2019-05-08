@@ -22,7 +22,10 @@ export default class CommentPage extends React.Component {
           <div className="hero-head">
             <div className="columns">
               <div className="column is-9">
-                <UserComments comments={this.props.groupedComments} />
+                <UserComments
+                  user={this.props.user}
+                  comments={this.props.groupedComments}
+                />
               </div>
             </div>
           </div>

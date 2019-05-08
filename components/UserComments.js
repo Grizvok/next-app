@@ -17,7 +17,8 @@ export default class UserComments extends React.Component {
       const grouping = {};
       grouping.comments = [];
       const postTitle = comment[0].ticket_title;
-      grouping.post = { title: postTitle };
+      const postCreator = comment[0].ticket_creator;
+      grouping.post = { title: postTitle, postCreator: postCreator };
 
       comment.map((val) => {
         grouping.comments.push(val);
@@ -29,7 +30,13 @@ export default class UserComments extends React.Component {
 
   render() {
     return this.state.groupings.map((grouping, index) => {
-      return <CommentedOnPost key={index} grouping={grouping} />;
+      return (
+        <CommentedOnPost
+          user={this.props.user}
+          key={index}
+          grouping={grouping}
+        />
+      );
     });
   }
 }

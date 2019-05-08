@@ -23,6 +23,15 @@ $box-radius: $radius-small;
 .commented-on-box {
   margin-left: 1%;
   margin-top: 1%;
+  border: 0.5px solid transparent;
+}
+
+.commented-on-box:hover {
+  border: 0.5px solid black;
+}
+
+.commented-on-box {
+  margin-bottom: 0% !important;
 }
 
 .forgot-password-link {
@@ -45,10 +54,6 @@ $box-radius: $radius-small;
   margin-right: 1%;
 }
 
-.user-comment {
-  margin-top: 2%;
-}
-
 .comment-level-item {
   margin-left: 5%;
   cursor: pointer;
@@ -65,6 +70,17 @@ $box-radius: $radius-small;
 
 .ticket-box {
   margin-top: 2%;
+}
+
+.user-comment {
+  margin-left: 1%;
+  margin-bottom: 0.1% !important;
+  margin-top: 0.1% !important;
+  border: 0.5px solid transparent;
+}
+
+.user-comment:hover {
+  border: 0.5px solid black !important;
 }
 
 .text-editor {
@@ -109,12 +125,16 @@ $box-radius: $radius-small;
   font-weight: bold;
 }
 
+.user-commenter-link:hover {
+  text-decoration: underline;
+}
+
 .comment-text {
   font-size: 0.9em;
 }
 
 .commenter-username {
-  color: $orange;
+  color: $blue;
   font-size: 0.75em;
 }
 

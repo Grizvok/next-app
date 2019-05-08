@@ -10,7 +10,7 @@ const router = new Router();
 router.get('/user/:userID', async (req, res) => {
   const { userID } = req.params;
   const rows = await db.query(
-    'SELECT ticket.ticket_title, ticket_comment.ticket_id_fkey, ticket_comment.id, comment, comment_creation_date, ticket_comment.last_edit, sci_user FROM users.ticket_comment INNER JOIN users.ticket ON(ticket.id = ticket_id_fkey) INNER JOIN users.client ON(client.id = ticket_comment.user_id_fkey) WHERE sci_user = $1',
+    'SELECT b.ticket_title, b.ticket_category, a.ticket_id_fkey, a.id, a.comment, a.comment_creation_date, a.last_edit, c.sci_user AS ticket_commenter, d.sci_user AS ticket_creator FROM users.ticket_comment a INNER JOIN users.ticket b ON(b.id = a.ticket_id_fkey) INNER JOIN users.client c ON(c.id = a.user_id_fkey) INNER JOIN users.client d ON(d.id = b.user_id_fkey) WHERE c.sci_user = $1',
     [userID]
   );
   const comments = rows.rows;
