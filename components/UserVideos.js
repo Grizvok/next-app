@@ -22,19 +22,15 @@ class UserVideos extends React.Component {
     return (
       <Subscribe to={[userStore]}>
         {(userstore) => (
-          <div className="column videocontainer is-three-fifths">
-            <div className="card">
-              <header className="card-header">
-                <p className="card-header-title is-centered">Overview</p>
-                <a
-                  href="#"
-                  className="card-header-icon"
-                  aria-label="more options"
+          <div className="column is-9 user-video-column">
+            <article className="media">
+              <div className="media-content">
+                <TicketItem
+                  tickets={this.props.tickets}
+                  user={this.props.user}
                 />
-              </header>
-              <TicketItem tickets={this.props.tickets} user={this.props.user} />
-              <footer className="card-footer" />
-            </div>
+              </div>
+            </article>
           </div>
         )}
       </Subscribe>

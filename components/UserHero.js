@@ -1,5 +1,5 @@
 import React from 'react';
-import UserAvatarCard from '../components/UserAvatarCard';
+import UserBody from './UserBody';
 import { Subscribe } from 'unstated';
 
 import { userStore } from '../Containers/UserContainer';
@@ -14,12 +14,7 @@ export default class UserHero extends React.Component {
         {(userstore) => (
           <section className="hero is-light is-bold is-fullheight">
             <div className="hero-head">
-              <div className="container">
-                <UserAvatarCard
-                  tickets={this.props.tickets}
-                  user={this.props.user}
-                />
-              </div>
+              <UserBody tickets={this.props.tickets} user={this.props.user} />
             </div>
           </section>
         )}

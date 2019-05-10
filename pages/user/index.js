@@ -1,32 +1,23 @@
-//npm packages
 import React from 'react';
-import fetch from 'isomorphic-unfetch';
-import PropTypes from 'prop-types';
-import Error from 'next/error';
-
-//our packages
+import AvatarCard from '../../components/AvatarCard';
 import Layout from '../../components/MyLayout';
 import UserNav from '../../components/UserNav';
-import UserHero from '../../components/UserHero';
+import groupBy from '../../helpers/groupBy';
+import UserActivity from '../../components/UserActivity';
 
 export default class UserPage extends React.Component {
   static async getInitialProps(context) {
-    const res = await fetch(
-      `http://localhost:3000/api/user/${context.query.id}`
-    );
-
     const userTickets = await fetch(
       `http://localhost:3000/api/ticket/${context.query.id}`
     ).then((r) => r.json());
 
-    const json = await res.json();
-    const statusCode = res.status > 200 ? res.status : false;
+    const comments = await fetch(
+      `http://localhost:3000/api/comment/user/${context.query.id}`
+    ).then((r) => r.json());
 
-    return {
-      statusCode,
-      user: json.user,
-      tickets: userTickets.tickets,
-    };
+    const groupedComments = groupBy(comments.comments, 'ticket_id_fkey');
+
+    return { user: context.query.id, userTickets, groupedComments };
   }
 
   constructor(props) {
@@ -34,17 +25,20 @@ export default class UserPage extends React.Component {
   }
 
   render() {
-    if (this.props.statusCode) {
-      return <Error statusCode={this.props.statusCode} />;
-    }
-
     return (
       <Layout>
         <UserNav user={this.props.user} />
-        <UserHero tickets={this.props.tickets} user={this.props.user} />
+        <section className="hero is-bold is-light is-fullheight">
+          <div className="hero-head">
+            <div className="columns user-overview-columns">
+              <div className="column is-9">
+                <UserActivity />
+              </div>
+              <AvatarCard user={this.props.user} />
+            </div>
+          </div>
+        </section>
       </Layout>
     );
   }
 }
-
-UserPage.propTypes = { user: PropTypes.string, tickets: PropTypes.array };

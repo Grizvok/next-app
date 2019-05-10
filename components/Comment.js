@@ -72,69 +72,69 @@ class Comment extends React.Component {
             return <DeletedComment />;
           }
           return (
-            <article className="media user-comment box">
-              <div className="media-content">
-                <div className="content">
-                  <p className="commenter-username user-commenter-link">
-                    <Link
-                      as={`/user/${this.props.comment.ticket_commenter}`}
-                      href={`/user?id=${this.props.comment.ticket_commenter}`}
-                    >
-                      <a>{this.props.comment.ticket_commenter}</a>
-                    </Link>
-                    <span className="comment-time-separator has-text-grey">
-                      ·
+            <div className="media-content box user-comment">
+              <div className="content">
+                <p className="comment-text">
+                  <Link
+                    as={`/user/${this.props.comment.ticket_commenter}`}
+                    href={`/user?id=${this.props.comment.ticket_commenter}`}
+                  >
+                    <a className="user-commenter-link">
+                      {this.props.comment.ticket_commenter}
+                    </a>
+                  </Link>
+                  <span className="comment-time-separator has-text-grey">
+                    ·
+                  </span>
+                  <span className="has-text-grey time-since-comment">
+                    {' '}
+                    {`${timeSinceCreation} ago`}
+                  </span>
+                </p>
+                {this.state.editMode ? (
+                  <EditCommentTextArea
+                    initialComment={this.state.comment}
+                    closeEditMode={this.closeEditMode}
+                    commentID={this.props.comment.id}
+                    handleEditedComment={this.handleEditedComment}
+                  />
+                ) : (
+                  <p className="comment-text">{this.state.comment}</p>
+                )}
+              </div>
+              <nav className="level is-mobile">
+                <div className="level-left">
+                  <a className="level-item comment-level-item">
+                    <span className="icon is-small">
+                      <i className="fas fa-comment-alt" />
                     </span>
-                    <span className="has-text-grey time-since-comment">
-                      {' '}
-                      {`${timeSinceCreation} ago`}
-                    </span>
-                  </p>
-                  {this.state.editMode ? (
-                    <EditCommentTextArea
-                      initialComment={this.state.comment}
-                      closeEditMode={this.closeEditMode}
-                      commentID={this.props.comment.id}
-                      handleEditedComment={this.handleEditedComment}
-                    />
-                  ) : (
-                    <p className="comment-text">{this.state.comment}</p>
+                    <span className="comment-reply-text">Reply</span>
+                  </a>
+                  {userstore.state.currentUser ===
+                  this.props.comment.ticket_commenter ? (
+                    <div className="level-item comment-level-item">
+                      <span className="icon is-small">
+                        <CommentDropDown
+                          openEditMode={this.openEditMode}
+                          closeEditMode={this.closeEditMode}
+                          openDeleteMode={this.openDeleteMode}
+                          closeDeleteMode={this.closeDeleteMode}
+                        />
+                      </span>
+                    </div>
+                  ) : null}
+                  {this.state.deleteMode && (
+                    <Portal selector={'#modal'}>
+                      <DeleteCommentModal
+                        close={this.closeDeleteMode}
+                        deleteComment={this.deleteComment}
+                        id={this.props.comment.id}
+                      />
+                    </Portal>
                   )}
                 </div>
-                <nav className="level is-mobile">
-                  <div className="level-left">
-                    <a className="level-item comment-level-item">
-                      <span className="icon is-small">
-                        <i className="fas fa-comment-alt" />
-                      </span>
-                      <span className="comment-reply-text">Reply</span>
-                    </a>
-                    {userstore.state.currentUser ===
-                    this.props.comment.ticket_commenter ? (
-                      <div className="level-item comment-level-item">
-                        <span className="icon is-small">
-                          <CommentDropDown
-                            openEditMode={this.openEditMode}
-                            closeEditMode={this.closeEditMode}
-                            openDeleteMode={this.openDeleteMode}
-                            closeDeleteMode={this.closeDeleteMode}
-                          />
-                        </span>
-                      </div>
-                    ) : null}
-                    {this.state.deleteMode && (
-                      <Portal selector={'#modal'}>
-                        <DeleteCommentModal
-                          close={this.closeDeleteMode}
-                          deleteComment={this.deleteComment}
-                          id={this.props.comment.id}
-                        />
-                      </Portal>
-                    )}
-                  </div>
-                </nav>
-              </div>
-            </article>
+              </nav>
+            </div>
           );
         }}
       </Subscribe>

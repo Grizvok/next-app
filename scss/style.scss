@@ -13,6 +13,10 @@ $box-radius: $radius-small;
   padding-top: 5%;
 }
 
+.ticket-page-columns {
+  margin-top: 0.5% !important;
+}
+
 .ellipsis-icon:hover {
   background-color: $grey-lighter;
   border-radius: 10%;
@@ -20,14 +24,33 @@ $box-radius: $radius-small;
   padding-bottom: 10%;
 }
 
+.user-overview-columns {
+  margin-top: 0.5% !important;
+}
+
 .commented-on-box {
   margin-left: 1%;
-  margin-top: 1%;
   border: 0.5px solid transparent;
+  cursor: pointer;
 }
 
 .commented-on-box:hover {
   border: 0.5px solid black;
+}
+
+.user-comment {
+  margin-left: 1%;
+  margin-top: 0% !important;
+  margin-bottom: 0% !important;
+  border: 0.5px solid transparent;
+}
+
+.user-comment:hover {
+  border: 0.5px solid black !important;
+}
+
+.user-tabs {
+  margin-bottom: 0% !important;
 }
 
 .commented-on-box {
@@ -72,15 +95,10 @@ $box-radius: $radius-small;
   margin-top: 2%;
 }
 
-.user-comment {
+.ticket-comment {
   margin-left: 1%;
   margin-bottom: 0.1% !important;
   margin-top: 0.1% !important;
-  border: 0.5px solid transparent;
-}
-
-.user-comment:hover {
-  border: 0.5px solid black !important;
 }
 
 .text-editor {
@@ -125,12 +143,20 @@ $box-radius: $radius-small;
   font-weight: bold;
 }
 
+.comment-creator:hover {
+  text-decoration: underline;
+}
+
 .user-commenter-link:hover {
   text-decoration: underline;
 }
 
+.user-commenter-link {
+  color: $blue !important;
+}
+
 .comment-text {
-  font-size: 0.9em;
+  font-size: 0.75em;
 }
 
 .commenter-username {
@@ -150,6 +176,10 @@ $box-radius: $radius-small;
 .expand-content-icon {
   font-size: 2em;
   margin-right: 4%;
+}
+
+.comment-page-columns {
+  margin-top: 0.5% !important;
 }
 
 .ticket-creation-info {
@@ -194,10 +224,6 @@ $box-radius: $radius-small;
 
 .comment-sorting-select {
   display: inline-block !important;
-}
-
-.avatarcard {
-  margin-top: 2%;
 }
 
 .not-registered-text {
@@ -260,7 +286,8 @@ $box-radius: $radius-small;
 }
 
 .videocontainer {
-  margin-top: 2%;
+  margin-top: 1%;
+  margin-left: 1%;
 }
 
 .sport-select {

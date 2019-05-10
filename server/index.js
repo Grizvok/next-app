@@ -97,6 +97,11 @@ app
       return app.render(req, res, '/user/comments', queryParams);
     });
 
+    server.get('/user/:id/tickets', (req, res) => {
+      const queryParams = { id: req.params.id };
+      return app.render(req, res, '/user/tickets', queryParams);
+    });
+
     server.get('/user/:id/skills', (req, res) => {
       const queryParams = { id: req.params.id };
       return app.render(req, res, '/user/skills', queryParams);

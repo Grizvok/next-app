@@ -72,7 +72,7 @@ class UserCommentSingle extends React.Component {
             return <DeletedComment />;
           }
           return (
-            <article className="media user-comment">
+            <article className="media ticket-comment">
               <div className="media-content">
                 <div className="content">
                   <p className="commenter-username">

@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../../components/MyLayout';
 import UserNav from '../../components/UserNav';
 import UserComments from '../../components/UserComments';
+import AvatarCard from '../../components/AvatarCard';
 
 export default class CommentPage extends React.Component {
   static async getInitialProps(context) {
@@ -20,13 +21,14 @@ export default class CommentPage extends React.Component {
         <UserNav user={this.props.user} />
         <section className="hero is-bold is-light is-fullheight">
           <div className="hero-head">
-            <div className="columns">
+            <div className="columns comment-page-columns">
               <div className="column is-9">
                 <UserComments
                   user={this.props.user}
                   comments={this.props.groupedComments}
                 />
               </div>
+              <AvatarCard user={this.props.user} />
             </div>
           </div>
         </section>

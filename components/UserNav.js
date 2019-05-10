@@ -15,11 +15,11 @@ class UserNav extends React.Component {
     const { user } = this.props;
 
     return (
-      <div className="tabs has-background-white">
+      <div className="tabs has-background-white user-tabs">
         <ul>
+          <SkillTab activeTab={router.pathname} user={user} />
           <TicketTab activeTab={router.pathname} user={user} />
           <CommentTab activeTab={router.pathname} user={user} />
-          <SkillTab activeTab={router.pathname} user={user} />
         </ul>
       </div>
     );
