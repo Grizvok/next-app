@@ -35,6 +35,10 @@ export default class UserComments extends React.Component {
           user={this.props.user}
           key={index}
           grouping={grouping}
+          comments={grouping.comments}
+          postTitle={grouping.post.title}
+          postCreator={grouping.post.postCreator}
+          ticketID={grouping.comments[0].ticket_id_fkey}
         />
       );
     });

@@ -15,8 +15,6 @@ router.get('/user/:userID', async (req, res) => {
   );
   const comments = rows.rows;
 
-  console.log(rows.rows);
-
   res.send({ comments });
 });
 

@@ -23,6 +23,8 @@ export default class UserPage extends React.Component {
 
     const groupedComments = groupBy(comments.comments, 'ticket_id_fkey');
 
+    //const sortedComments = sortComments(groupedComments);
+
     return {
       user: context.query.id,
       tickets: userTickets.tickets,
@@ -50,13 +52,12 @@ export default class UserPage extends React.Component {
 
       grouping.post = { title: postTitle, postCreator: postCreator };
 
-      let lastActivity = moment().format();
+      let lastActivity = moment(comment[0].comment_creation_date).format();
 
       comment.map((val) => {
-        if (moment(val.comment_creation_date).isBefore(lastActivity)) {
-          lastActivity = val.comment_creation_date;
+        if (moment(val.comment_creation_date).isAfter(lastActivity)) {
+          grouping.lastActivity = moment(val.comment_creation_date).format();
         }
-        grouping.lastActivity = lastActivity;
         grouping.comments.push(val);
       });
 
@@ -135,16 +136,16 @@ const sortComments = (comments) => {
 
     grouping.post = { title: postTitle, postCreator: postCreator };
 
-    let lastActivity = moment().format();
+    let lastActivity = moment(comment[0].comment_creation_date).format();
 
     comment.map((val) => {
-      if (moment(val.comment_creation_date).isBefore(lastActivity)) {
-        lastActivity = val.comment_creation_date;
+      if (moment(val.comment_creation_date).isAfter(lastActivity)) {
+        grouping.lastActivity = moment(val.comment_creation_date).format();
       }
-      grouping.lastActivity = lastActivity;
       grouping.comments.push(val);
     });
     state.push(grouping);
+    console.log(grouping.lastActivity);
   }
   return state;
 };

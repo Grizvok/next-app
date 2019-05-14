@@ -19,7 +19,7 @@ class UserTicket extends React.Component {
     const creator = this.props.ticket.sci_user;
     const ticketDescription = this.props.ticket.ticket_description;
 
-    const date = moment(this.props.ticket_creation_date).format(
+    const date = moment(this.props.ticket.ticket_creation_date).format(
       'MMMM Do YYYY, h:mm a'
     );
     const href = `http://localhost:3000/ticket/${id}`;
@@ -28,7 +28,7 @@ class UserTicket extends React.Component {
         {(userstore) => {
           if (userstore.state.currentUser === this.props.user) {
             return (
-              <div className="content">
+              <div className="content ticket-content-div">
                 <div className="box commented-on-box">
                   <Link as={`/ticket/${id}`} href={`/ticket?id=${id}`}>
                     <a className="ticket-title">{ticketTitle}</a>
